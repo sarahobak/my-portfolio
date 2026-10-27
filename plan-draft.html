@@ -6,7 +6,7 @@
 <title>하루 지출 기록장 기획안</title>
 <style>
   :root {
-    --bg: #faf7f0;
+    --bg: #c5d5bf;
     --surface: #ffffff;
     --text: #2f332e;
     --muted: #7a7f78;
@@ -14,13 +14,13 @@
     --main-strong: #5f7a5a;
     --soft: #e6ede3;
     --softer: #f3f6f1;
-    --border: #ece6d8;
+    --border: #e3e9df;
     --delete: #e59a86;
     --shadow: 0 6px 20px rgba(95, 122, 90, 0.08);
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #1c1e1a;
+      --bg: #1e2a1c;
       --surface: #262924;
       --text: #ecefe9;
       --muted: #a4aaa1;
@@ -34,7 +34,7 @@
     }
   }
   :root[data-theme="dark"] {
-    --bg: #1c1e1a;
+    --bg: #1e2a1c;
     --surface: #262924;
     --text: #ecefe9;
     --muted: #a4aaa1;
@@ -59,8 +59,8 @@
 
   /* 상단 */
   .hero {
-    background: linear-gradient(135deg, #dfe8db 0%, #b9cbb4 100%);
-    color: #2f3d2c;
+    background: var(--bg);
+    color: var(--text);
     padding: 56px 16px 72px;
     text-align: center;
   }
@@ -192,7 +192,7 @@
   .box { background: var(--softer); border-radius: 16px; padding: 16px; }
   .box h3 { margin-top: 0; }
 
-  footer { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 32px; }
+  footer { text-align: center; color: var(--text); opacity: 0.7; font-size: 0.85rem; margin-top: 32px; }
 
   @media (max-width: 560px) {
     .hero h1 { font-size: 1.7rem; }
