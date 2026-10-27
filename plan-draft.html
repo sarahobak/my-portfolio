@@ -3,40 +3,55 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>외국어 공부 기획안</title>
+<title>하루 지출 기록장 기획안</title>
 <style>
   :root {
-    --bg: #fff8f3;
+    --bg: #faf7f0;
     --surface: #ffffff;
-    --text: #3a2a22;
-    --muted: #8a7468;
-    --main: #ff9f6e;
-    --main-strong: #f07f48;
-    --soft: #ffe8da;
-    --softer: #fff2ea;
-    --border: #f6dccd;
-    --shadow: 0 6px 20px rgba(240, 127, 72, 0.10);
+    --text: #2f332e;
+    --muted: #7a7f78;
+    --main: #8fa98a;
+    --main-strong: #5f7a5a;
+    --soft: #e6ede3;
+    --softer: #f3f6f1;
+    --border: #ece6d8;
+    --delete: #e59a86;
+    --shadow: 0 6px 20px rgba(95, 122, 90, 0.08);
   }
   @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1f1915;
-      --surface: #2a221d;
-      --text: #f3e9e2;
-      --muted: #bba697;
-      --main: #ffaa80;
-      --main-strong: #ffbd9a;
-      --soft: #4a3226;
-      --softer: #352820;
-      --border: #4a3a30;
+    :root:not([data-theme="light"]) {
+      --bg: #1c1e1a;
+      --surface: #262924;
+      --text: #ecefe9;
+      --muted: #a4aaa1;
+      --main: #a3bd9e;
+      --main-strong: #bcd3b7;
+      --soft: #34402f;
+      --softer: #2c3229;
+      --border: #3a3e36;
+      --delete: #eba996;
       --shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c1e1a;
+    --surface: #262924;
+    --text: #ecefe9;
+    --muted: #a4aaa1;
+    --main: #a3bd9e;
+    --main-strong: #bcd3b7;
+    --soft: #34402f;
+    --softer: #2c3229;
+    --border: #3a3e36;
+    --delete: #eba996;
+    --shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
     background: var(--bg);
     color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
     line-height: 1.7;
     word-break: keep-all;
   }
@@ -44,8 +59,8 @@
 
   /* 상단 */
   .hero {
-    background: linear-gradient(135deg, #ffd3b8 0%, #ffb48c 100%);
-    color: #4a2a1a;
+    background: linear-gradient(135deg, #dfe8db 0%, #b9cbb4 100%);
+    color: #2f3d2c;
     padding: 56px 16px 72px;
     text-align: center;
   }
@@ -63,10 +78,10 @@
 
   .summary {
     background: var(--surface);
-    border-radius: 16px;
+    border-radius: 20px;
     box-shadow: var(--shadow);
     padding: 20px 24px;
-    margin: -40px 0 32px;
+    margin: -40px 0 20px;
     border-left: 6px solid var(--main);
     font-weight: 600;
     position: relative;
@@ -77,7 +92,7 @@
   section {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: 20px;
     padding: 24px;
     margin-bottom: 20px;
     box-shadow: var(--shadow);
@@ -99,91 +114,89 @@
     background: var(--main);
     color: #fff;
     font-size: 0.9rem;
+    flex-shrink: 0;
   }
-  h3 { font-size: 1rem; margin: 0 0 8px; color: var(--main-strong); }
+  h3 { font-size: 1rem; margin: 20px 0 8px; color: var(--main-strong); }
+  h3:first-of-type { margin-top: 0; }
+  ul, ol { padding-left: 20px; margin: 0; }
+  li + li { margin-top: 4px; }
+  code { font-size: 0.85em; color: var(--muted); }
 
   /* 개요 */
-  .info { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .info div { background: var(--softer); border-radius: 12px; padding: 12px 16px; }
+  .info { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 0 0 32px; }
+  .info div { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 12px 16px; }
   .info dt { font-size: 0.8rem; color: var(--muted); }
   .info dd { margin: 0; font-weight: 600; }
 
-  /* 최종 목표 카드 */
-  .goals { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .goal { border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
-  .goal .icon { font-size: 1.4rem; }
-  .goal strong { display: block; margin: 4px 0 2px; }
-  .goal p { margin: 0; font-size: 0.92rem; color: var(--muted); }
-
-  /* 단계별 타임라인 */
-  .timeline { list-style: none; margin: 0; padding: 0; }
-  .timeline li {
-    position: relative;
-    padding: 0 0 20px 32px;
-    border-left: 2px solid var(--soft);
-    margin-left: 8px;
-  }
-  .timeline li:last-child { padding-bottom: 0; border-left-color: transparent; }
-  .timeline li::before {
-    content: "";
-    position: absolute;
-    left: -9px;
-    top: 4px;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--main);
-    border: 3px solid var(--surface);
-    box-shadow: 0 0 0 2px var(--main);
-  }
-  .timeline .when { font-size: 0.85rem; color: var(--muted); }
-  .timeline .what { font-weight: 700; }
-  .timeline p { margin: 2px 0 0; font-size: 0.95rem; }
-
-  /* 공부 방법 */
-  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .box { background: var(--softer); border-radius: 12px; padding: 16px; }
-  .box ul { margin: 0; padding-left: 18px; }
-
-  /* 점검 표 */
+  /* 표 */
   .table-wrap { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); }
-  th { background: var(--soft); font-weight: 600; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: var(--soft); font-weight: 600; white-space: nowrap; }
   th:first-child { border-top-left-radius: 8px; }
   th:last-child { border-top-right-radius: 8px; }
   tr:last-child td { border-bottom: none; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
 
-  /* 체크리스트 */
-  ul.todo { list-style: none; padding: 0; margin: 0; }
-  ul.todo li {
-    position: relative;
-    padding: 10px 0 10px 32px;
-    border-bottom: 1px dashed var(--border);
+  /* 화면 미리보기 */
+  .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+  .phone {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 16px 14px;
+    font-size: 0.82rem;
+    display: grid;
+    gap: 10px;
   }
-  ul.todo li:last-child { border-bottom: none; }
-  ul.todo li::before {
-    content: "";
-    position: absolute;
-    left: 2px;
-    top: 15px;
-    width: 16px;
-    height: 16px;
-    border: 2px solid var(--main);
-    border-radius: 5px;
-  }
+  .phone .tag { font-size: 0.7rem; color: var(--muted); }
+  .p-title { text-align: center; }
+  .p-title strong { display: block; font-size: 1rem; color: var(--main-strong); }
+  .p-title span { color: var(--muted); font-size: 0.75rem; }
+  .p-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 10px 12px; }
+  .field { height: 26px; border: 1px solid var(--border); border-radius: 10px; margin: 6px 0; padding: 0 8px; display: flex; align-items: center; color: var(--muted); font-size: 0.72rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0; }
+  .chip { background: var(--softer); border-radius: 999px; padding: 1px 8px; font-size: 0.7rem; }
+  .chip.on { background: var(--main); color: #fff; }
+  .p-btn { background: var(--main); color: #fff; border-radius: 10px; text-align: center; padding: 4px; font-weight: 700; font-size: 0.75rem; }
+  .p-total { background: var(--soft); border-radius: 16px; padding: 10px 12px; text-align: center; }
+  .p-total strong { display: block; font-size: 1.4rem; color: var(--main-strong); line-height: 1.3; }
+  .p-total span { font-size: 0.72rem; color: var(--muted); }
+  .row { display: flex; align-items: center; gap: 6px; padding: 5px 0; border-bottom: 1px dashed var(--border); font-size: 0.75rem; }
+  .row:last-child { border-bottom: none; }
+  .row .memo { flex: 1; }
+  .row .amt { font-weight: 700; }
+  .row .del { color: var(--delete); font-weight: 700; }
 
-  /* 컬러 팔레트 */
+  .areas { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .areas li { background: var(--softer); border-radius: 16px; padding: 12px 14px; margin: 0; }
+  .areas strong { display: block; }
+  .areas p { margin: 2px 0 0; font-size: 0.9rem; color: var(--muted); }
+  .note { margin-top: 12px; font-size: 0.9rem; color: var(--muted); }
+
+  /* 흐름 */
+  .flow { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .flow li { background: var(--softer); border-radius: 999px; padding: 6px 14px; font-size: 0.9rem; margin: 0; }
+  .flow li.arrow { background: none; padding: 0; color: var(--main); font-weight: 700; }
+
+  /* 기능 */
+  .later { margin-top: 16px; border: 1px dashed var(--border); border-radius: 16px; padding: 16px; }
+  .later h3 { margin-top: 0; color: var(--muted); }
+
+  /* 팔레트 */
   .palette { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; list-style: none; padding: 0; margin: 0; }
-  .palette li { text-align: center; font-size: 0.85rem; }
-  .swatch { height: 56px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 6px; }
-  .palette code { color: var(--muted); }
+  .palette li { text-align: center; font-size: 0.85rem; margin: 0; }
+  .swatch { height: 56px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 6px; }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+  .box { background: var(--softer); border-radius: 16px; padding: 16px; }
+  .box h3 { margin-top: 0; }
 
   footer { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 32px; }
 
   @media (max-width: 560px) {
     .hero h1 { font-size: 1.7rem; }
-    .info, .goals, .two { grid-template-columns: 1fr; }
+    .info, .two, .layout { grid-template-columns: 1fr; }
     .palette { grid-template-columns: repeat(2, 1fr); }
     section { padding: 20px 16px; }
   }
@@ -192,100 +205,122 @@
 <body>
 <header class="hero">
   <span class="badge">초안 · 2026-10-27</span>
-  <h1>외국어 공부 기획안</h1>
-  <p>1년 동안 영어를 내 것으로 만드는 계획</p>
+  <h1>하루 지출 기록장 기획안</h1>
+  <p>하루 지출을 쉽게 기록하고 총액을 확인하는 웹사이트</p>
 </header>
 
 <main>
-  <p class="summary"><small>한 줄 요약</small>1년 안에 일상 대화와 업무 이메일을 혼자 처리할 수 있는 수준이 된다.</p>
+  <p class="summary"><small>한 줄 요약</small>금액과 항목만 고르면 오늘 얼마 썼는지 바로 보여주는 지출 기록장.</p>
+
+  <dl class="info">
+    <div><dt>사용자</dt><dd>간편하게 소비를 관리하고 싶은 일반인</dd></div>
+    <div><dt>제작 조건</dt><dd>초보자가 HTML·CSS·JavaScript로 구현할 수 있는 범위</dd></div>
+  </dl>
 
   <section>
-    <h2><span class="num">1</span>개요</h2>
-    <dl class="info">
-      <div><dt>목표 언어</dt><dd>영어</dd></div>
-      <div><dt>기간</dt><dd>2026.11 ~ 2027.10 (12개월)</dd></div>
-      <div><dt>평일 공부 시간</dt><dd>하루 1시간</dd></div>
-      <div><dt>주말 공부 시간</dt><dd>하루 2시간</dd></div>
-    </dl>
-  </section>
+    <h2><span class="num">1</span>화면 구성</h2>
+    <div class="layout">
+      <div class="phone" aria-label="첫 화면 미리보기">
+        <div class="p-title"><span class="tag">① 상단 제목</span><strong>하루 지출 기록장</strong><span>10월 27일 · 오늘도 알뜰하게!</span></div>
+        <div class="p-card">
+          <span class="tag">② 지출 입력</span>
+          <div class="field">금액 (원)</div>
+          <div class="chips"><span class="chip on">🍚 식비</span><span class="chip">☕ 카페</span><span class="chip">🚌 교통</span><span class="chip">🛍️ 쇼핑</span><span class="chip">🏠 생활</span><span class="chip">✨ 기타</span></div>
+          <div class="field">메모 (선택)</div>
+          <div class="p-btn">기록하기</div>
+        </div>
+        <div class="p-total"><span class="tag">③ 오늘의 총지출</span><strong>18,500원</strong><span>3건 기록</span></div>
+        <div class="p-card">
+          <span class="tag">④ 지출 목록</span>
+          <div class="row"><span>☕</span><span class="memo">아이스 라테</span><span class="amt">4,500원</span><span class="del">✕</span></div>
+          <div class="row"><span>🚌</span><span class="memo">버스</span><span class="amt">1,500원</span><span class="del">✕</span></div>
+          <div class="row"><span>🍚</span><span class="memo">점심</span><span class="amt">12,500원</span><span class="del">✕</span></div>
+        </div>
+      </div>
 
-  <section>
-    <h2><span class="num">2</span>최종 목표</h2>
-    <div class="goals">
-      <div class="goal"><span class="icon">🗣️</span><strong>말하기</strong><p>원어민과 15분 동안 끊기지 않고 대화하기</p></div>
-      <div class="goal"><span class="icon">🎧</span><strong>듣기</strong><p>자막 없이 미국 드라마 한 편의 70% 이해하기</p></div>
-      <div class="goal"><span class="icon">✉️</span><strong>읽기·쓰기</strong><p>업무 이메일을 사전 없이 읽고 답장하기</p></div>
-      <div class="goal"><span class="icon">🏅</span><strong>시험</strong><p>OPIc IM2 이상 또는 TOEIC 850점 이상</p></div>
+      <ol class="areas">
+        <li><strong>① 상단 제목</strong><p>"하루 지출 기록장" 제목, 오늘 날짜, 짧은 인사 문구</p></li>
+        <li><strong>② 지출 입력 영역</strong><p>금액 입력칸, 항목 선택(버튼형), 메모(선택), "기록하기" 버튼</p></li>
+        <li><strong>③ 오늘의 총지출 카드</strong><p>큰 글씨로 총액, 아래에 기록 건수</p></li>
+        <li><strong>④ 지출 목록</strong><p>아이콘 · 메모 · 금액 · 삭제 버튼, 최근 기록이 맨 위</p></li>
+      </ol>
     </div>
-  </section>
+    <p class="note">기록이 없으면 목록 자리에 "아직 기록이 없어요" 안내를 보여준다. PC·모바일 모두 가운데 정렬 1단, 최대 폭 약 480px.</p>
 
-  <section>
-    <h2><span class="num">3</span>단계별 목표</h2>
-    <ol class="timeline">
-      <li><span class="when">1~3개월</span><div class="what">기초 다지기</div><p>기본 문법 정리, 필수 단어 1,000개</p></li>
-      <li><span class="when">4~6개월</span><div class="what">입 열기</div><p>매일 섀도잉 10분, 주 1회 회화 수업</p></li>
-      <li><span class="when">7~9개월</span><div class="what">실전 연습</div><p>자막 없이 드라마 보기, 영어 일기 주 3회</p></li>
-      <li><span class="when">10~12개월</span><div class="what">마무리</div><p>시험 응시, 원어민과 15분 대화 도전</p></li>
+    <h3>이용 흐름</h3>
+    <ol class="flow">
+      <li>금액 입력</li><li class="arrow" aria-hidden="true">→</li>
+      <li>항목 선택</li><li class="arrow" aria-hidden="true">→</li>
+      <li>기록하기</li><li class="arrow" aria-hidden="true">→</li>
+      <li>목록 추가 · 총지출 갱신</li><li class="arrow" aria-hidden="true">→</li>
+      <li>필요하면 삭제</li>
     </ol>
   </section>
 
   <section>
-    <h2><span class="num">4</span>공부 방법</h2>
-    <div class="two">
-      <div class="box">
-        <h3>☀️ 매일</h3>
-        <ul>
-          <li>단어 앱으로 새 단어 20개 + 복습</li>
-          <li>팟캐스트나 유튜브 듣기 20분</li>
-          <li>섀도잉(따라 말하기) 10분</li>
-        </ul>
-      </div>
-      <div class="box">
-        <h3>📅 매주</h3>
-        <ul>
-          <li>회화 수업 또는 언어 교환 1회</li>
-          <li>영어 일기 쓰기 3회</li>
-          <li>일요일에 한 주 돌아보기</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2><span class="num">5</span>점검 방법</h2>
+    <h2><span class="num">2</span>기능 목록</h2>
+    <h3>필수 기능</h3>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>주기</th><th>할 일</th></tr></thead>
+        <thead><tr><th>기능</th><th>설명</th></tr></thead>
         <tbody>
-          <tr><td><strong>매주</strong></td><td>공부한 시간과 외운 단어 수 기록</td></tr>
-          <tr><td><strong>매달</strong></td><td>1분 자기소개를 녹음해서 지난달과 비교</td></tr>
-          <tr><td><strong>3개월마다</strong></td><td>모의고사로 실력 확인, 다음 단계 목표 조정</td></tr>
+          <tr><td>지출 금액 입력</td><td>숫자만 입력, 0원·빈칸이면 안내 문구 표시</td></tr>
+          <tr><td>지출 항목 선택</td><td>🍚 식비 · ☕ 카페 · 🚌 교통 · 🛍️ 쇼핑 · 🏠 생활 · ✨ 기타 중 하나</td></tr>
+          <tr><td>지출 목록 표시</td><td>입력한 기록을 목록에 추가, 금액은 천 단위 쉼표 표시</td></tr>
+          <tr><td>총지출 자동 계산</td><td>기록이 추가·삭제될 때마다 합계를 다시 계산해 카드에 표시</td></tr>
+          <tr><td>기록 삭제</td><td>각 기록 옆 삭제 버튼으로 한 건씩 지우기</td></tr>
         </tbody>
       </table>
     </div>
+    <div class="later">
+      <h3>🕐 있으면 좋은 기능 (추후)</h3>
+      <ul>
+        <li>새로고침해도 기록이 남도록 브라우저에 저장</li>
+        <li>항목별 합계 보기</li>
+        <li>날짜를 바꿔 지난 기록 보기</li>
+        <li>하루 예산 설정과 남은 금액 표시</li>
+      </ul>
+    </div>
   </section>
 
   <section>
-    <h2><span class="num">6</span>정해야 할 것</h2>
-    <ul class="todo">
-      <li><strong>시험 고르기:</strong> OPIc과 TOEIC 중 무엇을 볼지, 언제 응시할지</li>
-      <li><strong>회화 수업 방법:</strong> 학원, 화상 영어, 언어 교환 모임 중 선택</li>
-      <li><strong>교재와 앱:</strong> 문법책 1권, 단어 앱 1개 정하기</li>
-      <li><strong>기록 도구:</strong> 공부 시간을 적을 곳 정하기 (앱, 노트, 스프레드시트)</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2><span class="num">7</span>컬러 팔레트</h2>
+    <h2><span class="num">3</span>디자인 가이드</h2>
+    <h3>컬러</h3>
     <ul class="palette">
-      <li><div class="swatch" style="background:#ff9f6e"></div>메인<br><code>#ff9f6e</code></li>
-      <li><div class="swatch" style="background:#ffd3b8"></div>서브<br><code>#ffd3b8</code></li>
-      <li><div class="swatch" style="background:#fff8f3"></div>배경<br><code>#fff8f3</code></li>
-      <li><div class="swatch" style="background:#3a2a22"></div>텍스트<br><code>#3a2a22</code></li>
+      <li><div class="swatch" style="background:#faf7f0"></div>배경 아이보리<br><code>#FAF7F0</code></li>
+      <li><div class="swatch" style="background:#8fa98a"></div>포인트 세이지<br><code>#8FA98A</code></li>
+      <li><div class="swatch" style="background:#5f7a5a"></div>딥 세이지<br><code>#5F7A5A</code></li>
+      <li><div class="swatch" style="background:#e6ede3"></div>라이트 세이지<br><code>#E6EDE3</code></li>
+      <li><div class="swatch" style="background:#ffffff"></div>카드 화이트<br><code>#FFFFFF</code></li>
+      <li><div class="swatch" style="background:#2f332e"></div>텍스트 차콜<br><code>#2F332E</code></li>
+      <li><div class="swatch" style="background:#7a7f78"></div>보조 그레이<br><code>#7A7F78</code></li>
+      <li><div class="swatch" style="background:#e59a86"></div>삭제 코랄<br><code>#E59A86</code></li>
     </ul>
+
+    <div class="two">
+      <div class="box">
+        <h3>🃏 둥근 카드 UI</h3>
+        <ul>
+          <li>카드 모서리 20px, 버튼·입력칸 12px, 항목 버튼은 알약 모양</li>
+          <li>아주 옅은 그림자, 카드 안 여백 20~24px</li>
+          <li>카드 사이 간격 16px</li>
+          <li>입력칸·버튼 높이 48px로 누르기 쉽게</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>🌱 귀여운 느낌 살리기</h3>
+        <ul>
+          <li>항목마다 이모지 아이콘으로 한눈에 구분</li>
+          <li>둥근 한글 글꼴(나눔스퀘어라운드, Pretendard)</li>
+          <li>총지출은 32px 이상 굵게, 본문은 16px</li>
+          <li>짧고 다정한 문구: "기록 완료!", "아직 기록이 없어요"</li>
+          <li>추가·삭제 때 살짝 커졌다 작아지는 가벼운 움직임만</li>
+        </ul>
+      </div>
+    </div>
   </section>
 
-  <footer>외국어 공부 기획안 · 초안</footer>
+  <footer>하루 지출 기록장 기획안 · 초안</footer>
 </main>
 </body>
 </html>
