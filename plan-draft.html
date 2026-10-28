@@ -3,27 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>여행한마디 기획안</title>
+<title>선물고민 기획안</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700&display=swap">
 <style>
   :root {
     color-scheme: light;
-    --bg: #fbfaf7;
+    --bg: #faf7f0;
     --surface: #ffffff;
-    --text: #36404a;
-    --muted: #8a94a0;
-    --line: #ece8e0;
-    --ocean: #5b9bd5;
-    --ocean-strong: #3f7fbd;
-    --sky: #d3e8f8;
-    --lavender: #e4dcf6;
-    --peach: #faddd3;
-    --mint: #d4eedf;
-    --sun: #ffedb3;
-    --rose: #f8d2d2;
-    --gold: #f2c14e;
-    --shadow: 0 8px 24px rgba(54, 64, 74, 0.06);
+    --text: #3a3633;
+    --muted: #8c857e;
+    --line: #ece6da;
+    --rose: #d9a5a0;
+    --rose-strong: #b97d77;
+    --blush: #f5e4e1;
+    --butter: #f6edd3;
+    --sage: #e2eadf;
+    --lavender: #e7e3f1;
   }
   * { box-sizing: border-box; }
   body {
@@ -34,488 +29,366 @@
     line-height: 1.7;
     word-break: keep-all;
   }
-  .jp { font-family: "Noto Sans JP", "Hiragino Sans", sans-serif; }
-  main { max-width: 1000px; margin: 0 auto; padding: 0 16px 80px; }
-  code { font-size: 0.85em; background: var(--bg); border-radius: 6px; padding: 1px 6px; }
+  main { max-width: 960px; margin: 0 auto; padding: 0 20px 96px; }
 
   /* 상단 */
-  .hero { text-align: center; padding: 40px 16px 32px; }
-  .hero svg { width: min(420px, 100%); height: auto; display: block; margin: 0 auto 8px; }
-  .badge {
-    display: inline-block;
-    background: var(--sky);
-    color: var(--ocean-strong);
-    padding: 4px 14px;
-    border-radius: 999px;
-    font-size: 0.82rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-  }
-  .hero h1 { font-size: 2.2rem; margin: 0 0 6px; letter-spacing: -0.02em; }
-  .hero p { margin: 0 auto; color: var(--muted); max-width: 480px; }
-
-  .summary {
-    background: var(--surface);
-    border-radius: 24px;
-    padding: 18px 24px;
-    text-align: center;
-    font-weight: 700;
-    margin: 0 auto 36px;
-    max-width: 680px;
-    box-shadow: var(--shadow);
-    border: 2px dashed var(--sky);
-  }
+  .hero { max-width: 960px; margin: 0 auto; padding: 80px 20px 56px; }
+  .eyebrow { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em; color: var(--rose-strong); text-transform: uppercase; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1.3; letter-spacing: -0.02em; margin: 12px 0 16px; }
+  .hero p { margin: 0; color: var(--muted); max-width: 520px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+  .meta span { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 14px; font-size: 0.85rem; }
 
   /* 섹션 */
-  section {
-    background: var(--surface);
-    border-radius: 28px;
-    padding: 32px;
-    margin-bottom: 24px;
-    box-shadow: var(--shadow);
-  }
-  h2 { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; margin: 0 0 20px; }
-  h2 .dot {
-    width: 36px; height: 36px; border-radius: 50%;
-    display: inline-flex; align-items: center; justify-content: center;
-    font-size: 1rem; flex-shrink: 0;
-  }
-  h3 { font-size: 1rem; margin: 28px 0 10px; }
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 28px; }
+  .sec-head .no { font-size: 0.85rem; font-weight: 700; color: var(--rose-strong); }
+  .sec-head h2 { font-size: 1.5rem; margin: 0; letter-spacing: -0.01em; }
+  h3 { font-size: 1.05rem; margin: 40px 0 14px; }
   ul, ol { margin: 0; padding-left: 20px; }
-  li + li { margin-top: 4px; }
-  .muted { color: var(--muted); font-size: 0.9rem; margin: 12px 0 0; }
+  li + li { margin-top: 6px; }
+  .note { color: var(--muted); font-size: 0.92rem; margin: 14px 0 0; }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 32px; }
 
   /* 개요 */
-  .info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 0; }
-  .info div { background: var(--bg); border-radius: 18px; padding: 14px 16px; }
-  .info .wide { grid-column: span 3; }
-  .info dt { font-size: 0.78rem; color: var(--muted); }
-  .info dd { margin: 0; font-weight: 600; }
-  .rules { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; list-style: none; padding: 0; margin: 0; }
-  .rules li { margin: 0; border: 1.5px dashed var(--line); border-radius: 18px; padding: 14px; font-size: 0.9rem; }
-  .rules b { display: block; font-size: 1.3rem; }
+  .info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 0; }
+  .info div { padding: 18px 20px 18px 0; border-bottom: 1px solid var(--line); }
+  .info dt { font-size: 0.8rem; color: var(--muted); }
+  .info dd { margin: 2px 0 0; font-weight: 600; }
 
-  /* 화면 미리보기 */
-  .screens { display: grid; grid-template-columns: repeat(auto-fit, minmax(176px, 1fr)); gap: 16px; }
-  .screen h4 { margin: 12px 0 2px; font-size: 0.95rem; }
-  .screen p { margin: 0; font-size: 0.8rem; color: var(--muted); }
-  .phone {
-    background: var(--bg);
-    border: 1.5px solid var(--line);
-    border-radius: 28px;
-    padding: 12px 10px 0;
-    height: 400px;
-    font-size: 0.7rem;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    overflow: hidden;
-  }
-  .ph-top { display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
-  .ph-title { text-align: center; font-weight: 800; font-size: 0.85rem; }
-  .ph-sub { text-align: center; color: var(--muted); font-size: 0.64rem; }
-  .ill { text-align: center; font-size: 1.6rem; line-height: 1.2; letter-spacing: 6px; }
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-  .country { background: var(--surface); border-radius: 16px; padding: 8px 4px; text-align: center; border: 2px solid transparent; position: relative; line-height: 1.4; }
-  .country b { display: block; font-size: 1.2rem; }
-  .country small { color: var(--muted); font-size: 0.6rem; }
-  .country.on { border-color: var(--ocean); }
-  .country.on::after { content: "✓"; position: absolute; top: 3px; right: 7px; color: var(--ocean); font-weight: 800; }
-  .country.soon { opacity: 0.45; }
-  .pill { background: var(--ocean); color: #fff; border-radius: 999px; text-align: center; padding: 7px; font-weight: 800; }
-  .pill.ghost { background: var(--surface); color: var(--text); border: 1px solid var(--line); }
-  .search { background: var(--surface); border-radius: 999px; padding: 5px 10px; color: var(--muted); border: 1px solid var(--line); }
-  .cat { border-radius: 16px; padding: 8px 4px; text-align: center; line-height: 1.3; }
-  .cat b { display: block; font-size: 1.15rem; }
-  .cat small { color: var(--muted); font-size: 0.58rem; }
-  .today { background: var(--surface); border-radius: 14px; padding: 6px 10px; border: 1px solid var(--line); }
-  .band { background: var(--sky); border-radius: 14px; padding: 6px 10px; font-weight: 800; }
-  .chips { display: flex; gap: 4px; flex-wrap: wrap; }
-  .chip { background: var(--surface); border-radius: 999px; padding: 1px 8px; border: 1px solid var(--line); font-size: 0.62rem; }
-  .chip.on { background: var(--ocean); color: #fff; border-color: var(--ocean); }
-  .talk { background: var(--surface); border-radius: 14px; padding: 6px 8px; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(54,64,74,.04); }
-  .talk .t { flex: 1; line-height: 1.35; }
-  .talk .t b { display: block; font-size: 0.7rem; }
-  .talk .t span { color: var(--muted); font-size: 0.62rem; }
-  .talk .i { font-size: 0.75rem; }
-  .talk .dotc { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-  .detail { background: var(--surface); border-radius: 20px; padding: 14px 10px; text-align: center; display: grid; gap: 3px; box-shadow: var(--shadow); }
-  .detail .fl { font-size: 1.05rem; font-weight: 700; line-height: 1.3; }
-  .detail .pr { color: var(--muted); font-size: 0.64rem; }
-  .detail .ko { font-weight: 800; font-size: 0.8rem; margin-top: 4px; }
-  .btns { display: flex; gap: 4px; justify-content: center; }
-  .btns span { background: var(--sky); border-radius: 999px; padding: 3px 8px; font-size: 0.6rem; font-weight: 700; }
-  .btns span.star { background: #fdf0c8; }
-  .reply { background: var(--peach); border-radius: 14px; padding: 6px 8px; font-size: 0.62rem; line-height: 1.4; }
-  .empty { text-align: center; color: var(--muted); font-size: 0.6rem; border: 1.5px dashed var(--line); border-radius: 14px; padding: 8px; }
-  .tabbar { margin-top: auto; margin-inline: -10px; background: var(--surface); border-top: 1px solid var(--line); display: flex; justify-content: space-around; padding: 7px 0 9px; font-size: 0.6rem; color: var(--muted); text-align: center; line-height: 1.3; }
-  .tabbar .on { color: var(--ocean); font-weight: 800; }
+  /* 페이지 미리보기 */
+  .browser { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; overflow: hidden; }
+  .browser-bar { display: flex; align-items: center; gap: 6px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  .browser-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+  .browser-bar span { margin-left: 10px; font-size: 0.75rem; color: var(--muted); background: var(--bg); border-radius: 999px; padding: 2px 12px; }
+  .page { background: var(--bg); padding: 36px 28px 28px; font-size: 0.86rem; }
+  .p-logo { font-weight: 800; font-size: 0.85rem; color: var(--rose-strong); }
+  .p-title { text-align: center; margin: 18px 0 26px; }
+  .p-title b { display: block; font-size: 1.5rem; letter-spacing: -0.02em; }
+  .p-title span { color: var(--muted); }
+  .p-card { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 26px; max-width: 620px; margin: 0 auto; }
+  .q { margin-bottom: 20px; }
+  .q-label { display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 10px; }
+  .q-label .n { width: 22px; height: 22px; border-radius: 50%; background: var(--rose-strong); color: #fff; font-size: 0.72rem; display: inline-flex; align-items: center; justify-content: center; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: var(--blush); border-radius: 999px; padding: 5px 14px; font-size: 0.82rem; }
+  .chip.on { background: var(--rose); color: #fff; font-weight: 700; }
+  .picked { border-top: 1px solid var(--line); padding-top: 14px; color: var(--muted); font-size: 0.82rem; text-align: center; }
+  .picked b { color: var(--text); }
+  .p-btn { display: block; max-width: 300px; margin: 22px auto 0; background: var(--rose); color: #fff; border-radius: 999px; padding: 12px; text-align: center; font-weight: 700; }
+  .p-result-title { text-align: center; margin: 40px 0 16px; font-weight: 700; }
+  .p-result-title span { background: var(--blush); border-radius: 999px; padding: 4px 16px; }
+  .gifts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .gift { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; }
+  .gift .art { height: 96px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; }
+  .gift .body { padding: 14px 16px 16px; }
+  .gift b { display: block; font-size: 0.98rem; }
+  .gift .price { color: var(--muted); font-size: 0.78rem; }
+  .gift p { margin: 6px 0 8px; font-size: 0.8rem; }
+  .gift .tags { color: var(--muted); font-size: 0.74rem; }
+  .gift .go { display: block; margin-top: 12px; text-align: center; border: 1px solid var(--line); border-radius: 999px; padding: 6px; font-size: 0.78rem; font-weight: 700; color: var(--rose-strong); }
+  .p-actions { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
+  .p-actions span { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 7px 16px; font-size: 0.8rem; font-weight: 600; }
+  .p-ad { margin-top: 22px; border: 1px dashed var(--line); border-radius: 16px; text-align: center; color: var(--muted); padding: 12px; font-size: 0.78rem; }
+  .p-foot { margin-top: 18px; text-align: center; color: var(--muted); font-size: 0.72rem; }
+  .tagline { display: inline-block; font-size: 0.7rem; font-weight: 700; color: var(--rose-strong); background: var(--surface); border: 1px solid var(--rose); border-radius: 999px; padding: 0 8px; margin-left: 6px; vertical-align: middle; }
+
+  /* 배치 목록 */
+  .rows { border-top: 1px solid var(--line); }
+  .row { display: grid; grid-template-columns: 48px 180px 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+  .row .n { font-weight: 700; color: var(--rose-strong); font-size: 0.85rem; }
+  .row b { font-weight: 700; }
+  .row span:last-child { color: var(--muted); font-size: 0.94rem; }
 
   /* 흐름 */
-  .flow { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-  .flow li { margin: 0; background: var(--bg); border-radius: 999px; padding: 6px 14px; font-size: 0.9rem; }
-  .flow li.arrow { background: none; padding: 0; color: var(--ocean); font-weight: 800; }
-
-  .mobile { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; list-style: none; padding: 0; margin: 0; }
-  .mobile li { margin: 0; background: var(--bg); border-radius: 18px; padding: 14px; font-size: 0.88rem; }
-  .mobile b { display: block; font-size: 1.2rem; }
-
-  /* 기능 */
-  .feats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .feat { border-radius: 20px; padding: 16px 18px; }
-  .feat b { display: block; margin-bottom: 2px; }
-  .feat p { margin: 0; font-size: 0.88rem; }
-  .later { display: flex; flex-wrap: wrap; gap: 8px; }
-  .later span { border: 1.5px dashed var(--line); border-radius: 999px; padding: 4px 14px; font-size: 0.88rem; color: var(--muted); }
-
-  /* 팔레트 */
-  .palette { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; list-style: none; padding: 0; margin: 0; }
-  .palette li { margin: 0; font-size: 0.8rem; text-align: center; }
-  .swatch { height: 60px; border-radius: 20px; border: 1px solid var(--line); margin-bottom: 6px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
-  .palette small { display: block; color: var(--muted); }
-
-  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .box { background: var(--bg); border-radius: 20px; padding: 18px; }
-  .box h3 { margin-top: 0; }
+  .flow { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; counter-reset: s; }
+  .flow li { margin: 0; counter-increment: s; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 18px 16px; font-size: 0.9rem; }
+  .flow li::before { content: "0" counter(s); display: block; font-size: 0.78rem; font-weight: 700; color: var(--rose-strong); margin-bottom: 6px; }
 
   /* 표 */
   .table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
-  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  th { background: var(--sky); font-weight: 700; white-space: nowrap; }
-  th:first-child { border-radius: 12px 0 0 12px; }
-  th:last-child { border-radius: 0 12px 12px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+  th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--blush); font-weight: 700; white-space: nowrap; font-size: 0.85rem; }
   tr:last-child td { border-bottom: none; }
   td:first-child { font-weight: 700; white-space: nowrap; }
-  .warn { background: #fff6e0; border-radius: 18px; padding: 14px 18px; font-size: 0.9rem; margin-top: 14px; }
-  .warn ul { margin-top: 4px; }
+
+  /* 규칙 */
+  .rules { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; counter-reset: r; }
+  .rules li { margin: 0; counter-increment: r; display: flex; gap: 14px; align-items: baseline; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 14px 18px; }
+  .rules li::before { content: counter(r); flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--blush); color: var(--rose-strong); font-weight: 800; font-size: 0.82rem; display: inline-flex; align-items: center; justify-content: center; }
+  .later { display: flex; flex-wrap: wrap; gap: 8px; }
+  .later span { border: 1px dashed var(--rose); border-radius: 999px; padding: 5px 14px; font-size: 0.88rem; color: var(--muted); }
+
+  /* 팔레트 */
+  .palette { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; list-style: none; padding: 0; margin: 0; }
+  .palette li { margin: 0; font-size: 0.82rem; }
+  .swatch { height: 72px; border-radius: 20px; border: 1px solid var(--line); margin-bottom: 8px; }
+  .palette small { display: block; color: var(--muted); font-size: 0.74rem; }
+
+  .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .three .card { padding: 24px; }
+  .three h3 { margin-top: 0; }
+  .demo { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 14px; }
+  .demo .btn { background: var(--rose); color: #fff; border-radius: 999px; padding: 8px 20px; font-weight: 700; font-size: 0.85rem; }
+  .demo .btn.sub { background: var(--surface); color: var(--text); border: 1px solid var(--line); }
 
   /* 일정 */
-  .steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
-  .steps li { margin: 0; background: var(--bg); border-radius: 20px; padding: 14px 12px; font-size: 0.84rem; }
-  .steps b { display: block; color: var(--ocean-strong); font-size: 0.8rem; }
-  .steps li.after { background: none; border: 1.5px dashed var(--line); }
-  .total { margin-top: 14px; text-align: center; background: var(--sky); border-radius: 999px; padding: 10px; font-weight: 700; }
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+  .steps li { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 16px 14px; font-size: 0.86rem; }
+  .steps b { display: block; color: var(--rose-strong); font-size: 0.8rem; margin-bottom: 4px; }
+  .total { margin-top: 16px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 18px 0 0; border-top: 1px solid var(--line); }
+  .total span { color: var(--muted); font-size: 0.88rem; }
+  .total b { font-size: 1.15rem; color: var(--rose-strong); }
 
-  ul.todo { list-style: none; padding: 0; margin: 0; }
-  ul.todo li { position: relative; margin: 0; padding: 10px 0 10px 32px; border-bottom: 1px dashed var(--line); }
-  ul.todo li:last-child { border-bottom: none; }
-  ul.todo li::before { content: ""; position: absolute; left: 2px; top: 15px; width: 16px; height: 16px; border: 2px solid var(--ocean); border-radius: 6px; }
+  ul.todo { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
+  ul.todo li { position: relative; margin: 0; padding: 14px 0 14px 32px; border-bottom: 1px solid var(--line); }
+  ul.todo li::before { content: ""; position: absolute; left: 2px; top: 19px; width: 16px; height: 16px; border: 1.5px solid var(--rose); border-radius: 6px; }
 
-  footer { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 32px; }
+  footer { max-width: 960px; margin: 0 auto; padding: 24px 20px 56px; color: var(--muted); font-size: 0.85rem; display: flex; justify-content: space-between; border-top: 1px solid var(--line); }
 
   @media (max-width: 860px) {
-    .steps { grid-template-columns: repeat(4, 1fr); }
-    .rules, .mobile { grid-template-columns: repeat(2, 1fr); }
+    .flow { grid-template-columns: repeat(2, 1fr); }
+    .steps { grid-template-columns: repeat(3, 1fr); }
     .palette { grid-template-columns: repeat(4, 1fr); }
+    .three { grid-template-columns: 1fr; }
   }
-  @media (max-width: 560px) {
-    .hero h1 { font-size: 1.8rem; }
-    section { padding: 22px 16px; border-radius: 24px; }
-    .info, .feats, .two { grid-template-columns: 1fr; }
-    .info .wide { grid-column: auto; }
-    .screens { grid-template-columns: 1fr; }
-    .phone { max-width: 280px; margin: 0 auto; }
-    .screen h4, .screen p { text-align: center; }
-    .steps { grid-template-columns: 1fr 1fr; }
-    .palette { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 600px) {
+    .hero { padding: 56px 20px 40px; }
+    section { padding: 44px 0; }
+    .card { padding: 24px; }
+    .info { grid-template-columns: 1fr; }
+    .page { padding: 24px 14px 20px; }
+    .p-card { padding: 20px; }
+    .gifts { grid-template-columns: 1fr; }
+    .row { grid-template-columns: 36px 1fr; }
+    .row span:last-child { grid-column: 2; }
+    .flow, .steps { grid-template-columns: 1fr 1fr; }
+    .palette { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 </head>
 <body>
 <header class="hero">
-  <svg viewBox="0 0 420 150" role="img" aria-label="구름 사이로 날아가는 비행기 일러스트">
-    <circle cx="350" cy="44" r="24" fill="#ffedb3"/>
-    <path d="M40 120 Q 150 40 300 70" fill="none" stroke="#5b9bd5" stroke-width="2" stroke-dasharray="4 7" stroke-linecap="round"/>
-    <g fill="#ffffff" stroke="#d3e8f8" stroke-width="2">
-      <path d="M60 96 a16 16 0 0 1 30 -6 a12 12 0 0 1 22 8 a10 10 0 0 1 -2 20 h-48 a11 11 0 0 1 -2 -22z"/>
-      <path d="M250 112 a18 18 0 0 1 34 -6 a13 13 0 0 1 24 9 a10 10 0 0 1 -2 20 h-54 a12 12 0 0 1 -2 -23z"/>
-      <path d="M170 40 a12 12 0 0 1 22 -4 a9 9 0 0 1 16 6 a8 8 0 0 1 -2 15 h-36 a8 8 0 0 1 0 -17z"/>
-    </g>
-    <g transform="translate(300 70) rotate(-12)">
-      <path d="M-26 0 L22 -4 Q32 -4 32 0 Q32 4 22 4 L-26 0z" fill="#5b9bd5"/>
-      <path d="M2 -2 L-10 -22 L-2 -22 L14 -2z" fill="#3f7fbd"/>
-      <path d="M2 2 L-10 20 L-2 20 L14 2z" fill="#3f7fbd"/>
-      <path d="M-22 -1 L-30 -12 L-24 -12 L-14 -1z" fill="#3f7fbd"/>
-    </g>
-  </svg>
-  <span class="badge">기획안 초안 · 2026.10.28</span>
-  <h1>여행한마디</h1>
-  <p>여행지에서 바로 꺼내 쓰는 상황별 여행 외국어 웹사이트</p>
+  <div class="eyebrow">Plan Draft · 2026.10.28</div>
+  <h1>선물고민 기획안</h1>
+  <p>누구에게 · 얼마로 · 왜 주는지 세 가지만 고르면, 같은 페이지 아래에 어울리는 선물 3개가 바로 나타나는 단일 웹페이지입니다.</p>
+  <div class="meta"><span>웹페이지 1장</span><span>로그인 없음</span><span>데이터베이스 없음</span><span>HTML · CSS · JavaScript</span></div>
 </header>
 
 <main>
-  <p class="summary">나라를 고르고 상황을 누르면, 그 자리에서 필요한 한마디를 뜻·발음과 함께 보여주고 들려줘요 ✈️</p>
-
   <section>
-    <h2><span class="dot" style="background:var(--sky)">🧳</span>개요</h2>
+    <div class="sec-head"><span class="no">00</span><h2>개요</h2></div>
     <dl class="info">
-      <div><dt>서비스명</dt><dd>여행한마디 (가칭)</dd></div>
-      <div><dt>사용 환경</dt><dd>여행지에서 휴대폰 → 모바일 우선</dd></div>
-      <div><dt>수익화</dt><dd>추후 광고 · 프리미엄 회화</dd></div>
-      <div class="wide"><dt>사용자</dt><dd>해외여행을 준비하거나 여행 중인 사람, 외국어를 거의 못 하는 초보자</dd></div>
+      <div><dt>서비스명</dt><dd>선물고민 (가칭)</dd></div>
+      <div><dt>형태</dt><dd>브라우저에서 바로 여는 페이지 1장</dd></div>
+      <div><dt>사용자</dt><dd>무엇을 사야 할지 막막한 누구나</dd></div>
+      <div><dt>제작 조건</dt><dd>로그인·회원가입·DB 없이</dd></div>
+      <div><dt>추천 방식</dt><dd>미리 준비한 선물 목록에서 골라 보여주기</dd></div>
+      <div><dt>수익화</dt><dd>추후 광고 · 상품 제휴 링크</dd></div>
     </dl>
-    <h3>초보자도 만들 수 있게, 단순하게</h3>
-    <ul class="rules">
-      <li><b>🔎</b>공부보다 "필요할 때 바로 찾기". 상황별 문장 5개씩</li>
-      <li><b>📄</b>문장은 직접 정리한 목록 파일 하나에 (서버 없음)</li>
-      <li><b>⭐</b>즐겨찾기는 브라우저에 저장 (회원가입 없음)</li>
-      <li><b>🔊</b>발음은 브라우저 내장 음성 읽기 기능 (무료)</li>
-    </ul>
   </section>
 
   <section>
-    <h2><span class="dot" style="background:var(--peach)">📱</span>화면 구성</h2>
-    <div class="screens">
-      <div class="screen">
-        <div class="phone" aria-label="여행 국가 선택 화면 미리보기">
-          <div class="ill">☁️✈️☁️</div>
-          <div class="ph-title">어디로 떠나세요?</div>
-          <div class="grid2">
-            <div class="country on"><b>🗼</b>🇯🇵 일본<br><small class="jp">こんにちは</small></div>
-            <div class="country"><b>🗽</b>🇺🇸 미국<br><small>Hello</small></div>
-            <div class="country soon"><b>🛵</b>🇻🇳 베트남<br><small>준비 중</small></div>
-            <div class="country soon"><b>🛕</b>🇹🇭 태국<br><small>준비 중</small></div>
+    <div class="sec-head"><span class="no">01</span><h2>화면 구성</h2></div>
+    <p style="margin:0 0 24px">한 페이지를 위에서 아래로 내려가며 모든 과정이 끝납니다. 화면이 바뀌거나 새 페이지로 이동하지 않아요.</p>
+
+    <div class="browser" aria-label="선물고민 페이지 미리보기">
+      <div class="browser-bar"><i></i><i></i><i></i><span>선물고민</span></div>
+      <div class="page">
+        <div class="p-logo">선물고민 <span class="tagline">①</span></div>
+        <div class="p-title"><b>어떤 선물이 좋을까요?</b><span>세 가지만 고르면 선물 3개를 추천해 드려요</span></div>
+
+        <div class="p-card">
+          <div class="q">
+            <div class="q-label"><span class="n">1</span>누구에게 주나요? <span class="tagline">②</span></div>
+            <div class="chips"><span class="chip">부모님</span><span class="chip">연인</span><span class="chip on">친구</span><span class="chip">직장 동료</span><span class="chip">선생님</span><span class="chip">아이</span></div>
           </div>
-          <div class="pill" style="margin-top:auto;margin-bottom:12px">이 나라로 떠나기</div>
-        </div>
-        <h4>① 여행 국가 선택</h4>
-        <p>구름·비행기 일러스트 아래 나라 카드 2 × 2. 고른 카드는 파란 테두리와 ✓.</p>
-      </div>
-
-      <div class="screen">
-        <div class="phone" aria-label="상황별 카테고리 화면 미리보기">
-          <div class="ph-top"><span>🇯🇵 일본 여행 중</span><span>🌏</span></div>
-          <div class="search">🔍 한국어로 찾기 (예: 화장실)</div>
-          <div class="grid2">
-            <div class="cat" style="background:var(--sky)"><b>✈️</b>공항<br><small>5문장</small></div>
-            <div class="cat" style="background:var(--lavender)"><b>🏨</b>호텔<br><small>5문장</small></div>
-            <div class="cat" style="background:var(--peach)"><b>🍜</b>식당<br><small>5문장</small></div>
-            <div class="cat" style="background:var(--mint)"><b>🛍️</b>쇼핑<br><small>5문장</small></div>
-            <div class="cat" style="background:var(--sun)"><b>🚕</b>교통<br><small>5문장</small></div>
-            <div class="cat" style="background:var(--rose)"><b>🆘</b>긴급<br><small>5문장</small></div>
+          <div class="q">
+            <div class="q-label"><span class="n">2</span>예산은 얼마인가요?</div>
+            <div class="chips"><span class="chip">1만 원 이하</span><span class="chip on">1~3만 원</span><span class="chip">3~5만 원</span><span class="chip">5~10만 원</span><span class="chip">10만 원 이상</span></div>
           </div>
-          <div class="today">💡 오늘의 한마디 · <span class="jp">ありがとう</span></div>
-          <div class="tabbar"><span class="on">🏠<br>홈</span><span>⭐<br>즐겨찾기</span><span>🌏<br>나라</span></div>
-        </div>
-        <h4>② 상황별 카테고리</h4>
-        <p>검색창과 카테고리 카드 6개. 카테고리마다 고유 파스텔 색.</p>
-      </div>
-
-      <div class="screen">
-        <div class="phone" aria-label="회화 카드 목록 화면 미리보기">
-          <div class="band">‹ ✈️ 공항</div>
-          <div class="chips"><span class="chip on">체크인</span><span class="chip">수하물</span><span class="chip">입국심사</span></div>
-          <div class="talk"><div class="t"><b>체크인은 어디예요?</b><span class="jp">チェックインはどこですか？</span></div><span class="i">🔊</span><span class="i">☆</span></div>
-          <div class="talk"><div class="t"><b>창가 자리로 주세요.</b><span class="jp">窓側の席をお願いします。</span></div><span class="i">🔊</span><span class="i">⭐</span></div>
-          <div class="talk"><div class="t"><b>짐은 어디서 찾아요?</b><span class="jp">荷物はどこで受け取りますか？</span></div><span class="i">🔊</span><span class="i">☆</span></div>
-          <div class="talk"><div class="t"><b>관광하러 왔어요.</b><span class="jp">観光で来ました。</span></div><span class="i">🔊</span><span class="i">☆</span></div>
-          <div class="tabbar"><span class="on">🏠<br>홈</span><span>⭐<br>즐겨찾기</span><span>🌏<br>나라</span></div>
-        </div>
-        <h4>③ 회화 카드</h4>
-        <p>한국어 뜻(굵게) + 외국어 문장. 카드마다 🔊 · ☆ 버튼.</p>
-      </div>
-
-      <div class="screen">
-        <div class="phone" aria-label="문장 자세히 보기 화면 미리보기">
-          <div class="ph-top"><span>‹ 🛍️ 쇼핑</span><span>2 / 5</span></div>
-          <div class="detail">
-            <div class="fl jp">これはいくらですか？</div>
-            <div class="pr">코레와 이쿠라데스카?</div>
-            <div class="pr">Kore wa ikura desu ka?</div>
-            <div class="ko">이거 얼마예요?</div>
-            <div class="btns"><span>🔊 듣기</span><span>🐢 천천히</span><span class="star">⭐ 저장</span></div>
+          <div class="q">
+            <div class="q-label"><span class="n">3</span>어떤 날인가요?</div>
+            <div class="chips"><span class="chip on">생일</span><span class="chip">감사</span><span class="chip">축하(입학·취업)</span><span class="chip">기념일</span><span class="chip">응원·위로</span><span class="chip">명절</span></div>
           </div>
-          <div class="reply">💬 이런 대답이 와요<br><b class="jp">千円です。</b> 센엔데스 — 천 엔이에요.</div>
-          <div class="pill">📱 보여주기 모드</div>
-          <div class="tabbar"><span class="on">🏠<br>홈</span><span>⭐<br>즐겨찾기</span><span>🌏<br>나라</span></div>
+          <div class="picked">고른 조건 · <b>친구 · 1~3만 원 · 생일</b></div>
         </div>
-        <h4>④ 문장 · 뜻 · 발음</h4>
-        <p>외국어 문장을 가장 크게, 한글·로마자 발음, 뜻, 대답 예시, 보여주기 모드.</p>
-      </div>
+        <div class="p-btn">선물 추천받기 <span class="tagline" style="background:transparent;color:#fff;border-color:#fff">③</span></div>
 
-      <div class="screen">
-        <div class="phone" aria-label="즐겨찾기 화면 미리보기">
-          <div class="ph-title" style="text-align:left">⭐ 내가 저장한 문장 · 3</div>
-          <div class="chips"><span class="chip on">전체</span><span class="chip">공항</span><span class="chip">식당</span><span class="chip">쇼핑</span></div>
-          <div class="talk"><span class="dotc" style="background:#9cc6ea"></span><div class="t"><b>창가 자리로 주세요.</b><span class="jp">窓側の席をお願いします。</span></div><span class="i">🔊</span></div>
-          <div class="talk"><span class="dotc" style="background:#f1aa98"></span><div class="t"><b>이거 주세요.</b><span class="jp">これをください。</span></div><span class="i">🔊</span></div>
-          <div class="talk"><span class="dotc" style="background:#8fd0ad"></span><div class="t"><b>카드로 낼 수 있어요?</b><span class="jp">カードで払えますか？</span></div><span class="i">🔊</span></div>
-          <div class="empty">🧳 자주 쓸 문장에 ☆를 눌러 보세요</div>
-          <div class="tabbar"><span>🏠<br>홈</span><span class="on">⭐<br>즐겨찾기</span><span>🌏<br>나라</span></div>
+        <div class="p-result-title"><span>친구에게 줄 1~3만 원대 생일 선물이에요</span> <span class="tagline">④</span></div>
+        <div class="gifts">
+          <div class="gift">
+            <div class="art" style="background:var(--butter)">🕯️</div>
+            <div class="body"><b>향초 선물 세트</b><span class="price">약 2만 원대</span><p>부담 없이 분위기를 선물할 수 있어요</p><span class="tags">#감성 #향기</span><span class="go">상품 보러 가기 →</span></div>
+          </div>
+          <div class="gift">
+            <div class="art" style="background:var(--sage)">☕</div>
+            <div class="body"><b>드립백 커피 세트</b><span class="price">약 2만 원대</span><p>매일 아침 생각나는 실용 선물이에요</p><span class="tags">#실용적 #취향</span><span class="go">상품 보러 가기 →</span></div>
+          </div>
+          <div class="gift">
+            <div class="art" style="background:var(--lavender)">🧦</div>
+            <div class="body"><b>캐릭터 수면 양말</b><span class="price">약 1만 원대</span><p>귀엽고 따뜻해서 웃음이 나는 선물이에요</p><span class="tags">#귀여움 #겨울</span><span class="go">상품 보러 가기 →</span></div>
+          </div>
         </div>
-        <h4>⑤ 즐겨찾기</h4>
-        <p>카테고리 필터 칩, 색 점으로 카테고리 구분. 비어 있으면 여행 가방 일러스트.</p>
+        <div class="p-actions"><span>다른 선물 보기</span><span>처음부터 다시</span> <span class="tagline" style="align-self:center">⑤</span></div>
+        <div class="p-ad">광고 자리 (처음에는 비워 둠) ⑥</div>
+        <div class="p-foot">선물고민 · 이 페이지의 링크로 구매하면 수수료를 받을 수 있어요 ⑦</div>
       </div>
     </div>
+
+    <h3>영역별 설명</h3>
+    <div class="rows">
+      <div class="row"><span class="n">①</span><b>상단 제목</b><span>로고, 큰 제목 "어떤 선물이 좋을까요?", 작은 설명 한 줄</span></div>
+      <div class="row"><span class="n">②</span><b>조건 선택 카드</b><span>질문 3개를 한 카드 안에. 질문마다 칩을 가로로 나열하고 하나만 선택. 아래에 고른 조건 요약</span></div>
+      <div class="row"><span class="n">③</span><b>추천 버튼</b><span>폭이 넓은 둥근 버튼. 세 가지를 모두 고르기 전에는 흐리게</span></div>
+      <div class="row"><span class="n">④</span><b>추천 결과</b><span>결과 제목 + 카드 3개. 버튼을 누르면 바로 나타나고 화면이 결과 위치로 부드럽게 이동</span></div>
+      <div class="row"><span class="n">⑤</span><b>결과 아래 버튼</b><span>다른 선물 보기(같은 조건으로 다시 3개) · 처음부터 다시</span></div>
+      <div class="row"><span class="n">⑥</span><b>광고 자리</b><span>결과 아래 배너 1개, 처음에는 비워 둠</span></div>
+      <div class="row"><span class="n">⑦</span><b>하단</b><span>짧은 소개, 제휴 링크 안내 문구, 문의</span></div>
+    </div>
+    <p class="note">결과 카드는 PC에서 가로 3개, 모바일에서 세로로 쌓아요. 카드는 아래에서 위로 살짝 떠오르며(0.3초) 나타나요.</p>
 
     <h3>이용 흐름</h3>
     <ol class="flow">
-      <li>나라 선택</li><li class="arrow" aria-hidden="true">→</li>
-      <li>상황 고르기 🍜</li><li class="arrow" aria-hidden="true">→</li>
-      <li>문장 찾고 🔊 듣기</li><li class="arrow" aria-hidden="true">→</li>
-      <li>크게 보기 · 보여주기 모드</li><li class="arrow" aria-hidden="true">→</li>
-      <li>⭐ 저장 → 즐겨찾기에서 꺼내기</li>
+      <li>페이지 접속, 질문 3개가 바로 보임</li>
+      <li>받는 사람 → 예산 → 목적 칩 고르기</li>
+      <li>"선물 추천받기" 누르기</li>
+      <li>아래에 선물 3개, 화면이 결과로 이동</li>
+      <li>상품 보러 가기 또는 다른 선물 보기</li>
     </ol>
-    <p class="muted">모든 화면 아래에 하단 탭 바(🏠 홈 · ⭐ 즐겨찾기 · 🌏 나라 변경)를 고정해 어디서든 한 번에 이동해요. <b>보여주기 모드</b>는 외국어 문장만 화면 가득 띄워 현지인에게 휴대폰을 보여주는 기능이에요.</p>
-
-    <h3>모바일 우선 설계</h3>
-    <ul class="mobile">
-      <li><b>📏</b>화면 폭에 꽉 차게 1단. PC는 가운데 폭 약 420px</li>
-      <li><b>👍</b>🔊 · ⭐ · 탭 바는 엄지가 닿는 아래쪽에</li>
-      <li><b>🔠</b>버튼 최소 44px, 글자 최소 15px</li>
-      <li><b>📶</b>데이터가 약해도 빨리 열리게 이미지는 가볍게</li>
-    </ul>
   </section>
 
   <section>
-    <h2><span class="dot" style="background:var(--mint)">✅</span>기능 목록</h2>
-    <div class="feats">
-      <div class="feat" style="background:var(--sky)"><b>🌏 여행 국가·언어 선택</b><p>나라 카드 고르기, 선택은 브라우저에 저장</p></div>
-      <div class="feat" style="background:var(--lavender)"><b>🗂️ 상황별 회화</b><p>공항·호텔·식당·쇼핑·교통·긴급, 카테고리마다 5문장</p></div>
-      <div class="feat" style="background:var(--peach)"><b>💬 현지 표현과 뜻</b><p>외국어 문장 · 한글 발음 · 로마자 · 한국어 뜻</p></div>
-      <div class="feat" style="background:var(--mint)"><b>🔊 발음 듣기</b><p>보통 속도와 🐢 천천히 듣기</p></div>
-      <div class="feat" style="background:#fdf0c8"><b>⭐ 자주 쓰는 문장 저장</b><p>저장·취소, 즐겨찾기 화면에서 모아 보기</p></div>
-      <div class="feat" style="background:var(--rose)"><b>📱 보여주기 모드</b><p>외국어 문장을 화면 가득 크게 표시</p></div>
+    <div class="sec-head"><span class="no">02</span><h2>핵심 기능</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>기능</th><th>설명</th></tr></thead>
+        <tbody>
+          <tr><td>받는 사람 선택</td><td>부모님 · 연인 · 친구 · 직장 동료 · 선생님 · 아이 중 하나</td></tr>
+          <tr><td>예산 선택</td><td>1만 원 이하 · 1~3만 원 · 3~5만 원 · 5~10만 원 · 10만 원 이상 중 하나</td></tr>
+          <tr><td>선물 목적 선택</td><td>생일 · 감사 · 축하(입학·취업) · 기념일 · 응원·위로 · 명절 중 하나</td></tr>
+          <tr><td>추천 버튼 활성화</td><td>세 가지를 모두 골라야 버튼이 눌림</td></tr>
+          <tr><td>선물 3개 추천</td><td>미리 준비한 목록에서 조건에 맞는 선물 3개 표시</td></tr>
+          <tr><td>다른 선물 보기</td><td>같은 조건에서 아직 안 보여준 선물 3개를 다시 표시</td></tr>
+          <tr><td>처음부터 다시</td><td>선택을 모두 지우고 맨 위로 이동</td></tr>
+        </tbody>
+      </table>
     </div>
-    <h3>있으면 좋은 기능 (추후)</h3>
-    <div class="later">
-      <span>한국어로 문장 검색</span><span>오늘의 한마디</span><span>오프라인 모드</span><span>숫자·가격 듣기 연습</span><span>나라 추가</span><span>출발 전 퀴즈</span>
+
+    <h3>선물 목록 준비 방법</h3>
+    <p style="margin:0 0 14px">선물 목록은 JavaScript 파일 안에 표처럼 적어 둡니다. 처음에는 <b>60개 정도</b>면 충분해요.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>선물 이름</th><th>받는 사람</th><th>예산</th><th>목적</th><th>추천 이유</th><th>링크</th></tr></thead>
+        <tbody>
+          <tr><td>향초 선물 세트</td><td>친구, 연인, 동료</td><td>1~3만 원</td><td>생일, 감사, 응원</td><td>부담 없이 분위기를 선물할 수 있어요</td><td style="color:var(--muted)">(비워 둠)</td></tr>
+          <tr><td>안마기</td><td>부모님</td><td>10만 원 이상</td><td>생일, 명절, 감사</td><td>매일 쓰는 효도 선물이에요</td><td style="color:var(--muted)">(비워 둠)</td></tr>
+          <tr><td>텀블러</td><td>동료, 친구, 선생님</td><td>1~3만 원</td><td>감사, 축하</td><td>실용적이고 누구나 잘 써요</td><td style="color:var(--muted)">(비워 둠)</td></tr>
+        </tbody>
+      </table>
     </div>
+    <p class="note">한 선물에 받는 사람·목적은 여러 개를 적을 수 있어요(예산은 하나). 나중에 제휴 링크를 넣을 수 있게 "링크" 칸을 처음부터 만들어 둬요.</p>
+
+    <h3>추천 규칙</h3>
+    <ol class="rules">
+      <li>받는 사람 · 예산 · 목적이 <b>모두 맞는</b> 선물을 찾는다</li>
+      <li>그중 3개를 무작위로 골라 보여준다</li>
+      <li>3개가 안 되면 <b>목적 조건을 빼고</b> 다시 찾아 채운다</li>
+      <li>그래도 모자라면 <b>예산을 한 칸 아래</b>까지 넓혀 채운다</li>
+      <li>"다른 선물 보기"는 이미 보여준 선물을 빼고 다시 3개를 고른다</li>
+    </ol>
+    <p class="note">목록을 만들 때 조합마다 최소 3개가 나오는지 표로 확인해 두면 3~4번 규칙은 거의 쓸 일이 없어요.</p>
+
+    <h3>추후 기능</h3>
+    <div class="later"><span>결과 링크 복사로 공유</span><span>취향 질문 추가 (실용 / 감성 / 재미)</span><span>계절 한정 선물</span><span>마음에 든 선물 하트 표시</span></div>
   </section>
 
   <section>
-    <h2><span class="dot" style="background:var(--lavender)">🎨</span>디자인 가이드</h2>
-    <p style="margin:0 0 16px"><b>키워드</b> · 깔끔함 · 감성 · 미니멀 · 설레는 여행</p>
+    <div class="sec-head"><span class="no">03</span><h2>디자인 가이드</h2></div>
+    <p style="margin:0 0 24px"><b>깔끔함 · 세련됨 · 미니멀 · 따뜻함.</b> 포인트 색은 더스티 로즈 하나만 쓰고, 파스텔 3색은 결과 카드 그림 배경에만 써요. 색이 많아지면 세련된 느낌이 줄어들어요.</p>
     <ul class="palette">
-      <li><div class="swatch" style="background:#fbfaf7"></div>오프화이트<small>#FBFAF7 · 배경</small></li>
+      <li><div class="swatch" style="background:#faf7f0"></div>아이보리<small>#FAF7F0 · 배경</small></li>
       <li><div class="swatch" style="background:#ffffff"></div>화이트<small>#FFFFFF · 카드</small></li>
-      <li><div class="swatch" style="background:#5b9bd5"></div>오션 블루<small>#5B9BD5 · 버튼·탭</small></li>
-      <li><div class="swatch" style="background:#f2c14e">⭐</div>골드<small>#F2C14E · 저장</small></li>
-      <li><div class="swatch" style="background:#36404a"></div>차콜<small>#36404A · 글자</small></li>
-      <li><div class="swatch" style="background:#8a94a0"></div>그레이<small>#8A94A0 · 보조 글자</small></li>
-      <li><div class="swatch" style="background:#d3e8f8">✈️</div>스카이<small>#D3E8F8 · 공항</small></li>
-      <li><div class="swatch" style="background:#e4dcf6">🏨</div>라벤더<small>#E4DCF6 · 호텔</small></li>
-      <li><div class="swatch" style="background:#faddd3">🍜</div>피치<small>#FADDD3 · 식당</small></li>
-      <li><div class="swatch" style="background:#d4eedf">🛍️</div>민트<small>#D4EEDF · 쇼핑</small></li>
-      <li><div class="swatch" style="background:#ffedb3">🚕</div>선샤인<small>#FFEDB3 · 교통</small></li>
-      <li><div class="swatch" style="background:#f8d2d2">🆘</div>로즈<small>#F8D2D2 · 긴급</small></li>
+      <li><div class="swatch" style="background:#d9a5a0"></div>더스티 로즈<small>#D9A5A0 · 버튼·선택</small></li>
+      <li><div class="swatch" style="background:#b97d77"></div>로즈 브라운<small>#B97D77 · 강조 글자</small></li>
+      <li><div class="swatch" style="background:#f5e4e1"></div>블러시<small>#F5E4E1 · 칩 기본</small></li>
+      <li><div class="swatch" style="background:#ece6da"></div>베이지<small>#ECE6DA · 선</small></li>
+      <li><div class="swatch" style="background:#f6edd3"></div>버터<small>#F6EDD3 · 그림 배경</small></li>
+      <li><div class="swatch" style="background:#e2eadf"></div>세이지<small>#E2EADF · 그림 배경</small></li>
+      <li><div class="swatch" style="background:#e7e3f1"></div>라벤더<small>#E7E3F1 · 그림 배경</small></li>
+      <li><div class="swatch" style="background:#3a3633"></div>웜 차콜<small>#3A3633 · 글자</small></li>
+      <li><div class="swatch" style="background:#8c857e"></div>웜 그레이<small>#8C857E · 보조 글자</small></li>
     </ul>
-    <p class="muted">배경과 카드는 흰색으로 비우고 파스텔은 카테고리 구분에만 써요. ②·③·⑤ 화면에서 같은 색을 써서 "하늘색 = 공항"처럼 기억되게 해요.</p>
 
-    <div class="two" style="margin-top:20px">
-      <div class="box">
-        <h3>🖼️ 일러스트</h3>
+    <div class="three" style="margin-top:32px">
+      <div class="card">
+        <h3>글꼴</h3>
         <ul>
-          <li>선이 얇고 색이 연한 플랫 일러스트: 비행기와 구름, 호텔, 라멘 그릇, 쇼핑백, 택시, 구급 상자</li>
-          <li>국가 선택 화면 위, 나라·카테고리 카드, 빈 즐겨찾기 화면에 사용</li>
-          <li>무료 일러스트 사이트에서 같은 스타일로 통일. <b>상업적 이용 가능 여부와 출처 표시 조건 확인</b></li>
-          <li>처음에는 이모지로 대신해도 괜찮아요</li>
+          <li>Pretendard (가독성 좋고 무료)</li>
+          <li>큰 제목 32px (모바일 26px) 굵게</li>
+          <li>질문 18px · 선물 이름 19px 굵게</li>
+          <li>본문·칩 16px · 가격·태그 14px</li>
+          <li>줄 간격 1.7로 넉넉하게</li>
         </ul>
       </div>
-      <div class="box">
-        <h3>🃏 카드와 버튼</h3>
+      <div class="card">
+        <h3>여백</h3>
         <ul>
-          <li>카드 모서리 24px, 옅은 그림자, 여백 18~20px, 간격 12px</li>
-          <li>카테고리 카드는 정사각형에 가깝게, 위 일러스트 · 아래 이름</li>
-          <li>큰 버튼은 알약 모양, 높이 52px</li>
-          <li>🔊 · ⭐ 버튼은 지름 44px 동그라미</li>
-          <li>하단 탭 바 높이 64px, 선택된 탭만 오션 블루</li>
+          <li>좌우: 모바일 20px, PC는 최대 폭 960px 가운데 정렬</li>
+          <li>영역 사이 48px</li>
+          <li>카드 안쪽 32px (모바일 24px)</li>
+          <li>질문 사이 28px · 칩 사이 8px</li>
         </ul>
       </div>
-      <div class="box">
-        <h3>🔤 글꼴과 글자 크기</h3>
+      <div class="card">
+        <h3>버튼과 카드</h3>
         <ul>
-          <li>보여주기 모드 40px 이상 · 자세히 보기 문장 28px</li>
-          <li>제목 22px · 카드의 뜻 17px 굵게 · 본문 15px · 발음 13px</li>
-          <li>한글은 Pretendard, 외국어는 Noto Sans 계열(JP·Thai 등)을 함께 지정해 글자 깨짐 방지</li>
+          <li>칩: 알약 모양, 높이 40px</li>
+          <li>추천 버튼: 높이 56px, 폭 최대 360px</li>
+          <li>카드: 모서리 24px, 1px 베이지 테두리, 그림자는 아주 옅게</li>
+          <li>마우스를 올리면 2px 떠오르는 정도만</li>
         </ul>
-      </div>
-      <div class="box">
-        <h3>💬 말투</h3>
-        <ul>
-          <li>"어디로 떠나세요?"</li>
-          <li>"이 한마디면 충분해요"</li>
-          <li>"저장했어요 ⭐"</li>
-        </ul>
+        <div class="demo"><span class="chip">기본 칩</span><span class="chip on">선택된 칩</span></div>
+        <div class="demo"><span class="btn">추천 버튼</span><span class="btn sub">보조 버튼</span></div>
       </div>
     </div>
   </section>
 
   <section>
-    <h2><span class="dot" style="background:var(--sun)">🛠️</span>문장과 발음을 위한 기술 · API</h2>
-    <h3 style="margin-top:0">처음에 쓸 것 · 무료, 초보자용</h3>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>필요한 것</th><th>방법</th><th>설명</th></tr></thead>
-        <tbody>
-          <tr><td>외국어 문장·뜻</td><td>직접 만든 JSON 목록 파일</td><td>나라 → 카테고리 → 문장(외국어, 한글 발음, 로마자, 뜻) 순서로 정리. 여행 회화책·여행 안내 자료를 참고해 작성하고, 가능하면 원어민에게 확인</td></tr>
-          <tr><td>발음 듣기</td><td>Web Speech API <code>speechSynthesis</code></td><td>브라우저 내장 음성 읽기. 무료, 키 필요 없음. 언어 코드(ja-JP, en-US)와 속도를 정할 수 있어 "천천히"도 가능</td></tr>
-          <tr><td>즐겨찾기 저장</td><td><code>localStorage</code></td><td>브라우저에 작은 데이터를 저장. 회원가입 없이 사용</td></tr>
-          <tr><td>글꼴</td><td>Google Fonts</td><td>Noto Sans JP · Thai 등으로 외국어 글자 깨짐 방지</td></tr>
-        </tbody>
-      </table>
+    <div class="sec-head"><span class="no">04</span><h2>광고와 제휴 링크 고려</h2></div>
+    <div class="rows">
+      <div class="row"><span class="n">AD</span><b>광고 위치</b><span>결과 아래 배너 1개, 하단 1개. 조건 선택 카드와 추천 버튼 근처에는 두지 않음</span></div>
+      <div class="row"><span class="n">LINK</span><b>제휴 링크</b><span>결과 카드의 "상품 보러 가기" 버튼에 쇼핑몰 제휴 링크 연결</span></div>
+      <div class="row"><span class="n">PREP</span><b>미리 준비</b><span>선물 목록에 "링크" 칸을 만들어 두고, 처음에는 쇼핑몰 검색 결과 주소를 넣어 둠</span></div>
+      <div class="row"><span class="n">NOTE</span><b>안내 문구</b><span>제휴 링크를 쓰면 결과 아래와 하단에 "이 페이지의 링크로 구매하면 수수료를 받을 수 있어요" 같은 안내를 꼭 표시</span></div>
     </div>
-
-    <h3>나중에 고려할 것 · 더 좋은 품질, 대부분 유료</h3>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>목적</th><th>예시</th><th>메모</th></tr></thead>
-        <tbody>
-          <tr><td>자연스러운 음성</td><td>Google Cloud Text-to-Speech, 네이버 클로바 보이스, Amazon Polly</td><td>미리 mp3 파일로 만들어 두면 매번 호출하지 않아도 됨</td></tr>
-          <tr><td>원어민 녹음</td><td>Forvo API, 직접 녹음</td><td>프리미엄 콘텐츠로 활용</td></tr>
-          <tr><td>번역 보조</td><td>파파고 API, Google Cloud Translation, DeepL API</td><td>새 문장 초안용으로만 쓰고 사람이 꼭 다시 확인</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="warn">
-      <b>⚠️ 알아 둘 점</b>
-      <ul>
-        <li>Web Speech API는 기기·브라우저마다 목소리 품질이 다르고, 특정 언어 목소리가 없는 기기도 있어요. 없으면 "이 기기에서는 발음을 들을 수 없어요" 안내를 띄워요.</li>
-        <li>번역은 실시간으로 하지 않아요. 기계 번역은 여행 상황에서 어색하거나 틀릴 수 있어서, 미리 확인한 문장만 보여줘요.</li>
-        <li>유료 API 키를 웹페이지 코드에 넣으면 누구나 볼 수 있어요. 키가 필요한 API는 서버가 필요하므로 1차에서는 쓰지 않아요.</li>
-      </ul>
-    </div>
+    <p class="note">추천은 선물 목록 기준으로만 하고, 수수료가 높은 상품을 억지로 앞에 두지 않아요. 믿을 수 있어야 다시 찾아와요.</p>
   </section>
 
   <section>
-    <h2><span class="dot" style="background:#fdf0c8">💰</span>수익화 계획</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>시기</th><th>방식</th><th>내용</th></tr></thead>
-        <tbody>
-          <tr><td>방문자가 모이면</td><td>광고</td><td>홈과 즐겨찾기 아래 배너 1개씩. 문장 자세히 보기·보여주기 모드에는 광고 없음</td></tr>
-          <tr><td>그다음</td><td>프리미엄 여행 회화</td><td>도시별 팩(도쿄·오사카·방콕), 원어민 녹음, 알레르기·채식 등 특별 상황 문장, 오프라인 저장</td></tr>
-          <tr><td>함께</td><td>제휴 링크</td><td>여행자 보험, 유심·eSIM, 숙소 예약 등 여행 관련 제휴 안내</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="muted">기본 6개 카테고리 문장은 계속 무료예요. 프리미엄 카테고리는 처음부터 🔒 "준비 중"으로 자리만 만들어 두면 나중에 추가하기 쉬워요.</p>
-  </section>
-
-  <section>
-    <h2><span class="dot" style="background:var(--sky)">🗓️</span>초보자용 제작 순서</h2>
+    <div class="sec-head"><span class="no">05</span><h2>초보자용 제작 순서</h2></div>
     <ol class="steps">
-      <li><b>1 · 3일</b>일본어 문장 30개를 뜻·발음과 함께 목록 파일로</li>
-      <li><b>2 · 2일</b>HTML로 화면 5개와 하단 탭 바 뼈대</li>
-      <li><b>3 · 3일</b>CSS로 파스텔 색, 둥근 카드, 모바일 배치</li>
-      <li><b>4 · 3일</b>화면 전환, 카테고리별 문장 불러오기</li>
-      <li><b>5 · 2일</b>발음 듣기(보통·천천히), 보여주기 모드</li>
-      <li><b>6 · 2일</b>즐겨찾기 저장·삭제, 휴대폰 확인 후 배포</li>
-      <li class="after"><b>7 · 이후</b>영어 추가, 일러스트 교체, 검색</li>
+      <li><b>1 · 2일</b>선물 60개를 표로 정리</li>
+      <li><b>2 · 1일</b>HTML로 제목, 조건 카드, 버튼, 결과 영역 뼈대</li>
+      <li><b>3 · 2일</b>CSS로 아이보리 배경, 둥근 칩·카드, 여백, 모바일 배치</li>
+      <li><b>4 · 2일</b>칩 선택, 버튼 활성화, 선물 3개 고르기</li>
+      <li><b>5 · 1일</b>다른 선물 보기, 처음부터 다시, 결과로 이동</li>
+      <li><b>6 · 1일</b>휴대폰 확인 후 배포</li>
     </ol>
-    <div class="total">예상 기간 · 하루 1~2시간 기준 약 2~3주 (1차 출시: 일본어)</div>
+    <div class="total"><span>예상 기간 · 하루 1~2시간 기준</span><b>약 1~2주</b></div>
 
     <h3>정해야 할 것</h3>
     <ul class="todo">
-      <li><strong>서비스명:</strong> "여행한마디" 외 후보 검토</li>
-      <li><strong>첫 출시 나라:</strong> 일본만 vs 일본·영어권</li>
-      <li><strong>문장 확인:</strong> 도와줄 원어민 또는 참고 자료</li>
-      <li><strong>일러스트:</strong> 구할 곳과 사용 조건</li>
+      <li><strong>서비스명:</strong> "선물고민" 외 후보 검토</li>
+      <li><strong>선택지:</strong> 받는 사람·목적 최종 목록</li>
+      <li><strong>선물 목록:</strong> 직접 만들지, 인기 선물 순위 자료를 참고할지</li>
+      <li><strong>제휴 쇼핑몰:</strong> 어디와 제휴할지</li>
     </ul>
   </section>
-
-  <footer>여행한마디 기획안 · 초안</footer>
 </main>
+
+<footer><span>선물고민 기획안 · 초안</span><span>2026.10.28</span></footer>
 </body>
 </html>
