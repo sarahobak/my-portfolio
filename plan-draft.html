@@ -140,6 +140,19 @@
   .total span { color: var(--muted); font-size: 0.88rem; }
   .total b { font-size: 1.15rem; color: var(--rose-strong); }
 
+  .steps { grid-template-columns: repeat(7, 1fr); }
+  .steps li span { display: block; margin-top: 6px; color: var(--muted); font-size: 0.8rem; }
+  .steps li.after { background: transparent; border-style: dashed; }
+  .prompts { display: grid; gap: 12px; }
+  .prompt { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--rose); border-radius: 20px; padding: 18px 22px; }
+  .prompt .p-step { display: inline-block; font-size: 0.78rem; font-weight: 700; color: var(--rose-strong); background: var(--blush); border-radius: 999px; padding: 2px 12px; margin-bottom: 8px; }
+  .prompt p { margin: 0; font-size: 0.94rem; }
+  .prompt p + p { margin-top: 6px; }
+  .prompt p::before { content: "💬 "; }
+  .prompt em { color: var(--muted); font-style: normal; }
+  ul.checks { list-style: none; padding: 0; }
+  ul.checks li { position: relative; padding-left: 26px; }
+  ul.checks li::before { content: ""; position: absolute; left: 0; top: 6px; width: 15px; height: 15px; border: 1.5px solid var(--rose); border-radius: 5px; }
   ul.todo { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
   ul.todo li { position: relative; margin: 0; padding: 14px 0 14px 32px; border-bottom: 1px solid var(--line); }
   ul.todo li::before { content: ""; position: absolute; left: 2px; top: 19px; width: 16px; height: 16px; border: 1.5px solid var(--rose); border-radius: 6px; }
@@ -172,7 +185,7 @@
   <div class="eyebrow">Plan Draft · 2026.10.28</div>
   <h1>선물고민 기획안</h1>
   <p>누구에게 · 얼마로 · 왜 주는지 세 가지만 고르면, 같은 페이지 아래에 어울리는 선물 3개가 바로 나타나는 단일 웹페이지입니다.</p>
-  <div class="meta"><span>웹페이지 1장</span><span>로그인 없음</span><span>데이터베이스 없음</span><span>HTML · CSS · JavaScript</span></div>
+  <div class="meta"><span>웹페이지 1장</span><span>로그인 없음</span><span>데이터베이스 없음</span><span>개발 프로그램 없이 AI로 제작</span></div>
 </header>
 
 <main>
@@ -182,7 +195,7 @@
       <div><dt>서비스명</dt><dd>선물고민 (가칭)</dd></div>
       <div><dt>형태</dt><dd>브라우저에서 바로 여는 페이지 1장</dd></div>
       <div><dt>사용자</dt><dd>무엇을 사야 할지 막막한 누구나</dd></div>
-      <div><dt>제작 조건</dt><dd>로그인·회원가입·DB 없이</dd></div>
+      <div><dt>제작 조건</dt><dd>AI에게 요청해 HTML 파일 하나로 · 로그인·DB 없음</dd></div>
       <div><dt>추천 방식</dt><dd>미리 준비한 선물 목록에서 골라 보여주기</dd></div>
       <div><dt>수익화</dt><dd>추후 광고 · 상품 제휴 링크</dd></div>
     </dl>
@@ -276,7 +289,7 @@
     </div>
 
     <h3>선물 목록 준비 방법</h3>
-    <p style="margin:0 0 14px">선물 목록은 JavaScript 파일 안에 표처럼 적어 둡니다. 처음에는 <b>60개 정도</b>면 충분해요.</p>
+    <p style="margin:0 0 14px">선물 목록은 아래처럼 표로 정리해 AI에게 주면, AI가 페이지 안에 넣어 줘요. 표도 AI에게 만들어 달라고 할 수 있어요(05 참고). 처음에는 <b>60개 정도</b>면 충분해요.</p>
     <div class="table-wrap">
       <table>
         <thead><tr><th>선물 이름</th><th>받는 사람</th><th>예산</th><th>목적</th><th>추천 이유</th><th>링크</th></tr></thead>
@@ -360,22 +373,76 @@
   </section>
 
   <section>
-    <div class="sec-head"><span class="no">05</span><h2>초보자용 제작 순서</h2></div>
+    <div class="sec-head"><span class="no">05</span><h2>AI로 만드는 순서</h2></div>
+    <p style="margin:0 0 24px">코드 편집기 같은 개발 프로그램은 설치하지 않아요. <b>AI 채팅(Claude 등)과 웹브라우저만</b> 있으면 돼요. 코드는 AI가 쓰고, 나는 말로 요청하고 결과를 확인해요.</p>
     <ol class="steps">
-      <li><b>1 · 2일</b>선물 60개를 표로 정리</li>
-      <li><b>2 · 1일</b>HTML로 제목, 조건 카드, 버튼, 결과 영역 뼈대</li>
-      <li><b>3 · 2일</b>CSS로 아이보리 배경, 둥근 칩·카드, 여백, 모바일 배치</li>
-      <li><b>4 · 2일</b>칩 선택, 버튼 활성화, 선물 3개 고르기</li>
-      <li><b>5 · 1일</b>다른 선물 보기, 처음부터 다시, 결과로 이동</li>
-      <li><b>6 · 1일</b>휴대폰 확인 후 배포</li>
+      <li><b>1 · 30분</b>선물 목록 만들기<span>AI에게 표로 요청하고, 어색한 선물·가격은 직접 고치기</span></li>
+      <li><b>2 · 10분</b>페이지 만들기<span>기획안과 선물 목록을 붙여 넣고 HTML 파일 하나로 요청</span></li>
+      <li><b>3 · 10분</b>미리보기 확인<span>AI 채팅 미리보기, 또는 파일을 내려받아 더블클릭</span></li>
+      <li><b>4 · 30분~1시간</b>말로 고치기<span>마음에 안 드는 점을 하나씩 요청</span></li>
+      <li><b>5 · 20분</b>동작 확인<span>체크리스트대로 직접 눌러 보고 안 되는 것은 그대로 알려 주기</span></li>
+      <li><b>6 · 20분</b>인터넷에 올리기<span>설치 없이 웹사이트에 파일만 끌어다 올리기</span></li>
+      <li class="after"><b>7 · 이후</b>수정·추가<span>파일을 다시 주고 "선물 10개 추가해 줘"처럼 요청</span></li>
     </ol>
-    <div class="total"><span>예상 기간 · 하루 1~2시간 기준</span><b>약 1~2주</b></div>
+    <div class="total"><span>예상 기간 · 총 2~3시간</span><b>하루~이틀</b></div>
+
+    <h3>단계별 요청 예시</h3>
+    <div class="prompts">
+      <div class="prompt">
+        <span class="p-step">1 · 선물 목록 만들기</span>
+        <p>선물 추천 사이트에 쓸 선물 목록을 표로 만들어 줘. 칸은 선물 이름, 받는 사람, 예산, 목적, 가격대, 추천 이유(한 줄), 태그, 링크(비워 둠). 받는 사람은 부모님·연인·친구·직장 동료·선생님·아이, 예산은 1만 원 이하·1~3만 원·3~5만 원·5~10만 원·10만 원 이상, 목적은 생일·감사·축하·기념일·응원·위로·명절이야. 모든 조합에서 최소 3개가 나오도록 60개 정도 만들어 줘.</p>
+      </div>
+      <div class="prompt">
+        <span class="p-step">2 · 페이지 만들기</span>
+        <p>아래 기획안과 선물 목록으로 웹페이지를 만들어 줘. 브라우저에서 바로 열리는 HTML 파일 하나로, 따로 설치할 것 없이 만들어 줘. <em>(기획안과 선물 목록 붙여 넣기)</em></p>
+      </div>
+      <div class="prompt">
+        <span class="p-step">4 · 말로 고치기</span>
+        <p>칩 글자를 조금 더 크게 해 줘.</p>
+        <p>휴대폰에서 결과 카드가 세로로 한 줄씩 보이게 해 줘.</p>
+        <p>"다른 선물 보기"를 눌렀을 때 같은 선물이 또 나와. 이미 본 선물은 빼 줘.</p>
+      </div>
+    </div>
+
+    <div class="three" style="margin-top:32px">
+      <div class="card">
+        <h3>동작 확인 체크리스트</h3>
+        <ul class="checks">
+          <li>세 가지를 다 고르기 전엔 버튼이 안 눌린다</li>
+          <li>누르면 선물 3개가 나타나고 결과로 내려간다</li>
+          <li>조합 5개 이상 바꿔 봐도 항상 3개가 나온다</li>
+          <li>"다른 선물 보기"에 본 선물이 또 안 나온다</li>
+          <li>"처음부터 다시"로 선택이 모두 지워진다</li>
+          <li>휴대폰에서도 글자가 작지 않고 카드가 세로로 쌓인다</li>
+          <li>색이 디자인 가이드 5가지를 벗어나지 않는다</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>인터넷에 올리기 (설치 없이)</h3>
+        <ul>
+          <li><b>Netlify Drop:</b> 웹사이트에 파일이 든 폴더를 끌어다 놓으면 바로 주소가 생겨요. 가장 쉬워요</li>
+          <li><b>GitHub Pages:</b> GitHub 웹사이트에서 저장소를 만들고 "파일 올리기"로 올린 뒤, 설정에서 Pages를 켜요</li>
+          <li>파일 이름을 <b>index.html</b>로 바꿔 올리면 주소만 입력해도 바로 열려요</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>AI로 만들 때 주의할 점</h3>
+        <ul>
+          <li><b>한 번에 하나씩</b> 요청하기</li>
+          <li>잘 될 때마다 <b>파일을 따로 저장</b> (선물고민-1.html, -2.html)</li>
+          <li>고칠 때는 <b>지금 파일을 다시 붙여 넣기</b></li>
+          <li>선물 이름과 <b>가격은 직접 확인</b></li>
+          <li>안 될 때는 <b>본 그대로 설명</b>: "버튼을 눌러도 아무것도 안 나와요"</li>
+        </ul>
+      </div>
+    </div>
 
     <h3>정해야 할 것</h3>
     <ul class="todo">
       <li><strong>서비스명:</strong> "선물고민" 외 후보 검토</li>
       <li><strong>선택지:</strong> 받는 사람·목적 최종 목록</li>
-      <li><strong>선물 목록:</strong> 직접 만들지, 인기 선물 순위 자료를 참고할지</li>
+      <li><strong>AI 도구:</strong> 어떤 AI 채팅으로 만들지</li>
+      <li><strong>올릴 곳:</strong> Netlify Drop 또는 GitHub Pages</li>
       <li><strong>제휴 쇼핑몰:</strong> 어디와 제휴할지</li>
     </ul>
   </section>
