@@ -11,14 +11,12 @@
     --bg: #faf7f0;
     --surface: #ffffff;
     --text: #3a3633;
-    --muted: #8c857e;
-    --line: #ece6da;
-    --rose: #d9a5a0;
+    /* 색은 5가지만: 아이보리 · 화이트 · 로즈 · 블러시 · 웜 차콜 */
+    --muted: rgba(58, 54, 51, 0.6);
+    --line: rgba(58, 54, 51, 0.12);
+    --rose: #b97d77;
     --rose-strong: #b97d77;
     --blush: #f5e4e1;
-    --butter: #f6edd3;
-    --sage: #e2eadf;
-    --lavender: #e7e3f1;
   }
   * { box-sizing: border-box; }
   body {
@@ -122,7 +120,7 @@
   .later span { border: 1px dashed var(--rose); border-radius: 999px; padding: 5px 14px; font-size: 0.88rem; color: var(--muted); }
 
   /* 팔레트 */
-  .palette { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; list-style: none; padding: 0; margin: 0; }
+  .palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; list-style: none; padding: 0; margin: 0; }
   .palette li { margin: 0; font-size: 0.82rem; }
   .swatch { height: 72px; border-radius: 20px; border: 1px solid var(--line); margin-bottom: 8px; }
   .palette small { display: block; color: var(--muted); font-size: 0.74rem; }
@@ -151,7 +149,7 @@
   @media (max-width: 860px) {
     .flow { grid-template-columns: repeat(2, 1fr); }
     .steps { grid-template-columns: repeat(3, 1fr); }
-    .palette { grid-template-columns: repeat(4, 1fr); }
+    .palette { grid-template-columns: repeat(3, 1fr); }
     .three { grid-template-columns: 1fr; }
   }
   @media (max-width: 600px) {
@@ -220,15 +218,15 @@
         <div class="p-result-title"><span>친구에게 줄 1~3만 원대 생일 선물이에요</span> <span class="tagline">④</span></div>
         <div class="gifts">
           <div class="gift">
-            <div class="art" style="background:var(--butter)">🕯️</div>
+            <div class="art" style="background:var(--blush)">🕯️</div>
             <div class="body"><b>향초 선물 세트</b><span class="price">약 2만 원대</span><p>부담 없이 분위기를 선물할 수 있어요</p><span class="tags">#감성 #향기</span><span class="go">상품 보러 가기 →</span></div>
           </div>
           <div class="gift">
-            <div class="art" style="background:var(--sage)">☕</div>
+            <div class="art" style="background:var(--blush)">☕</div>
             <div class="body"><b>드립백 커피 세트</b><span class="price">약 2만 원대</span><p>매일 아침 생각나는 실용 선물이에요</p><span class="tags">#실용적 #취향</span><span class="go">상품 보러 가기 →</span></div>
           </div>
           <div class="gift">
-            <div class="art" style="background:var(--lavender)">🧦</div>
+            <div class="art" style="background:var(--blush)">🧦</div>
             <div class="body"><b>캐릭터 수면 양말</b><span class="price">약 1만 원대</span><p>귀엽고 따뜻해서 웃음이 나는 선물이에요</p><span class="tags">#귀여움 #겨울</span><span class="go">상품 보러 가기 →</span></div>
           </div>
         </div>
@@ -307,19 +305,13 @@
 
   <section>
     <div class="sec-head"><span class="no">03</span><h2>디자인 가이드</h2></div>
-    <p style="margin:0 0 24px"><b>깔끔함 · 세련됨 · 미니멀 · 따뜻함.</b> 포인트 색은 더스티 로즈 하나만 쓰고, 파스텔 3색은 결과 카드 그림 배경에만 써요. 색이 많아지면 세련된 느낌이 줄어들어요.</p>
+    <p style="margin:0 0 24px"><b>깔끔함 · 세련됨 · 미니멀 · 따뜻함.</b> 색은 아래 5가지만 써요. 포인트는 로즈 하나뿐이고, 보조 글자와 선은 새 색을 더하지 않고 웜 차콜의 투명도를 낮춰서 만들어요.</p>
     <ul class="palette">
       <li><div class="swatch" style="background:#faf7f0"></div>아이보리<small>#FAF7F0 · 배경</small></li>
-      <li><div class="swatch" style="background:#ffffff"></div>화이트<small>#FFFFFF · 카드</small></li>
-      <li><div class="swatch" style="background:#d9a5a0"></div>더스티 로즈<small>#D9A5A0 · 버튼·선택</small></li>
-      <li><div class="swatch" style="background:#b97d77"></div>로즈 브라운<small>#B97D77 · 강조 글자</small></li>
-      <li><div class="swatch" style="background:#f5e4e1"></div>블러시<small>#F5E4E1 · 칩 기본</small></li>
-      <li><div class="swatch" style="background:#ece6da"></div>베이지<small>#ECE6DA · 선</small></li>
-      <li><div class="swatch" style="background:#f6edd3"></div>버터<small>#F6EDD3 · 그림 배경</small></li>
-      <li><div class="swatch" style="background:#e2eadf"></div>세이지<small>#E2EADF · 그림 배경</small></li>
-      <li><div class="swatch" style="background:#e7e3f1"></div>라벤더<small>#E7E3F1 · 그림 배경</small></li>
-      <li><div class="swatch" style="background:#3a3633"></div>웜 차콜<small>#3A3633 · 글자</small></li>
-      <li><div class="swatch" style="background:#8c857e"></div>웜 그레이<small>#8C857E · 보조 글자</small></li>
+      <li><div class="swatch" style="background:#ffffff"></div>화이트<small>#FFFFFF · 카드·보조 버튼</small></li>
+      <li><div class="swatch" style="background:#b97d77"></div>로즈<small>#B97D77 · 버튼·선택·강조</small></li>
+      <li><div class="swatch" style="background:#f5e4e1"></div>블러시<small>#F5E4E1 · 칩·결과 그림 배경</small></li>
+      <li><div class="swatch" style="background:#3a3633"></div>웜 차콜<small>#3A3633 · 글자 (60% 보조 글자 · 12% 선)</small></li>
     </ul>
 
     <div class="three" style="margin-top:32px">
@@ -347,7 +339,7 @@
         <ul>
           <li>칩: 알약 모양, 높이 40px</li>
           <li>추천 버튼: 높이 56px, 폭 최대 360px</li>
-          <li>카드: 모서리 24px, 1px 베이지 테두리, 그림자는 아주 옅게</li>
+          <li>카드: 모서리 24px, 1px 연한 선 테두리, 그림자는 아주 옅게</li>
           <li>마우스를 올리면 2px 떠오르는 정도만</li>
         </ul>
         <div class="demo"><span class="chip">기본 칩</span><span class="chip on">선택된 칩</span></div>
