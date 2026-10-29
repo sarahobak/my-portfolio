@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gift Finder 기능 정의서</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  /* plan-draft.html과 같은 Gift Finder 디자인 시스템(5-1)의 10가지 색만 사용 */
+  :root {
+    color-scheme: light;
+    --bg: #f7f3ea;
+    --bg2: #efe8da;
+    --card: #fffdf8;
+    --olive: #5e6b3f;
+    --olive-dk: #4a5531;
+    --olive-lt: #e5e8d6;
+    --text: #2e2b26;
+    --muted: #6e685d;
+    --disabled: #a8a296;
+    --line: #e2dacb;
+    --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --shadow: 0 10px 24px rgba(46, 43, 38, 0.08);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--olive); text-underline-offset: 3px; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 40px; }
+  code { font-family: inherit; font-size: 0.9em; background: var(--olive-lt); border-radius: 6px; padding: 1px 7px; }
+  p { margin: 0 0 12px; }
+  ul { margin: 0; padding-left: 20px; }
+  li + li { margin-top: 4px; }
+
+  /* 문서 헤더 */
+  .doc-head { position: sticky; top: 0; z-index: 10; background: rgba(247, 243, 234, 0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .doc-head .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 64px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--olive-dk); font-size: 18px; text-decoration: none; white-space: nowrap; }
+  .logo svg { width: 20px; height: 20px; }
+  .toc { display: flex; gap: 20px; }
+  .toc a { color: var(--muted); text-decoration: none; font-size: 14px; white-space: nowrap; transition: color 200ms var(--ease); }
+  .toc a:hover { color: var(--text); }
+
+  /* 표지 */
+  .cover { padding: 80px 0 64px; }
+  .label { font-size: 13px; font-weight: 600; letter-spacing: 0.12em; color: var(--olive); text-transform: uppercase; }
+  .cover h1 { font-size: 44px; line-height: 1.3; letter-spacing: -0.02em; margin: 12px 0 16px; }
+  .cover p { color: var(--muted); font-size: 17px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .legend span { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 4px 14px; font-size: 14px; }
+
+  .stars { color: var(--olive); letter-spacing: 0.08em; white-space: nowrap; }
+  .check { display: inline-block; margin-left: 4px; padding: 0 8px; border: 1px dashed var(--olive); border-radius: 999px; font-size: 12px; font-weight: 600; color: var(--olive); line-height: 20px; white-space: nowrap; }
+
+  /* 섹션 */
+  section.part { padding: 80px 0; border-top: 1px solid var(--line); scroll-margin-top: 64px; }
+  section.part.alt { background: var(--bg2); }
+  .part-head { margin-bottom: 32px; }
+  .part-head h2 { font-size: 30px; letter-spacing: -0.015em; margin: 8px 0 0; }
+  .part-head p { color: var(--muted); margin: 8px 0 0; }
+  h3 { font-size: 20px; margin: 48px 0 16px; }
+  h3:first-child { margin-top: 0; }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 28px; }
+
+  /* 표 */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: var(--card); }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; padding: 12px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--olive-lt); font-weight: 600; font-size: 14px; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+  .notes { margin-top: 16px; color: var(--muted); font-size: 15px; }
+
+  /* 페르소나 */
+  .persona { display: flex; gap: 28px; align-items: flex-start; }
+  .avatar { flex: none; width: 72px; height: 72px; border-radius: 50%; background: var(--olive); color: var(--card); display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; }
+  .persona dl { margin: 0; flex: 1; }
+  .persona dl div { display: grid; grid-template-columns: 130px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .persona dl div:first-child { padding-top: 0; }
+  .persona dl div:last-child { border-bottom: none; padding-bottom: 0; }
+  .persona dt { color: var(--muted); font-size: 14px; font-weight: 600; }
+  .persona dd { margin: 0; }
+  .persona dd.key { color: var(--olive-dk); font-weight: 700; }
+
+  /* 시나리오 */
+  .story { font-size: 18px; line-height: 1.9; margin-bottom: 28px; }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 15px; }
+  .flow span { background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 6px 16px; }
+  .flow i { color: var(--disabled); font-style: normal; }
+
+  /* 기능 카드 */
+  .features { display: grid; gap: 16px; }
+  .feat { padding: 24px; scroll-margin-top: 80px; }
+  .feat-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+  .feat-head h4 { margin: 0; font-size: 18px; letter-spacing: -0.01em; }
+  .feat-head h4 .n { color: var(--olive); margin-right: 6px; }
+  .feat .why { color: var(--muted); font-size: 15px; margin-bottom: 14px; }
+  .feat dl { margin: 0; font-size: 15px; }
+  .feat dl > div { display: grid; grid-template-columns: 92px 1fr; gap: 12px; padding: 8px 0; border-top: 1px dashed var(--line); }
+  .feat dt { color: var(--muted); font-size: 13.5px; font-weight: 600; padding-top: 1px; }
+  .feat dd { margin: 0; }
+  .feat dd .table-wrap { margin-top: 8px; border-radius: 12px; }
+  .feat dd table { font-size: 14px; }
+  .feat dd th, .feat dd td { padding: 8px 12px; }
+  .msg { background: var(--olive-lt); color: var(--olive-dk); border-radius: 8px; padding: 1px 8px; font-weight: 600; }
+
+  footer.doc-foot { border-top: 1px solid var(--line); padding: 32px 0 56px; color: var(--muted); font-size: 13px; }
+  footer.doc-foot .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+  /* 모션: 차분하게, 대부분 200~500ms */
+  @keyframes rise { from { opacity: 0; translate: 0 16px; } }
+  .cover > * { animation: rise 500ms var(--ease) backwards; }
+  .cover > :nth-child(2) { animation-delay: 80ms; }
+  .cover > :nth-child(3) { animation-delay: 160ms; }
+  .cover > :nth-child(4) { animation-delay: 240ms; }
+  .js .reveal { opacity: 0; translate: 0 16px; transition: opacity 500ms var(--ease), translate 500ms var(--ease); }
+  .js .reveal.in { opacity: 1; translate: 0 0; }
+  .feat { transition: translate 300ms var(--ease), box-shadow 300ms var(--ease), border-color 300ms var(--ease); }
+  .feat:hover { translate: 0 -2px; box-shadow: var(--shadow); border-color: var(--olive-lt); }
+
+  @media (max-width: 767px) {
+    .wrap { padding: 0 20px; }
+    .toc { display: none; }
+    .cover { padding: 56px 0 48px; }
+    .cover h1 { font-size: 30px; }
+    .cover p { font-size: 16px; }
+    section.part { padding: 64px 0; }
+    .part-head h2 { font-size: 24px; }
+    .story { font-size: 16px; }
+    .persona { flex-direction: column; gap: 20px; }
+    .persona dl div { grid-template-columns: 1fr; gap: 2px; }
+    .feat { padding: 20px; }
+    .feat dl > div { grid-template-columns: 1fr; gap: 2px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .js .reveal { opacity: 1; translate: none; }
+    .feat:hover { translate: none; }
+  }
+</style>
+<script>
+  // 스크롤 페이드인: 동작 줄이기 설정이거나 IntersectionObserver가 없으면 아무것도 숨기지 않음
+  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('js');
+    addEventListener('DOMContentLoaded', () => {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -8% 0px' });
+      document.querySelectorAll('section.part .wrap > *, .features > .feat').forEach((el) => { el.classList.add('reveal'); io.observe(el); });
+    });
+  }
+</script>
+</head>
+<body>
+
+<header class="doc-head">
+  <div class="wrap">
+    <a class="logo" href="#top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>Gift Finder 기능 정의서</a>
+    <nav class="toc" aria-label="목차">
+      <a href="#s1">페르소나</a><a href="#s2">시나리오</a><a href="#s3">기능</a><a href="#s4">데이터</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap">
+    <div class="cover">
+      <span class="label">Gift Finder · 2026.10.29</span>
+      <h1>기능 정의서</h1>
+      <p>이 사이트에 어떤 기능이 있고, 누르면 어떻게 되는지 정리했어요.</p>
+      <div class="legend">
+        <span><b class="stars">★★★</b> 꼭 있어야 함</span>
+        <span><b class="stars">★★</b> 처음부터 있으면 좋음</span>
+        <span><b class="stars">★</b> 나중에 해도 됨</span>
+        <span><i class="check" style="margin:0">확인 필요</i> 기획안에 없어서 새로 정한 것</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 01 -->
+  <section class="part" id="s1">
+    <div class="wrap">
+      <div class="part-head"><span class="label">01</span><h2>페르소나</h2><p>이 사이트를 쓸 사람 한 명</p></div>
+      <div class="card persona">
+        <div class="avatar" aria-hidden="true">지</div>
+        <dl>
+          <div><dt>이름</dt><dd>김지은 (29세)</dd></div>
+          <div><dt>하는 일</dt><dd>회사원 4년 차 (마케팅팀 대리)</dd></div>
+          <div><dt>온 이유</dt><dd>팀 선배 승진 선물을 5만 원 안으로 고르려고</dd></div>
+          <div><dt>보는 상황</dt><dd>퇴근길 지하철에서 휴대폰으로 10분 안에</dd></div>
+          <div><dt>꼭 보고 싶은 것</dt><dd class="key">왜 이 선물이 좋은지, 가격이 얼마인지</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section class="part alt" id="s2">
+    <div class="wrap">
+      <div class="part-head"><span class="label">02</span><h2>사용자 시나리오</h2></div>
+      <p class="story">지은 씨는 <code>선물 추천 시작하기</code>를 누르고 <code>직장 동료</code> · <code>3~5만 원</code> · <code>축하</code>를 고른다.<br>추천된 선물 3개를 보고 마음에 들면 쇼핑몰로 가고, 아니면 다른 선물 3개를 더 본다.</p>
+      <div class="flow" aria-label="순서">
+        <span>시작 버튼</span><i>→</i><span>조건 3개 고르기</span><i>→</i><span>선물 3개 보기</span><i>→</i><span>쇼핑몰로 가기</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section class="part" id="s3">
+    <div class="wrap">
+      <div class="part-head"><span class="label">03</span><h2>기능</h2></div>
+
+      <h3>꼭 필요한 기능</h3>
+      <div class="features">
+
+        <article class="card feat" id="f1">
+          <div class="feat-head"><h4><span class="n">1</span>시작 버튼</h4><span class="stars">★★★</span></div>
+          <p class="why">들어오자마자 바로 시작하려고</p>
+          <dl>
+            <div><dt>어디서</dt><dd>첫 화면</dd></div>
+            <div><dt>이렇게 하면</dt><dd><code>선물 추천 시작하기</code>를 누르면</dd></div>
+            <div><dt>이렇게 돼요</dt><dd>질문 고르는 곳으로 내려간다</dd></div>
+            <div><dt>이럴 땐</dt><dd>휴대폰에서도 스크롤 없이 버튼이 보여야 한다</dd></div>
+            <div><dt>먼저 필요한 것</dt><dd>2번 기능</dd></div>
+          </dl>
+        </article>
+
+
+        <article class="card feat" id="f2">
+          <div class="feat-head"><h4><span class="n">2</span>조건 고르기</h4><span class="stars">★★★</span></div>
+          <p class="why">누구에게, 얼마로, 어떤 날인지 알아야 추천할 수 있어서</p>
+          <dl>
+            <div><dt>어디서</dt><dd>선물 찾기</dd></div>
+            <div><dt>이렇게 하면</dt><dd>질문 3개에서 버튼을 하나씩 누르면</dd></div>
+            <div><dt>고를 수 있는 것</dt><dd>글자 입력이나 파일 올리기는 없음
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>질문</th><th>고를 수 있는 것</th><th>규칙</th></tr></thead>
+                  <tbody>
+                    <tr><td>누구에게?</td><td>연인 · 친구 · 부모님 · 직장 동료 · 형제자매 · 나에게</td><td>1개</td></tr>
+                    <tr><td>예산은?</td><td>3만 원 이하 · 3~5만 원 · 5~10만 원 · 10만 원 이상</td><td>1개</td></tr>
+                    <tr><td>어떤 날?</td><td>생일 · 기념일 · 감사 · 집들이 · 축하 · 응원·위로</td><td>1개</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </dd></div>
+            <div><dt>이렇게 돼요</dt><dd>고른 버튼 색이 바뀌고, 3개를 다 고르면 추천 버튼이 켜진다</dd></div>
+            <div><dt>이럴 땐</dt><dd>덜 고르면 <span class="msg">2개 더 고르면 추천받을 수 있어요</span>가 나온다</dd></div>
+            <div><dt>먼저 필요한 것</dt><dd>없음</dd></div>
+          </dl>
+        </article>
+
+        <article class="card feat" id="f3">
+          <div class="feat-head"><h4><span class="n">3</span>선물 추천</h4><span class="stars">★★★</span></div>
+          <p class="why">이 사이트의 핵심 기능이라서</p>
+          <dl>
+            <div><dt>어디서</dt><dd>선물 찾기 → 추천 결과</dd></div>
+            <div><dt>이렇게 하면</dt><dd><code>선물 3개 추천받기</code>를 누르면</dd></div>
+            <div><dt>이렇게 돼요</dt><dd>선물 3개가 나온다. 제목: <span class="msg">직장 동료에게 줄 3~5만 원대 축하 선물이에요</span></dd></div>
+            <div><dt>이럴 땐</dt><dd><ul>
+              <li>맞는 선물이 모자라면 비슷한 선물로 채우고 <span class="msg">비슷한 선물도 함께 골랐어요</span>라고 알려 준다</li>
+              <li>하나도 없으면 <span class="msg">조건에 맞는 선물을 찾지 못했어요</span>가 나온다</li>
+            </ul></dd></div>
+            <div><dt>먼저 필요한 것</dt><dd>2번 기능, <a href="#s4">선물 목록</a></dd></div>
+          </dl>
+        </article>
+        <article class="card feat" id="f4">
+          <div class="feat-head"><h4><span class="n">4</span>선물 카드</h4><span class="stars">★★★</span></div>
+          <p class="why">이 선물을 사도 될지 판단하려고</p>
+          <dl>
+            <div><dt>어디서</dt><dd>추천 결과</dd></div>
+            <div><dt>이렇게 하면</dt><dd>카드를 보고 <code>상품 찾아보기 ↗</code>를 누르면</dd></div>
+            <div><dt>이렇게 돼요</dt><dd>쇼핑몰 검색 결과가 새 창으로 열린다</dd></div>
+            <div><dt>카드에 보이는 것</dt><dd>그림 · 선물 이름 · 가격 · 추천 이유 한 줄 · 태그 2개</dd></div>
+            <div><dt>이럴 땐</dt><dd>글이 길면 두 줄까지만 보인다</dd></div>
+            <div><dt>먼저 필요한 것</dt><dd>3번 기능</dd></div>
+          </dl>
+        </article>
+
+
+        <article class="card feat" id="f5">
+          <div class="feat-head"><h4><span class="n">5</span>다른 선물 보기</h4><span class="stars">★★</span></div>
+          <p class="why">처음 3개가 마음에 안 들 때</p>
+          <dl>
+            <div><dt>어디서</dt><dd>추천 결과</dd></div>
+            <div><dt>이렇게 하면</dt><dd><code>다른 선물 3개 보기</code>를 누르면</dd></div>
+            <div><dt>이렇게 돼요</dt><dd>아직 안 본 선물 3개로 바뀐다</dd></div>
+            <div><dt>이럴 땐</dt><dd>다 보면 <span class="msg">추천을 모두 봤어요. 처음부터 다시 보여 드릴게요</span>가 나온다</dd></div>
+            <div><dt>먼저 필요한 것</dt><dd>3번 기능</dd></div>
+          </dl>
+        </article>
+
+        <article class="card feat" id="f6">
+          <div class="feat-head"><h4><span class="n">6</span>조건 바꾸기</h4><span class="stars">★★</span></div>
+          <p class="why">예산 같은 조건 하나만 바꿔 보고 싶을 때</p>
+          <dl>
+            <div><dt>어디서</dt><dd>추천 결과 → 선물 찾기</dd></div>
+            <div><dt>이렇게 하면</dt><dd><code>조건 바꾸기</code>를 누르면</dd></div>
+            <div><dt>이렇게 돼요</dt><dd>질문으로 돌아간다. 전에 고른 건 그대로 남아 있다</dd></div>
+            <div><dt>이럴 땐</dt><dd>조건을 바꾸면 "이미 본 선물" 기록은 지운다 <span class="check">확인 필요</span></dd></div>
+            <div><dt>먼저 필요한 것</dt><dd>2번, 3번 기능</dd></div>
+          </dl>
+        </article>
+
+        <article class="card feat" id="f7">
+          <div class="feat-head"><h4><span class="n">7</span>위쪽 메뉴</h4><span class="stars">★★</span></div>
+          <p class="why">어디서든 원하는 곳으로 바로 가려고</p>
+          <dl>
+            <div><dt>어디서</dt><dd>화면 맨 위 (항상 보임)</dd></div>
+            <div><dt>이렇게 하면</dt><dd>메뉴나 <code>추천받기</code>를 누르면</dd></div>
+            <div><dt>이렇게 돼요</dt><dd>그 위치로 이동하고, 지금 보는 메뉴에 밑줄이 생긴다</dd></div>
+            <div><dt>이럴 땐</dt><dd>휴대폰에서는 ☰ 버튼을 눌러야 메뉴가 열린다</dd></div>
+            <div><dt>먼저 필요한 것</dt><dd>각 화면</dd></div>
+          </dl>
+        </article>
+
+        <article class="card feat" id="f8">
+          <div class="feat-head"><h4><span class="n">8</span>아래쪽 안내 문구</h4><span class="stars">★★</span></div>
+          <p class="why">믿을 수 있는 사이트라는 걸 알려 주려고</p>
+          <dl>
+            <div><dt>어디서</dt><dd>화면 맨 아래</dd></div>
+            <div><dt>이렇게 하면</dt><dd>따로 누를 것 없음</dd></div>
+            <div><dt>이렇게 돼요</dt><dd><span class="msg">Gift Finder는 상품을 팔지 않아요. 가격은 참고용이에요.</span>가 보인다</dd></div>
+            <div><dt>이럴 땐</dt><dd>나중에 광고를 넣으면 여기에 같이 적는다</dd></div>
+            <div><dt>먼저 필요한 것</dt><dd>없음</dd></div>
+          </dl>
+        </article>
+      </div>
+
+      <h3>나중에 해도 되는 기능</h3>
+      <div class="features">
+
+        <article class="card feat" id="f9">
+          <div class="feat-head"><h4><span class="n">9</span>상황별 선물</h4><span class="stars">★</span></div>
+          <p class="why">조건을 정하기 전에 먼저 둘러보고 싶은 사람을 위해</p>
+          <dl>
+            <div><dt>어디서</dt><dd>상황별 선물</dd></div>
+            <div><dt>이렇게 하면</dt><dd>상황 카드(생일, 집들이 등)의 <code>이 상황으로 찾기 →</code>를 누르면</dd></div>
+            <div><dt>이렇게 돼요</dt><dd>"어떤 날"이 미리 골라진 채로 선물 찾기로 간다</dd></div>
+            <div><dt>이럴 땐</dt><dd>이미 골라 둔 게 있으면 "어떤 날"만 바뀐다 <span class="check">확인 필요</span></dd></div>
+            <div><dt>먼저 필요한 것</dt><dd>2번 기능</dd></div>
+          </dl>
+        </article>
+
+        <article class="card feat" id="f10">
+          <div class="feat-head"><h4><span class="n">10</span>이용 방법 · 자주 묻는 질문</h4><span class="stars">★</span></div>
+          <p class="why">처음 온 사람이 사용법을 알 수 있게</p>
+          <dl>
+            <div><dt>어디서</dt><dd>이용 방법</dd></div>
+            <div><dt>이렇게 하면</dt><dd>질문을 누르면</dd></div>
+            <div><dt>이렇게 돼요</dt><dd>답이 펼쳐진다. 한 번에 하나만 열린다</dd></div>
+            <div><dt>이럴 땐</dt><dd>다른 질문을 열면 먼저 연 질문은 닫힌다</dd></div>
+            <div><dt>먼저 필요한 것</dt><dd>없음</dd></div>
+          </dl>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section class="part alt" id="s4">
+    <div class="wrap">
+      <div class="part-head"><span class="label">04</span><h2>저장되는 데이터</h2><p><b>사용자가 입력해서 저장되는 것은 없어요.</b> 글자를 쓰는 칸도, 회원가입도 없고, 고른 조건은 새로고침하면 사라져요. 대신 사이트에 선물 목록을 미리 넣어 둬요. 나중에 DB를 쓰면 이 표를 그대로 쓰면 돼요.</p></div>
+
+      <h3>선물 목록 <span class="muted" style="font-size:14px;font-weight:500;color:var(--muted)">gifts · 60개 정도</span></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>항목</th><th>타입</th><th>비고</th></tr></thead>
+          <tbody>
+            <tr><td><code>id</code></td><td>숫자</td><td>선물 번호</td></tr>
+            <tr><td><code>name</code></td><td>글자 (30자까지)</td><td>선물 이름. 예: 핸드드립 세트</td></tr>
+            <tr><td><code>recipients</code></td><td>목록</td><td>누구에게. 여러 개 가능</td></tr>
+            <tr><td><code>budget</code></td><td>선택 1개</td><td>예산 4개 중 하나</td></tr>
+            <tr><td><code>occasions</code></td><td>목록</td><td>어떤 날. 여러 개 가능</td></tr>
+            <tr><td><code>price_label</code></td><td>글자 (15자까지)</td><td>가격. 예: 약 4만 원대</td></tr>
+            <tr><td><code>reason</code></td><td>글자 (40자까지)</td><td>추천 이유 한 줄</td></tr>
+            <tr><td><code>tags</code></td><td>목록 (2개)</td><td>태그. 예: 실용적, 데일리</td></tr>
+            <tr><td><code>icon</code></td><td>선택 1개</td><td>카드에 넣을 그림</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="notes">
+        <li>"누구에게 × 예산" 조합마다 선물이 3개 이상 있어야 한다</li>
+        <li>글자 수 제한은 카드에서 두 줄을 넘지 않게 정한 값이다 <span class="check">확인 필요</span></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="doc-foot">
+  <div class="wrap"><span>Gift Finder 기능 정의서</span><span>2026.10.29</span></div>
+</footer>
+</body>
+</html>
