@@ -75,6 +75,7 @@
   td:first-child { font-weight: 600; white-space: nowrap; }
   .notes { margin-top: 16px; color: var(--muted); font-size: 15px; }
 
+  h3 small.sub { font-size: 14px; font-weight: 500; color: var(--muted); margin-left: 6px; }
   .muted { color: var(--muted); font-size: 14.5px; margin: 0; }
 
   /* 페르소나 · 시나리오 카드 (한 장씩 넘어감) */
@@ -251,7 +252,7 @@
     <div class="cover">
       <span class="label">Gift Finder · 2026.10.29</span>
       <h1>기능 정의서</h1>
-      <p>이번에 만들 기능은 <b>5개</b>만. 나머지는 나중에 해요.</p>
+      <p>이번에 만들 기능은 <b>7개</b>. 나머지는 나중에 해요.</p>
     </div>
   </div>
 
@@ -320,16 +321,17 @@
             <article class="card story" aria-roledescription="slide" aria-label="1 / 3">
               <div class="s-top">
                 <div class="avatar" aria-hidden="true">지</div>
-                <div><b class="p-name">지은 씨 <small>가장 빠른 길</small></b><span class="p-role">쓰는 기능: 1 조건 고르기 · 2 선물 추천</span></div>
+                <div><b class="p-name">지은 씨 <small>가장 빠른 길</small></b><span class="p-role">쓰는 기능: 1 조건 고르기 · 2 선물 추천 · 7 결과 공유하기</span></div>
               </div>
               <ol class="steps">
                 <li>퇴근길 지하철에서 링크를 연다. 첫 화면 가운데에 질문 3개가 바로 보인다.</li>
                 <li><code>직장 동료</code> · <code>3~5만 원</code> · <code>축하</code>를 차례로 누른다. 다 고르니 <code>추천받기</code> 버튼이 켜진다.</li>
                 <li><code>추천받기</code>를 누르니 선물 카드 3개가 나온다.</li>
                 <li>카드의 가격과 추천 이유 한 줄을 훑어본다. "매일 책상에서 쓰기 좋아요"라는 이유가 마음에 든다.</li>
-                <li><code>상품 찾아보기 ↗</code>를 눌러 쇼핑몰에서 가격을 확인하고 장바구니에 담는다.</li>
+                <li>팀원들과 돈을 모아 사기로 했던 게 생각나서 <code>공유하기</code>를 누르고, 복사된 링크를 팀 단톡방에 보낸다.</li>
+                <li>팀원들이 좋다고 하자 <code>상품 찾아보기 ↗</code>를 눌러 쇼핑몰에서 주문한다.</li>
               </ol>
-              <p class="result"><b>결과</b> 지하철 두 정거장, 5분 만에 선물을 정했다.</p>
+              <p class="result"><b>결과</b> 지하철 두 정거장 만에 선물을 정하고 팀원들 의견까지 받았다.</p>
             </article>
 
             <article class="card story" aria-roledescription="slide" aria-label="2 / 3">
@@ -350,14 +352,15 @@
             <article class="card story" aria-roledescription="slide" aria-label="3 / 3">
               <div class="s-top">
                 <div class="avatar c" aria-hidden="true">민</div>
-                <div><b class="p-name">민서 씨 <small>꼼꼼히 비교하는 길</small></b><span class="p-role">쓰는 기능: 1 조건 고르기 · 2 선물 추천 · 4 더 보기 · 5 다시 고르기</span></div>
+                <div><b class="p-name">민서 씨 <small>꼼꼼히 비교하는 길</small></b><span class="p-role">쓰는 기능: 1 조건 고르기 · 2 선물 추천 · 4 더 보기 · 5 다시 고르기 · 6 찜하기</span></div>
               </div>
               <ol class="steps">
                 <li>점심시간에 집 PC로 사이트를 연다.</li>
                 <li><code>부모님</code> · <code>5~10만 원</code> · <code>생일</code>을 고르고 추천받는다.</li>
-                <li>한 줄 이유만으로는 엄마가 실제로 쓸지 모르겠다. <code>더 보기</code>를 눌러 자세한 이유를 읽는다.</li>
+                <li>한 줄 이유만으로는 엄마가 실제로 쓸지 모르겠다. <code>더 보기</code>를 눌러 자세한 이유를 읽고, 괜찮은 선물 하나를 ♡로 찜해 둔다.</li>
                 <li>조금 더 좋은 선물도 보고 싶어 <code>다시 고르기</code>를 누른다. 고른 조건이 남아 있어서 예산만 <code>10만 원 이상</code>으로 바꾼다.</li>
-                <li>새로 나온 카드들의 <code>더 보기</code>를 비교하고, 가장 잘 쓸 것 같은 선물을 <code>상품 찾아보기 ↗</code>로 확인한다.</li>
+                <li>새로 나온 선물 중에서도 하나를 ♡로 찜한다.</li>
+                <li>위쪽의 <code>찜 2</code>를 눌러 찜한 두 선물을 나란히 보고, 더 잘 쓸 것 같은 선물을 <code>상품 찾아보기 ↗</code>로 확인한다.</li>
               </ol>
               <p class="result"><b>결과</b> 두 가지 예산의 선물을 비교해 보고 확신을 갖고 골랐다.</p>
             </article>
@@ -386,6 +389,8 @@
             <tr><td>3</td><td><a href="#f3">＋ 2개 더</a></td><td>지금 카드는 두고 2개를 더 보여 준다</td></tr>
             <tr><td>4</td><td><a href="#f4">더 보기</a></td><td>카드를 펼쳐 추천 이유를 자세히 보여 준다</td></tr>
             <tr><td>5</td><td><a href="#f5">다시 고르기</a></td><td>조건을 바꿔서 다시 추천받는다</td></tr>
+            <tr><td>6</td><td><a href="#f6">찜하기</a></td><td>마음에 드는 선물을 ♡로 모아 둔다</td></tr>
+            <tr><td>7</td><td><a href="#f7">결과 공유하기</a></td><td>추천 결과를 링크로 보낸다</td></tr>
           </tbody>
         </table>
       </div>
@@ -451,11 +456,39 @@
             <div><dt>먼저 필요한 것</dt><dd>1번</dd></div>
           </dl>
         </article>
+
+        <article class="card feat" id="f6">
+          <div class="feat-head"><h4><span class="n">6</span>찜하기</h4></div>
+          <dl>
+            <div><dt>어디서</dt><dd>각 카드 오른쪽 위 ♡, 화면 위쪽 <code>찜</code></dd></div>
+            <div><dt>이렇게 하면</dt><dd>카드의 ♡를 누르면</dd></div>
+            <div><dt>이렇게 돼요</dt><dd>♥로 바뀌고 <span class="msg">찜했어요</span>가 잠깐 나온다. 위쪽 <code>찜 2</code>를 누르면 찜한 선물만 모아서 볼 수 있다</dd></div>
+            <div><dt>이럴 땐</dt><dd><ul>
+              <li>다시 누르면 찜이 풀린다</li>
+              <li>브라우저에 저장돼서 새로고침해도 남아 있다. 다른 휴대폰이나 PC에서는 안 보인다</li>
+            </ul></dd></div>
+            <div><dt>먼저 필요한 것</dt><dd>2번</dd></div>
+          </dl>
+        </article>
+
+        <article class="card feat" id="f7">
+          <div class="feat-head"><h4><span class="n">7</span>결과 공유하기</h4></div>
+          <dl>
+            <div><dt>어디서</dt><dd>추천 결과 제목 옆</dd></div>
+            <div><dt>이렇게 하면</dt><dd><code>공유하기</code>를 누르면</dd></div>
+            <div><dt>이렇게 돼요</dt><dd>고른 조건이 담긴 링크가 복사되고 <span class="msg">링크를 복사했어요</span>가 나온다. 받은 사람이 링크를 열면 같은 조건으로 추천이 나온다</dd></div>
+            <div><dt>이럴 땐</dt><dd><ul>
+              <li>휴대폰에서는 카카오톡 등으로 바로 보내는 공유 창이 열린다</li>
+              <li>받은 사람에게는 같은 조건의 다른 선물이 나올 수도 있다</li>
+            </ul></dd></div>
+            <div><dt>먼저 필요한 것</dt><dd>2번</dd></div>
+          </dl>
+        </article>
       </div>
 
       <div class="card later">
         <h4>나중에 (지금은 안 만듦)</h4>
-        <p>상황별 선물 · 찜하기 · 결과 공유하기 · 자주 묻는 질문</p>
+        <p>상황별 선물 · 자주 묻는 질문</p>
         <p class="muted">위쪽 메뉴와 "Gift Finder는 상품을 팔지 않아요. 가격은 참고용이에요." 안내 문구는 기능이 아니라 화면에 그냥 넣는다.</p>
       </div>
     </div>
@@ -464,11 +497,14 @@
   <!-- 04 -->
   <section class="part alt" id="s4">
     <div class="wrap">
-      <div class="part-head"><span class="label">04</span><h2>저장되는 데이터</h2><p><b>사용자가 입력해서 저장되는 것은 없어요.</b> 회원가입이 없고, 새로고침하면 처음으로 돌아가요. 사이트에는 선물 목록만 미리 넣어 둬요. 60개 정도.</p></div>
+      <div class="part-head"><span class="label">04</span><h2>저장되는 데이터</h2><p><b>사용자가 글자를 입력하는 칸은 없어요.</b> 회원가입도 없어요. 고른 조건은 새로고침하면 사라지고, <b>찜한 선물만 브라우저에 저장돼요.</b></p></div>
+
+      <h3>선물 목록 <small class="sub">사이트에 미리 넣어 둠 · 60개 정도</small></h3>
       <div class="table-wrap">
         <table>
           <thead><tr><th>항목</th><th>타입</th><th>비고</th></tr></thead>
           <tbody>
+            <tr><td><code>id</code></td><td>숫자</td><td>선물 번호 (찜하기에 사용)</td></tr>
             <tr><td><code>name</code></td><td>글자</td><td>선물 이름. 예: 핸드드립 세트</td></tr>
             <tr><td><code>who</code></td><td>목록</td><td>누구에게 (여러 개 가능)</td></tr>
             <tr><td><code>budget</code></td><td>선택 1개</td><td>예산 4개 중 하나</td></tr>
@@ -482,6 +518,20 @@
       <ul class="notes">
         <li>조건마다 선물이 5개 이상 있으면 <code>＋ 2개 더</code>까지 잘 동작한다</li>
       </ul>
+
+      <h3>찜한 선물 <small class="sub">브라우저에 저장</small></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>항목</th><th>타입</th><th>비고</th></tr></thead>
+          <tbody>
+            <tr><td><code>gift_id</code></td><td>숫자</td><td>찜한 선물 번호 (선물 목록의 <code>id</code>)</td></tr>
+            <tr><td><code>saved_at</code></td><td>날짜·시간</td><td>찜한 때. 최근 찜한 순서로 보여 줄 때 사용</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>공유 링크 <small class="sub">저장 안 함</small></h3>
+      <p>고른 조건 3개를 링크 주소 끝에 붙여서 보내요.<br><code>.../gift-finder.html?who=직장동료&amp;budget=3-5&amp;day=축하</code></p>
     </div>
   </section>
 </main>
