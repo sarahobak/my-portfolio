@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>마운자로 다이어리 (Mounjaro Diary) 기획안</title>
+<meta name="description" content="마운자로 다이어리 기획안 (maunjarou.md 내용)">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+  /* 마운자로 다이어리 디자인 시스템(5장)의 색상만 사용 */
+  :root {
+    color-scheme: light;
+    --bg: #f8f5fc;
+    --card: #ffffff;
+    --main: #d9c9f0;
+    --point: #bca6e3;
+    --soft: #eee7f8;
+    --primary: #6b55a0;
+    --text: #302a38;
+    --muted: #756c82;
+    --line: #e7e0ef;
+    --alert: #a23e2b;
+    --alert-bg: #f7e9e5;
+    --r-card: 14px;
+    --r-btn: 10px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--primary); text-underline-offset: 3px; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.86em; background: var(--soft); color: var(--primary); border-radius: 6px; padding: 1px 6px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* 헤더 · 목차 */
+  header.doc { position: sticky; top: 0; z-index: 10; background: rgba(248, 245, 252, 0.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  header.doc .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 64px; }
+  .brand { display: flex; align-items: baseline; gap: 8px; font-weight: 700; color: var(--primary); text-decoration: none; white-space: nowrap; }
+  .brand span { font-size: 13px; font-weight: 500; color: var(--muted); }
+  .toc { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+  .toc a { color: var(--muted); text-decoration: none; font-size: 14px; padding: 6px 10px; border-radius: var(--r-btn); white-space: nowrap; }
+  .toc a:hover { background: var(--soft); color: var(--text); }
+
+  /* 표지 */
+  .cover { padding: 72px 0 56px; }
+  .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--primary); }
+  .cover h1 { font-size: 40px; line-height: 1.3; letter-spacing: -0.02em; margin: 10px 0 8px; }
+  .cover .copy { font-size: 20px; font-weight: 600; color: var(--primary); margin: 0 0 16px; }
+  .cover .meta { color: var(--muted); font-size: 14px; margin: 0; }
+  .summary { margin-top: 28px; background: var(--main); color: var(--text); border-radius: var(--r-card); padding: 24px 28px; font-size: 17px; }
+  .summary b { display: block; font-size: 13px; letter-spacing: 0.08em; margin-bottom: 4px; }
+
+  /* 섹션 */
+  section.part { padding: 64px 0; border-top: 1px solid var(--line); scroll-margin-top: 64px; }
+  .part-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 24px; }
+  .part-head .no { font-size: 14px; font-weight: 700; color: var(--primary); background: var(--soft); border-radius: var(--r-btn); padding: 2px 10px; }
+  h2 { font-size: 24px; line-height: 1.4; letter-spacing: -0.015em; margin: 0; }
+  h3 { font-size: 18px; line-height: 1.45; margin: 32px 0 12px; }
+  .card h3:first-child { margin-top: 0; }
+  p { margin: 0 0 12px; }
+  ul.list { margin: 0; padding-left: 20px; }
+  ul.list li + li { margin-top: 6px; }
+  .muted { color: var(--muted); }
+  .small { font-size: 14px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r-card); padding: 24px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-2 > *, .grid-3 > *, .w-top > *, .w-bottom > * { min-width: 0; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px; border-radius: var(--r-btn); background: var(--main); color: var(--text); font-weight: 600; text-decoration: none; }
+  .btn:hover { background: var(--point); }
+
+  /* 표 */
+  .table-wrap { overflow-x: auto; background: var(--card); border: 1px solid var(--line); border-radius: var(--r-card); }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; padding: 13px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--soft); color: var(--primary); font-weight: 600; font-size: 14px; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { font-weight: 600; }
+
+  .quote { border-left: 4px solid var(--primary); background: var(--card); border-radius: 0 var(--r-btn) var(--r-btn) 0; padding: 12px 16px; margin: 0; }
+  .quote + .quote { margin-top: 10px; }
+  .quote b { display: block; font-size: 13px; color: var(--muted); font-weight: 600; margin-bottom: 2px; }
+
+  /* 메뉴 칩 */
+  .menu-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .menu-chips span { border: 1px solid var(--line); background: var(--card); border-radius: var(--r-btn); padding: 6px 12px; font-size: 14px; color: var(--muted); }
+  .menu-chips span.cur { background: var(--primary); border-color: var(--primary); color: #fff; font-weight: 600; }
+
+  /* 와이어프레임 */
+  .wire { background: var(--card); border: 1px solid var(--line); border-radius: var(--r-card); overflow: hidden; font-size: 13px; }
+  .w-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 20px; border-bottom: 1px solid var(--line); }
+  .w-head b { color: var(--primary); }
+  .w-head nav { display: flex; gap: 4px; flex-wrap: wrap; color: var(--muted); font-size: 12px; }
+  .w-head nav span { padding: 2px 8px; border-radius: 8px; }
+  .w-head nav .cur { background: var(--main); color: var(--text); }
+  .w-body { background: var(--bg); padding: 20px; display: grid; gap: 14px; }
+  .w-top { display: grid; grid-template-columns: 5fr 7fr; gap: 14px; }
+  .w-chip { display: inline-block; background: var(--soft); color: var(--primary); border-radius: 999px; padding: 1px 10px; font-size: 11px; font-weight: 600; }
+  .w-title { font-size: 18px; font-weight: 700; margin: 6px 0 0; }
+  .w-copy { color: var(--primary); font-weight: 600; margin: 0 0 8px; }
+  .w-form { background: var(--card); border: 2px solid var(--point); border-radius: 12px; padding: 14px; display: grid; gap: 8px; }
+  .w-field { height: 30px; border: 1px solid var(--line); border-radius: 8px; display: flex; align-items: center; padding: 0 10px; color: var(--muted); font-size: 12px; }
+  .w-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .w-btn { background: var(--main); color: var(--text); border-radius: 8px; text-align: center; padding: 7px; font-weight: 600; }
+  .w-result { background: var(--main); color: var(--text); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+  .w-result .lbl { font-size: 11px; font-weight: 700; }
+  .w-result .date { color: var(--text); font-size: 38px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
+  .w-result .line { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .w-result .st { background: #fff; color: var(--primary); border-radius: 999px; padding: 3px 12px; font-weight: 800; }
+  .w-result .ups { display: flex; gap: 6px; flex-wrap: wrap; }
+  .w-result .ups span { background: rgba(255, 255, 255, 0.6); border-radius: 6px; padding: 2px 8px; font-size: 11px; }
+  .w-result .base { border-top: 1px solid rgba(48, 42, 56, 0.14); padding-top: 8px; font-size: 11px; }
+  .w-bottom { display: grid; grid-template-columns: 7fr 5fr; gap: 14px; }
+  .w-card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+  .w-card b { display: block; margin-bottom: 8px; }
+  .w-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; font-size: 11px; }
+  .w-cal span { padding: 4px 0; border-radius: 6px; }
+  .w-cal .dose { background: var(--point); color: var(--text); font-weight: 700; }
+  .w-cal .next { background: var(--soft); color: var(--primary); font-weight: 800; }
+  .w-cal .plan { box-shadow: inset 0 0 0 1.5px var(--primary); }
+  .w-cal .today { box-shadow: inset 0 0 0 2px var(--primary); font-weight: 700; }
+  .w-rec { display: flex; justify-content: space-between; align-items: center; gap: 8px; border-top: 1px solid var(--line); padding-top: 8px; margin-top: 8px; font-size: 12px; }
+  .w-tag { background: var(--soft); color: var(--primary); border-radius: 999px; padding: 0 6px; font-size: 10px; font-weight: 600; }
+  .w-acts span { border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; font-size: 11px; }
+  .w-acts .del { color: var(--alert); }
+  .w-guide { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .w-guide span { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 8px; font-size: 11px; }
+  .w-guide i { display: block; font-style: normal; color: var(--primary); font-weight: 700; font-size: 10px; }
+  .w-note { background: var(--soft); color: var(--primary); border-radius: 10px; padding: 10px 12px; font-size: 12px; }
+
+  /* 상태 미리보기 */
+  .states { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 12px; }
+  .state { background: #fff; color: var(--primary); border: 1px solid var(--line); border-radius: 999px; padding: 6px 16px; font-size: 18px; font-weight: 800; }
+  .state.today { background: var(--soft); border-color: var(--soft); }
+  .state.overdue { background: var(--alert-bg); border-color: var(--alert-bg); color: var(--alert); }
+
+  .lead-in { color: var(--muted); max-width: 680px; margin: -8px 0 0; }
+  .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; border: 1px solid var(--line); margin-right: 8px; vertical-align: -1px; }
+  .preview { background: var(--bg); border-radius: var(--r-btn); padding: 18px; }
+  .gold-bar { display: block; width: 32px; height: 3px; border-radius: 2px; background: var(--point); margin-bottom: 8px; }
+  .pv-title { font-size: 20px; font-weight: 700; margin: 0 0 12px; }
+  .pv-result { background: var(--main); color: var(--text); border-radius: 12px; padding: 16px 18px; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 2px 12px; }
+  .pv-result .small { grid-column: 1 / -1; }
+  .pv-date { color: var(--text); font-size: 40px; font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; }
+  .pv-st { background: #fff; color: var(--primary); border-radius: 999px; padding: 3px 12px; font-weight: 800; }
+  .pv-cal { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 12px; text-align: center; font-size: 14px; }
+  .pv-cal span { position: relative; background: var(--card); border-radius: 8px; padding: 8px 0; }
+  .pv-cal .dose { background: var(--point); color: var(--text); font-weight: 700; }
+  .pv-cal .next { background: var(--soft); color: var(--primary); font-weight: 800; }
+  .pv-cal .plan { box-shadow: inset 0 0 0 1.5px var(--primary); }
+  .pv-cal .today { box-shadow: inset 0 0 0 2px var(--primary); font-weight: 700; }
+  .pv-cal .today::after { content: ""; position: absolute; bottom: 3px; left: 50%; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: var(--primary); }
+  table.contrast { font-size: 14px; }
+  table.contrast td { padding: 8px 6px; }
+  table.contrast td:nth-child(2) { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .goal { margin-top: 24px; background: var(--main); color: var(--text); border-radius: var(--r-card); padding: 24px 28px; border-left: 4px solid var(--point); }
+  .goal b { display: block; color: var(--text); font-size: 14px; letter-spacing: 0.06em; margin-bottom: 4px; }
+  /* 팔레트 */
+  .palette { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; list-style: none; padding: 0; margin: 0 0 20px; }
+  .palette li { background: var(--card); border: 1px solid var(--line); border-radius: var(--r-card); overflow: hidden; font-size: 14px; }
+  .palette .sw { height: 64px; border-bottom: 1px solid var(--line); }
+  .palette div.t { padding: 10px 14px; }
+  .palette b { display: block; }
+  .palette small { color: var(--muted); }
+
+  /* 단계 */
+  .flow { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; counter-reset: s; }
+  .flow li { counter-increment: s; background: var(--card); border: 1px solid var(--line); border-radius: var(--r-card); padding: 14px; font-size: 14px; }
+  .flow li::before { content: counter(s); display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--main); color: var(--text); font-size: 12px; font-weight: 700; margin-bottom: 8px; }
+  .flow b { display: block; font-size: 15px; margin-bottom: 2px; }
+
+
+
+
+  footer.doc { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--muted); font-size: 14px; }
+  footer.doc .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+  @media (max-width: 959px) {
+      .flow { grid-template-columns: repeat(4, 1fr); }
+    .w-top, .w-bottom { grid-template-columns: 1fr; }
+    .w-guide { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 639px) {
+    .wrap { padding: 0 16px; }
+    .toc { display: none; }
+    .brand span { display: none; }
+    .cover { padding: 48px 0 40px; }
+    .cover h1 { font-size: 30px; }
+    .cover .copy { font-size: 17px; }
+    section.part { padding: 48px 0; }
+      .palette { grid-template-columns: 1fr 1fr; }
+    .flow { grid-template-columns: 1fr 1fr; }
+    .card { padding: 20px; }
+    .w-head nav { display: none; }
+    .w-body { padding: 14px; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  /* md 변환용 */
+  pre.wire-text { background: var(--card); border: 1px solid var(--line); border-radius: var(--r-card); padding: 20px; overflow-x: auto; font-family: ui-monospace, SFMono-Regular, Menlo, "D2Coding", monospace; font-size: 13px; line-height: 1.55; margin: 0 0 16px; }
+  .sw-dot { display: inline-block; width: 12px; height: 12px; border-radius: 4px; border: 1px solid var(--line); vertical-align: -1px; margin-right: 4px; }
+  section.part > .wrap > p, section.part > .wrap > .table-wrap, section.part > .wrap > ul.list { margin-bottom: 16px; }
+  section.part h3 { margin-top: 32px; }
+  ul.list ul { margin-top: 6px; padding-left: 20px; }
+  .cover blockquote { margin: 0; }
+</style>
+</head>
+<body>
+
+<header class="doc">
+  <div class="wrap">
+    <a class="brand" href="#top">마운자로 다이어리 기획안<span>Mounjaro Diary</span></a>
+    <nav class="toc" aria-label="기획안 목차"><a href="#p0">프로젝트명 및 브랜딩</a><a href="#p1">진행 순서와 결과</a><a href="#p2">레퍼런스 분석</a><a href="#p3">사이트 구조와 와이어프레임</a><a href="#p4">투여 일정 계산 규칙</a><a href="#p5">디자인 시스템</a><a href="#p6">메뉴별 콘텐츠</a><a href="#p7">저장과 정보 출처</a></nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap">
+    <div class="cover">
+      <span class="eyebrow">Plan Draft</span>
+      <h1>마운자로 다이어리 (Mounjaro Diary) 기획안</h1>
+      <p class="copy">나의 투여 일정부터 마운자로 정보까지</p><p class="meta">작성 · 구현 · 테스트: Claude Code만 사용 · 2026-10-28</p>
+      <div class="summary"><b>한 줄 요약</b>접속하자마자 "마지막 실제 투여일 · 용량 · 간격"을 넣고 다음 예정일을 확인하는 사이트. 소개·사용법·부작용·주의사항·가격·FAQ는 계산기를 돕는 정보로 구성한다.</div>
+
+    </div>
+  </div>
+
+  <section class="part" id="p0">
+    <div class="wrap">
+      <div class="part-head"><span class="no">00</span><h2>프로젝트명 및 브랜딩</h2></div>
+<div class="table-wrap"><table>
+<thead><tr><th>항목</th><th>내용</th><th>사이트 적용 위치</th></tr></thead>
+<tbody>
+<tr><td>서비스명</td><td><b>마운자로 다이어리 (Mounjaro Diary)</b></td><td>모든 화면</td></tr>
+<tr><td>메인 카피</td><td>나의 투여 일정부터 마운자로 정보까지</td><td>메인 제목 바로 아래 (18px · 굵기 600 · 주요 색상)</td></tr>
+<tr><td>서비스 설명</td><td>마운자로 투여 일정 계산, 투여 기록 관리, 사용법, 부작용 및 주의사항을 확인할 수 있는 개인 관리 웹사이트입니다.</td><td>푸터, 검색 결과 설명(meta description)</td></tr>
+<tr><td>헤더 로고</td><td><code>마운자로 다이어리</code> 텍스트 로고 + 작은 영문 <code>Mounjaro Diary</code> (모바일은 한글만)</td><td>헤더 왼쪽, 누르면 홈</td></tr>
+<tr><td>메인 페이지 제목</td><td><code>나의 마운자로 다이어리</code></td><td>홈·계산기 화면 맨 위 제목</td></tr>
+<tr><td>브라우저 탭 제목</td><td><code>마운자로 다이어리 \| 투여 일정 및 정보 관리</code></td><td>홈·계산기 화면. 정보 화면은 <code>사용법 \| 마운자로 다이어리</code>처럼 메뉴명 + 서비스명</td></tr>
+<tr><td>디자인 방향</td><td>개인 건강 관리 다이어리처럼 편안하고 세련되게, 의료 정보에 맞는 신뢰감과 가독성 확보</td><td>5장 디자인 시스템</td></tr>
+</tbody></table></div>
+<p><b>브랜딩 일관성:</b> 헤더 로고 · 메인 제목 · 탭 제목 · 푸터 · 화면 하단 안내에 같은 서비스명 <code>마운자로 다이어리</code>를 쓴다.</p>
+<p><b>독립 서비스 명시:</b> 공식 제조사 서비스로 오인되지 않도록 아래 두 곳에 표시한다.</p>
+<ul class="list"><li><b>모든 화면 하단 안내:</b> "마운자로 다이어리는 제조사 공식 서비스가 아닌 독립적인 정보 서비스예요."</li><li><b>푸터:</b> "마운자로 다이어리는 마운자로의 제조사·판매사(일라이 릴리, 한국릴리)가 운영하는 공식 서비스가 아니며, 이들과 관련이 없고 후원도 받지 않아요. 의약품을 판매하지 않아요. '마운자로(Mounjaro)'는 해당 권리자의 상표예요."</li><li>제조사 로고·제품 사진·공식 색상은 쓰지 않는다</li></ul>
+    </div>
+  </section>
+  <section class="part" id="p1">
+    <div class="wrap">
+      <div class="part-head"><span class="no">01</span><h2>진행 순서와 결과</h2></div>
+<div class="table-wrap"><table>
+<thead><tr><th>단계</th><th>한 일</th><th>결과</th></tr></thead>
+<tbody>
+<tr><td>1. 기존 프로젝트 확인</td><td>저장소 구조 확인</td><td>빌드 도구 없는 정적 HTML 저장소(GitHub Pages로 공개 중). 같은 방식으로 HTML 파일 1개로 제작</td></tr>
+<tr><td>2. 레퍼런스 분석</td><td>walnuuut.com 페이지와 스타일 파일 확인</td><td>2장 참고</td></tr>
+<tr><td>3. 정보 출처 확인</td><td>식약처 의약품안전나라 품목 상세, NHS 안내 페이지 직접 확인</td><td>7장 참고</td></tr>
+<tr><td>4. 와이어프레임 설계</td><td>계산기 중심 배치</td><td>3장 참고</td></tr>
+<tr><td>5. 구현</td><td>HTML · CSS · JavaScript, 외부 라이브러리 없음 (글꼴만 CDN)</td><td><code>maunjaro-diary.html</code></td></tr>
+<tr><td>6. 테스트</td><td>날짜 계산 단위 테스트 + 실제 브라우저 화면 테스트</td><td><code>tests/</code></td></tr>
+<tr><td>7. 오류 수정</td><td>스크린샷 검토 후 레이아웃 수정</td><td>—</td></tr>
+</tbody></table></div>
+    </div>
+  </section>
+  <section class="part" id="p2">
+    <div class="wrap">
+      <div class="part-head"><span class="no">02</span><h2>레퍼런스 분석 · <a href="https://walnuuut.com/" target="_blank" rel="noopener">https://walnuuut.com/</a></h2></div>
+<p>2026-10-28에 페이지와 스타일 파일(<code>/css/style.css</code>)을 직접 내려받아 확인했다.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>관찰한 점</th><th>마운자로 다이어리에 적용</th><th>의료 정보 사이트에 맞게 바꾼 점</th></tr></thead>
+<tbody>
+<tr><td>흑백 위주(#000 · #fff · #f6f6f6), 아주 넓은 여백</td><td>넉넉한 여백, 색 수 최소화</td><td>흑백 대신 소프트 라벤더로 부드러움과 신뢰감</td></tr>
+<tr><td>영문 소문자 섹션 라벨 + 현지어 제목 2줄 (about / わたしのこと)</td><td><code>GUIDE</code> · <code>HOW TO USE</code> 같은 영문 라벨 + 한글 제목</td><td>라벨은 보조 역할만, 정보는 모두 한국어</td></tr>
+<tr><td>알약 모양 버튼, "view more" 텍스트 링크</td><td>"자세히 보기 →" 텍스트 링크</td><td>버튼은 지정대로 모서리 10px로 단정하게</td></tr>
+<tr><td>"pick up 01"처럼 번호 붙은 소개</td><td>홈 정보 카드에 01~06 번호</td><td>—</td></tr>
+<tr><td>감성 사진 중심, 장식적인 섹션 전환</td><td>카드와 여백으로 자연스럽게 구분</td><td>사진·장식 없이 정보와 출처를 먼저</td></tr>
+</tbody></table></div>
+    </div>
+  </section>
+  <section class="part" id="p3">
+    <div class="wrap">
+      <div class="part-head"><span class="no">03</span><h2>사이트 구조와 와이어프레임</h2></div>
+<h3>상단 메뉴</h3>
+<p><code>홈</code> · <code>투여 일정 계산기</code> · <code>마운자로 소개</code> · <code>사용법</code> · <code>부작용</code> · <code>주의사항</code> · <code>가격 정보</code> · <code>FAQ</code></p>
+<ul class="list"><li>한 페이지 안에서 주소 뒤 <code>#/usage</code>처럼 화면을 바꾼다 (새로고침해도 같은 화면, 링크 공유 가능)</li><li>현재 메뉴는 <b>라벤더(주요 컬러) 배경 + 진한 글자</b>로 하나만 표시 (<code>aria-current=&quot;page&quot;</code>)</li><li>1080px 미만에서는 ☰ 햄버거 메뉴. 메뉴를 고르거나 Esc를 누르면 닫힘</li><li>홈과 투여 일정 계산기 화면에서는 계산기를 맨 위에 보여 주고, 정보 화면에서는 숨김</li></ul>
+<h3>홈 화면 (PC)</h3>
+<pre class="wire-text">┌──────────────────────────────────────────────────────────────┐
+│ 마운자로 다이어리 [홈] 계산기 소개 사용법 부작용 주의사항 가격 FAQ │
+├──────────────────────────────────────────────────────────────┤
+│ (오늘 · 2026년 10월 30일 (금))                                 │
+│ 나의 마운자로 다이어리           ┌──────── 결과 (라벤더) ───────┐ │
+│ 나의 투여 일정부터 마운자로 정보까지│ 다음 예정일                  │ │
+│ ┌──── 입력 (진한 테두리) ────┐    │ 11월 4일            [ D-5 ] │ │
+│ │ 마지막 실제 투여일 [     ] │    │ 2026년 · 수요일              │ │
+│ │ 처방 용량 [2.5mg] 간격[7]일│    │ 이후 예정일 11/11 11/18 ...  │ │
+│ │ [ 다음 예정일 계산하기 ]   │    │ 기준 · 마지막 투여 10/28     │ │
+│ └────────────────────────────┘    └─────────────────────────────┘ │
+│ ┌──── 월간 달력 ─────────────┐ ┌──── 실제 투여 기록 ──────────┐ │
+│ │ ‹ 오늘 ›   2026년 11월      │ │ [투여일][용량][메모][기록 추가]│ │
+│ │ 실제 투여 ■ 다음 □ 이후 ┆┆  │ │ 10월 28일 (수) 계산 기준 수정 삭제│ │
+│ └────────────────────────────┘ │ 삭제한 기록 ▸ (복원)          │ │
+│                                 └──────────────────────────────┘ │
+│ GUIDE · 알아 두면 좋은 정보  [01 소개][02 사용법][03 부작용]...   │
+│ ⓘ 계산 결과는 참고 정보이며 의료진의 판단을 대신하지 않아요       │
+└──────────────────────────────────────────────────────────────┘</pre>
+<ul class="list"><li>모바일(960px 미만): 입력 → 결과 → 달력 → 기록 순서로 1단. 계산하면 결과 위치로 스크롤</li><li>일정이 없으면 결과 자리에 "아직 등록된 투여 일정이 없어요" + 입력 안내 3단계 + <code>일정 등록 시작하기</code> 버튼(날짜 입력칸으로 이동)</li></ul>
+<h3>계산기를 시각적으로 우선하는 방법</h3>
+<ul class="list"><li>입력 카드만 2px 포인트 라벤더 테두리 + 그림자</li><li>결과 카드만 주요 컬러(라벤더) 배경, 날짜 숫자 72px(모바일 52px) · 굵기 800</li><li>상태 표시는 알약 모양 20px: <code>D-5</code> / <code>오늘 예정</code> / <code>예정일 지남</code>(오류 전용 붉은 계열)</li></ul>
+    </div>
+  </section>
+  <section class="part" id="p4">
+    <div class="wrap">
+      <div class="part-head"><span class="no">04</span><h2>투여 일정 계산 규칙</h2></div>
+<div class="table-wrap"><table>
+<thead><tr><th>규칙</th><th>구현</th></tr></thead>
+<tbody>
+<tr><td>다음 예정일</td><td><b>가장 최근의 유효한 실제 투여일 + 투여 간격(일)</b></td></tr>
+<tr><td>예시</td><td>2026-10-28 + 7일 = <b>2026-11-04</b></td></tr>
+<tr><td>남은 날짜</td><td>오늘과 다음 예정일의 <b>달력상 날짜 차이</b> (시각은 보지 않음)</td></tr>
+<tr><td>상태</td><td>0일 <code>오늘 예정</code> · 남음 <code>D-N</code> · 지남 <code>예정일 지남</code></td></tr>
+<tr><td>이후 예정일</td><td>다음 예정일부터 같은 간격으로 4회</td></tr>
+<tr><td>유효한 기록</td><td>삭제하지 않았고, 날짜가 올바르며, 오늘 이전인 기록</td></tr>
+<tr><td>기준 기록</td><td>유효한 기록 중 날짜가 가장 늦은 것 (목록에 <code>계산 기준</code> 표시)</td></tr>
+<tr><td>예정일과 실제 투여일</td><td>따로 관리. 예정일은 저장하지 않고 매번 기록에서 계산</td></tr>
+<tr><td>기록 추가·수정·삭제</td><td>바뀔 때마다 즉시 다시 계산</td></tr>
+<tr><td>미래 날짜</td><td>실제 투여일로 등록 불가 (입력칸 최대값 + 저장 전 검사, 안내 문구)</td></tr>
+<tr><td>같은 날짜 중복</td><td>등록 불가, 기존 기록을 수정하도록 안내</td></tr>
+<tr><td>투여 간격</td><td>1~28일 사이 정수, 기본 7일</td></tr>
+<tr><td>누락·일정 변경</td><td><b>새로운 투여 지침을 자동으로 만들지 않음.</b> 예정일이 지나면 "기록을 추가하고 의료진 안내를 따르세요"만 표시</td></tr>
+</tbody></table></div>
+<h3>날짜 오류를 막는 방법</h3>
+<ul class="list"><li>날짜는 <code>YYYY-MM-DD</code> 문자열로만 저장하고, 계산할 때 <b>UTC 자정 기준 '날짜 번호'</b> 로 바꿔 더하고 뺀다 → 서머타임·시간대와 무관</li><li>'오늘'은 사용자 기기의 현지 날짜(년·월·일)만 사용</li><li>월말·연말·윤년은 <code>Date.UTC</code>가 처리하고, 2026-02-30 같은 없는 날짜는 거절</li><li>자정이 지나면 1분 안에 오늘 날짜와 남은 날짜를 다시 계산</li></ul>
+<h3>기록을 덮어쓰지 않는 방법</h3>
+<ul class="list"><li><b>수정:</b> 이전 값(날짜·용량·메모·수정 시각)을 그 기록의 <code>history</code>에 남기고 새 값으로 바꿈. 다른 기록은 건드리지 않음 (목록에 "수정 N회")</li><li><b>삭제:</b> 실제로 지우지 않고 <code>deletedAt</code> 표시만 → 계산에서 제외. 6초 동안 <code>되돌리기</code>, 이후에도 "삭제한 기록"에서 복원</li><li><b>복원:</b> 같은 날짜의 다른 기록이 있으면 복원하지 않고 안내</li><li><b>계산 버튼:</b> 입력한 날짜의 기록이 없을 때만 새로 추가. 있으면 그대로 두고 용량·간격 설정만 저장</li></ul>
+    </div>
+  </section>
+  <section class="part" id="p5">
+    <div class="wrap">
+      <div class="part-head"><span class="no">05</span><h2>디자인 시스템 · Soft Lavender Diary</h2></div>
+<p><b>콘셉트:</b> 연보라와 라벤더를 중심으로 밝고 부드러운 다이어리 분위기를 만들고, 진한 보라색은 최소화한다. 기존 기능, 메뉴 구조, 날짜 계산 로직은 바꾸지 않고 전체 페이지의 색상만 일관되게 수정한다.</p>
+<h3>컬러 시스템</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>역할</th><th>값</th><th>쓰는 곳</th></tr></thead>
+<tbody>
+<tr><td>배경</td><td><span class="sw-dot" style="background:#F8F5FC"></span><code>#F8F5FC</code></td><td>페이지 전체 배경</td></tr>
+<tr><td>주요 컬러</td><td><span class="sw-dot" style="background:#D9C9F0"></span><code>#D9C9F0</code></td><td>주요 버튼, 선택된 메뉴, 결과 카드 배경 (글자는 본문 텍스트 색)</td></tr>
+<tr><td>포인트 컬러</td><td><span class="sw-dot" style="background:#BCA6E3"></span><code>#BCA6E3</code></td><td>버튼 오버, 달력의 실제 투여일, 입력 카드 테두리, 메인 제목 위 짧은 강조선, 빈 상태 점선</td></tr>
+<tr><td>보조 컬러</td><td><span class="sw-dot" style="background:#EEE7F8"></span><code>#EEE7F8</code></td><td>달력의 다음 예정일, 기록 입력 영역, 오늘 날짜 칩, 계산 기준 배지, 안내 상자, 표 머리, 메뉴 오버</td></tr>
+<tr><td>카드 배경</td><td><span class="sw-dot" style="background:#FFFFFF"></span><code>#FFFFFF</code></td><td>모든 카드, 입력칸</td></tr>
+<tr><td>본문 텍스트</td><td><span class="sw-dot" style="background:#302A38"></span><code>#302A38</code></td><td>제목, 본문, 버튼·결과 카드 글자</td></tr>
+<tr><td>보조 텍스트</td><td><span class="sw-dot" style="background:#756C82"></span><code>#756C82</code></td><td>설명, 도움말 (흰색·배경 위에서만)</td></tr>
+<tr><td>테두리</td><td><span class="sw-dot" style="background:#E7E0EF"></span><code>#E7E0EF</code></td><td>카드·입력칸 테두리, 구분선</td></tr>
+<tr><td>라벤더 잉크 (추가)</td><td><span class="sw-dot" style="background:#6B55A0"></span><code>#6B55A0</code></td><td>링크, 영문 라벨, 메인 카피, 상태 칩 글자, 달력 '오늘' 테두리, 이후 예정일 점선, 키보드 초점 — 작은 글자와 선에만 최소 사용</td></tr>
+<tr><td>상태색 (추가)</td><td><span class="sw-dot" style="background:#A23E2B"></span><code>#A23E2B</code> / 배경 <span class="sw-dot" style="background:#F7E9E5"></span><code>#F7E9E5</code></td><td>오류 문구, '예정일 지남'에만</td></tr>
+</tbody></table></div>
+<ul class="list"><li><b>가독성이 확보되는 보라색:</b> 주요 컬러 <span class="sw-dot" style="background:#D9C9F0"></span><code>#D9C9F0</code> 위에 흰 글자는 1.6:1로 읽기 어렵다. 그래서 주요 버튼과 선택된 메뉴는 연보라 배경 위에 <b>본문 텍스트 색(9.0:1)</b> 으로 글자를 올린다</li><li>링크처럼 글자 자체가 보라색이어야 하는 곳만 라벤더 잉크 <span class="sw-dot" style="background:#6B55A0"></span><code>#6B55A0</code>(흰 배경 6.1:1)을 쓴다</li></ul>
+<h3>명도 대비 (본문 기준 4.5:1 이상)</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>조합</th><th>대비</th><th>판단</th></tr></thead>
+<tbody>
+<tr><td>본문 / 배경</td><td>12.9 : 1</td><td>본문</td></tr>
+<tr><td>본문 / 주요 컬러</td><td>9.0 : 1</td><td>버튼 · 선택 메뉴 · 결과 카드</td></tr>
+<tr><td>본문 / 포인트 컬러</td><td>6.4 : 1</td><td>버튼 오버 · 실제 투여일</td></tr>
+<tr><td>본문 / 보조 컬러</td><td>11.5 : 1</td><td>기록 입력 영역</td></tr>
+<tr><td>보조 텍스트 / 배경 · 흰색</td><td>4.6~5.0 : 1</td><td>설명 · 도움말</td></tr>
+<tr><td>라벤더 잉크 / 흰색 · 보조 컬러</td><td>5.1~6.1 : 1</td><td>링크 · 라벨 · 상태 칩</td></tr>
+<tr><td>흰 글자 / 주요 컬러</td><td>1.6 : 1</td><td><b>쓰지 않음</b></td></tr>
+<tr><td>보조 텍스트 / 보조·주요 컬러</td><td>3.2~4.1 : 1</td><td><b>쓰지 않음</b> → 이 위의 글자는 본문 텍스트 색</td></tr>
+</tbody></table></div>
+<h3>UI/UX 디자인 원칙</h3>
+<ul class="list"><li><b>넉넉한 여백:</b> 영역 사이 48~64px, 카드 안쪽 24px</li><li><b>절제된 장식:</b> 사진·일러스트·그라데이션 없음. 장식은 짧은 강조선 정도만</li><li><b>진한 보라 최소화:</b> 넓은 면은 연보라·라벤더, 진한 색은 작은 글자와 선에만</li><li><b>일관된 카드 디자인:</b> 흰 배경 · 1px <span class="sw-dot" style="background:#E7E0EF"></span><code>#E7E0EF</code> 테두리 · 모서리 14px로 통일</li><li><b>계산기 우선:</b> 입력 카드(포인트 테두리)와 결과 카드(주요 컬러 배경 + 72px 날짜)만 다른 카드보다 강하게 표현</li><li><b>날짜와 기록 구분:</b> 실제 투여일 = 포인트 컬러로 채움 · 다음 예정일 = 보조 컬러 · 이후 예정일 = 점선 테두리 · 오늘 = 라벤더 잉크 테두리 + 작은 점</li><li><b>모바일 가독성:</b> 본문 16px 유지, 결과 날짜 52px, 누르는 영역 44px 이상</li></ul>
+<h3>레퍼런스 재해석 · <a href="https://walnuuut.com/" target="_blank" rel="noopener">https://walnuuut.com/</a></h3>
+<p>감각적인 레이아웃, 여백 활용, 차분한 분위기를 참고하되 흑백 대신 소프트 라벤더로 부드러움을 더하고, 사진 중심 구성 대신 정보와 출처를 먼저 보여 준다 (2장 참고).</p>
+<h3>타이포그래피 · 모양</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>항목</th><th>값</th></tr></thead>
+<tbody>
+<tr><td>글꼴</td><td>Pretendard, 대체 Noto Sans KR</td></tr>
+<tr><td>글자 크기</td><td>제목 32px(모바일 28px) · 섹션 제목 24px · 카드 제목 18px · 본문 16px</td></tr>
+<tr><td>모서리</td><td>카드 14px · 버튼·입력칸 10px</td></tr>
+<tr><td>콘텐츠 최대 너비</td><td>1120px</td></tr>
+<tr><td>누르는 영역</td><td>버튼·입력칸 최소 44~56px</td></tr>
+</tbody></table></div>
+<h3>최종 디자인 목표</h3>
+<p>밝고 부드러운 라벤더 분위기 속에서 투여 일정 계산기를 가장 중요한 콘텐츠로 강조하는 <b>개인 다이어리형 서비스</b>. 전체 페이지에서 컬러 · 타이포그래피 · 버튼 · 카드 · 달력 · 상태 표시의 시각적 일관성을 유지한다.</p>
+    </div>
+  </section>
+  <section class="part" id="p6">
+    <div class="wrap">
+      <div class="part-head"><span class="no">06</span><h2>메뉴별 콘텐츠</h2></div>
+<div class="table-wrap"><table>
+<thead><tr><th>메뉴</th><th>담은 내용</th></tr></thead>
+<tbody>
+<tr><td>마운자로 소개</td><td>작용 원리(GIP·GLP-1 이중 효능제), 허가된 사용 목적 3가지(제2형 당뇨병 혈당 조절, 만성 체중 관리, 비만 성인의 폐쇄성 수면 무호흡), 주요 특징(주 1회, 국내 제형, 만 18세 미만 미확립)</td></tr>
+<tr><td>사용법</td><td>투여 방법, 용량 단계(2.5 mg 4주 → 5 mg → 최소 4주마다 2.5 mg씩, 최대 15 mg), 투여 간격(누락 4일·요일 변경 3일 허가 사항 인용), 보관(2~8℃, 퀵펜 첫 사용 후 30℃ 이하 30일)</td></tr>
+<tr><td>부작용</td><td>즉시 도움이 필요한 증상 표(과민반응, 췌장염, 담낭, 저혈당, 탈수, 갑상선, 기분 변화) + 흔한 부작용(빈도별)</td></tr>
+<tr><td>주의사항</td><td>금기(MTC·MEN2, 과민반응, 제1형 당뇨병), 신중 투여 대상, 약물 상호작용(경구약·경구피임약·설포닐우레아·인슐린), 임신·수유·소아·고령자</td></tr>
+<tr><td>가격 정보</td><td>가격 숫자는 싣지 않음. 국내는 의약품안전나라 '보험약가' 항목이 비어 있음을 확인한 사실과 확인처 링크, 미국은 제조사 공식 안내 링크, 각 확인 날짜</td></tr>
+<tr><td>FAQ</td><td>사용법 3 · 부작용 2 · 일정 관리 4 · 가격 2, 펼쳐 보는 방식</td></tr>
+</tbody></table></div>
+    </div>
+  </section>
+  <section class="part" id="p7">
+    <div class="wrap">
+      <div class="part-head"><span class="no">07</span><h2>저장과 정보 출처</h2></div>
+<h3>저장</h3>
+<ul class="list"><li>브라우저 로컬 저장소(<code>localStorage</code>, 키 <code>mounjaroDiary.v1</code>)에만 저장, 서버 없음</li><li>이전 이름(마운자로 가이드) 때 <code>mounjaroGuide.v1</code>에 저장한 기록이 있으면 처음 열 때 새 키로 옮겨 그대로 이어서 사용</li><li>저장 내용: 용량·간격 설정, 실제 투여 기록(수정 이력·삭제 표시 포함)</li><li>새로고침 후에도 설정·기록 유지, 마지막 투여일 입력칸은 기준 기록으로 다시 채움</li><li>저장된 값이 깨져 있으면 빈 상태로 시작 (화면이 멈추지 않음)</li><li>시크릿 창 등으로 저장이 막히면 안내 문구 표시</li></ul>
+<h3>출처 (모두 2026-10-28 직접 확인)</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>출처</th><th>쓴 곳</th></tr></thead>
+<tbody>
+<tr><td><a href="https://nedrug.mfds.go.kr/pbp/CCBBB01/getItemDetail?itemSeq=202502333" target="_blank" rel="noopener">식약처 의약품안전나라 · 마운자로퀵펜주2.5밀리그램 품목 상세</a> (허가일 2025-09-05, 효능·용법·주의사항 최근 변경 2026-04-30)</td><td>소개, 사용법, 부작용, 주의사항, 가격(보험약가 항목)</td></tr>
+<tr><td><a href="https://nedrug.mfds.go.kr/searchDrug?itemName=%EB%A7%88%EC%9A%B4%EC%9E%90%EB%A1%9C" target="_blank" rel="noopener">식약처 의약품안전나라 · &#x27;마운자로&#x27; 검색 결과</a></td><td>국내 제형(퀵펜주·프리필드펜주·바이알주)</td></tr>
+<tr><td><a href="https://www.nhs.uk/medicines/tirzepatide/" target="_blank" rel="noopener">NHS · Tirzepatide (Mounjaro)</a> (페이지 검토일 2026-05-15)</td><td>즉시 도움이 필요한 증상의 쉬운 표현</td></tr>
+<tr><td><a href="https://www.hira.or.kr/npay/index.do" target="_blank" rel="noopener">건강보험심사평가원 비급여 진료비 정보</a></td><td>가격 확인처 (접속만 확인, 마운자로 등록 여부는 사용자가 직접 검색)</td></tr>
+<tr><td><a href="https://mounjaro.lilly.com/savings-coverage" target="_blank" rel="noopener">Mounjaro Savings &amp; Coverage (Eli Lilly, 미국)</a></td><td>해외 참고 가격 안내처</td></tr>
+</tbody></table></div>
+<ul class="list"><li>확인하지 못한 가격·의학 정보는 만들어 넣지 않았다 (예: 국내 판매 가격, 미국 정가 페이지는 자동 접속이 막혀 넣지 않음)</li><li>모든 화면 아래에 "계산 결과는 일정 관리용 참고 정보이며 개인별 처방이나 의료진의 판단을 대신하지 않아요" 안내</li></ul>
+    </div>
+  </section>
+</main>
+
+<footer class="doc">
+  <div class="wrap"><span>마운자로 다이어리 (Mounjaro Diary) 기획안</span><span>maunjarou.md 내용을 그대로 옮긴 페이지</span></div>
+</footer>
+</body>
+</html>
