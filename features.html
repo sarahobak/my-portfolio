@@ -91,19 +91,24 @@
   .person dt { color: var(--muted); font-size: 14px; font-weight: 600; }
   .person dd { margin: 0; }
   .person dd.key { color: var(--olive-dk); font-weight: 700; }
-  .scene { background: var(--bg); border-radius: 16px; padding: 18px 20px; }
-  .scene p { margin: 6px 0 12px; font-size: 16.5px; }
-  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 14px; }
-  .flow span { background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 4px 14px; }
-  .flow i { color: var(--disabled); font-style: normal; }
+  .person dl div:last-child { padding-bottom: 0; }
+  .person dl { margin: 0; }
+  .story { padding: 32px; }
+  .s-top { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+  .steps { list-style: none; padding: 0; margin: 0; counter-reset: st; }
+  .steps li { counter-increment: st; position: relative; margin: 0; padding: 0 0 16px 40px; }
+  .steps li::before { content: counter(st); position: absolute; left: 0; top: 1px; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--olive); color: var(--olive); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: var(--card); }
+  .steps li:not(:last-child)::after { content: ""; position: absolute; left: 12px; top: 28px; bottom: 2px; width: 1px; background: var(--line); }
+  .result { margin: 8px 0 0; background: var(--olive-lt); color: var(--olive-dk); border-radius: 14px; padding: 12px 16px; }
+  .result b { margin-right: 8px; }
 
   /* 스크립트가 없으면 카드 3장을 그냥 세로로 쌓아 보여 줌 */
   .track { display: grid; gap: 16px; }
   .c-nav { display: none; }
   .carousel.ready .viewport { overflow: hidden; border-radius: 20px; }
   .carousel.ready .track { display: flex; gap: 0; transition: translate 500ms var(--ease); }
-  .carousel.ready .person { flex: 0 0 100%; transition: opacity 500ms var(--ease); }
-  .carousel.ready .person:not(.on) { opacity: 0.4; }
+  .carousel.ready .card { flex: 0 0 100%; transition: opacity 500ms var(--ease); }
+  .carousel.ready .card:not(.on) { opacity: 0.4; }
   .carousel.ready .c-nav { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 20px; }
   .c-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); color: var(--text); font: inherit; font-size: 18px; cursor: pointer; transition: background-color 250ms var(--ease), border-color 250ms var(--ease), scale 200ms var(--ease); }
   .c-btn:hover { background: var(--olive-lt); border-color: var(--olive); }
@@ -150,7 +155,8 @@
     .cover p { font-size: 16px; }
     section.part { padding: 64px 0; }
     .part-head h2 { font-size: 24px; }
-    .person { padding: 22px; }
+    .person, .story { padding: 22px; }
+    .steps li { padding-left: 36px; }
     .person dl div { grid-template-columns: 1fr; gap: 2px; }
     .feat { padding: 20px; }
     .feat dl > div { grid-template-columns: 1fr; gap: 2px; }
@@ -173,11 +179,10 @@
       document.querySelectorAll('section.part .wrap > *, .features > .feat').forEach((el) => { el.classList.add('reveal'); io.observe(el); });
     });
   }
-  // 페르소나 카드: 한 장씩 넘어감. 6초마다 자동, 마우스를 올리거나 버튼에 초점이 있으면 멈춤.
+  // 페르소나 · 시나리오 카드: 한 장씩 넘어감. 6초마다 자동, 마우스를 올리거나 버튼에 초점이 있으면 멈춤.
   // 동작 줄이기 설정이면 자동으로 넘기지 않고 이동 애니메이션도 끔(CSS)
   addEventListener('DOMContentLoaded', () => {
-    const box = document.querySelector('.carousel');
-    if (!box) return;
+    document.querySelectorAll('.carousel').forEach((box) => {
     const track = box.querySelector('.track');
     const slides = [...track.children];
     const dots = box.querySelector('.dots');
@@ -226,6 +231,7 @@
 
     box.classList.add('ready');
     go(0); restart();
+    });
   });
 </script>
 </head>
@@ -235,7 +241,7 @@
   <div class="wrap">
     <a class="logo" href="#top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>Gift Finder 기능 정의서</a>
     <nav class="toc" aria-label="목차">
-      <a href="#s1">페르소나 · 시나리오</a><a href="#s3">기능</a><a href="#s4">데이터</a>
+      <a href="#s1">페르소나</a><a href="#s2">시나리오</a><a href="#s3">기능</a><a href="#s4">데이터</a>
     </nav>
   </div>
 </header>
@@ -249,12 +255,12 @@
     </div>
   </div>
 
-  <!-- 01 · 02 -->
+  <!-- 01 -->
   <section class="part" id="s1">
     <div class="wrap">
-      <div class="part-head"><span class="label">01 · 02</span><h2>페르소나와 사용자 시나리오</h2><p>이 사이트를 쓸 사람 세 명과, 각자 사이트를 쓰는 모습</p></div>
+      <div class="part-head"><span class="label">01</span><h2>페르소나</h2><p>이 사이트를 쓸 사람 세 명</p></div>
 
-      <div class="carousel" aria-roledescription="carousel" aria-label="페르소나와 시나리오">
+      <div class="carousel" aria-roledescription="carousel" aria-label="페르소나">
         <div class="viewport">
           <div class="track">
             <article class="card person" aria-roledescription="slide" aria-label="1 / 3">
@@ -264,14 +270,9 @@
               </div>
               <dl>
                 <div><dt>온 이유</dt><dd>선배 승진 선물 (5만 원 안)</dd></div>
-                <div><dt>보는 상황</dt><dd>지하철, 휴대폰</dd></div>
+                <div><dt>보는 상황</dt><dd>퇴근길 지하철, 휴대폰</dd></div>
                 <div><dt>꼭 보고 싶은 것</dt><dd class="key">추천 이유와 가격</dd></div>
               </dl>
-              <div class="scene">
-                <span class="label">Scenario</span>
-                <p>조건 3개를 고르고 추천받은 선물 중 하나를 바로 쇼핑몰에서 찾아본다.</p>
-                <div class="flow"><span>조건 고르기</span><i>→</i><span>선물 추천</span><i>→</i><span>상품 찾아보기 ↗</span></div>
-              </div>
             </article>
 
             <article class="card person" aria-roledescription="slide" aria-label="2 / 3">
@@ -284,11 +285,6 @@
                 <div><dt>보는 상황</dt><dd>주말 카페, 노트북</dd></div>
                 <div><dt>꼭 보고 싶은 것</dt><dd class="key">싸 보이지 않는지</dd></div>
               </dl>
-              <div class="scene">
-                <span class="label">Scenario</span>
-                <p>추천받은 3개가 아쉬워서 <code>＋ 2개 더</code>를 눌러 후보를 늘린 뒤 고른다.</p>
-                <div class="flow"><span>조건 고르기</span><i>→</i><span>선물 추천</span><i>→</i><span>＋ 2개 더</span><i>→</i><span>상품 찾아보기 ↗</span></div>
-              </div>
             </article>
 
             <article class="card person" aria-roledescription="slide" aria-label="3 / 3">
@@ -301,19 +297,76 @@
                 <div><dt>보는 상황</dt><dd>점심시간, 집 PC</dd></div>
                 <div><dt>꼭 보고 싶은 것</dt><dd class="key">부모님이 잘 쓸 수 있는지</dd></div>
               </dl>
-              <div class="scene">
-                <span class="label">Scenario</span>
-                <p><code>더 보기</code>로 추천 이유를 자세히 읽고, 예산을 바꿔 다시 추천받는다.</p>
-                <div class="flow"><span>선물 추천</span><i>→</i><span>더 보기</span><i>→</i><span>다시 고르기</span><i>→</i><span>상품 찾아보기 ↗</span></div>
-              </div>
             </article>
           </div>
         </div>
-
         <div class="c-nav">
-          <button type="button" class="c-btn" data-dir="-1" aria-label="이전 사례">←</button>
-          <div class="dots" role="tablist" aria-label="사례 선택"></div>
-          <button type="button" class="c-btn" data-dir="1" aria-label="다음 사례">→</button>
+          <button type="button" class="c-btn" data-dir="-1" aria-label="이전">←</button>
+          <div class="dots" role="tablist" aria-label="페르소나 선택"></div>
+          <button type="button" class="c-btn" data-dir="1" aria-label="다음">→</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section class="part alt" id="s2">
+    <div class="wrap">
+      <div class="part-head"><span class="label">02</span><h2>사용자 시나리오</h2><p>세 사람이 사이트에 들어와서 선물을 고르기까지</p></div>
+
+      <div class="carousel" aria-roledescription="carousel" aria-label="사용자 시나리오">
+        <div class="viewport">
+          <div class="track">
+            <article class="card story" aria-roledescription="slide" aria-label="1 / 3">
+              <div class="s-top">
+                <div class="avatar" aria-hidden="true">지</div>
+                <div><b class="p-name">지은 씨 <small>가장 빠른 길</small></b><span class="p-role">쓰는 기능: 1 조건 고르기 · 2 선물 추천</span></div>
+              </div>
+              <ol class="steps">
+                <li>퇴근길 지하철에서 링크를 연다. 첫 화면 가운데에 질문 3개가 바로 보인다.</li>
+                <li><code>직장 동료</code> · <code>3~5만 원</code> · <code>축하</code>를 차례로 누른다. 다 고르니 <code>추천받기</code> 버튼이 켜진다.</li>
+                <li><code>추천받기</code>를 누르니 선물 카드 3개가 나온다.</li>
+                <li>카드의 가격과 추천 이유 한 줄을 훑어본다. "매일 책상에서 쓰기 좋아요"라는 이유가 마음에 든다.</li>
+                <li><code>상품 찾아보기 ↗</code>를 눌러 쇼핑몰에서 가격을 확인하고 장바구니에 담는다.</li>
+              </ol>
+              <p class="result"><b>결과</b> 지하철 두 정거장, 5분 만에 선물을 정했다.</p>
+            </article>
+
+            <article class="card story" aria-roledescription="slide" aria-label="2 / 3">
+              <div class="s-top">
+                <div class="avatar b" aria-hidden="true">도</div>
+                <div><b class="p-name">도현 씨 <small>후보를 늘려 보는 길</small></b><span class="p-role">쓰는 기능: 1 조건 고르기 · 2 선물 추천 · 3 ＋ 2개 더</span></div>
+              </div>
+              <ol class="steps">
+                <li>주말 카페에서 노트북으로 사이트를 연다.</li>
+                <li><code>친구</code> · <code>3만 원 이하</code> · <code>집들이</code>를 고르고 추천받는다.</li>
+                <li>3개 중 2개는 친구 집에 이미 있을 것 같은 물건이라 아쉽다.</li>
+                <li><code>＋ 2개 더</code>를 누르니 카드 2개가 아래에 붙는다. 처음 3개도 그대로 있어서 함께 비교할 수 있다.</li>
+                <li>한 번 더 눌러 7개를 본 뒤, 싸 보이지 않는 디퓨저로 정하고 <code>상품 찾아보기 ↗</code>를 누른다.</li>
+              </ol>
+              <p class="result"><b>결과</b> 처음 추천이 아쉬웠지만 조건을 다시 고르지 않고 마음에 드는 선물을 찾았다.</p>
+            </article>
+
+            <article class="card story" aria-roledescription="slide" aria-label="3 / 3">
+              <div class="s-top">
+                <div class="avatar c" aria-hidden="true">민</div>
+                <div><b class="p-name">민서 씨 <small>꼼꼼히 비교하는 길</small></b><span class="p-role">쓰는 기능: 1 조건 고르기 · 2 선물 추천 · 4 더 보기 · 5 다시 고르기</span></div>
+              </div>
+              <ol class="steps">
+                <li>점심시간에 집 PC로 사이트를 연다.</li>
+                <li><code>부모님</code> · <code>5~10만 원</code> · <code>생일</code>을 고르고 추천받는다.</li>
+                <li>한 줄 이유만으로는 엄마가 실제로 쓸지 모르겠다. <code>더 보기</code>를 눌러 자세한 이유를 읽는다.</li>
+                <li>조금 더 좋은 선물도 보고 싶어 <code>다시 고르기</code>를 누른다. 고른 조건이 남아 있어서 예산만 <code>10만 원 이상</code>으로 바꾼다.</li>
+                <li>새로 나온 카드들의 <code>더 보기</code>를 비교하고, 가장 잘 쓸 것 같은 선물을 <code>상품 찾아보기 ↗</code>로 확인한다.</li>
+              </ol>
+              <p class="result"><b>결과</b> 두 가지 예산의 선물을 비교해 보고 확신을 갖고 골랐다.</p>
+            </article>
+          </div>
+        </div>
+        <div class="c-nav">
+          <button type="button" class="c-btn" data-dir="-1" aria-label="이전">←</button>
+          <div class="dots" role="tablist" aria-label="시나리오 선택"></div>
+          <button type="button" class="c-btn" data-dir="1" aria-label="다음">→</button>
         </div>
       </div>
     </div>
