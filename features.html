@@ -134,6 +134,42 @@
   .later h4 { margin: 0 0 6px; font-size: 16px; }
   .msg { background: var(--olive-lt); color: var(--olive-dk); border-radius: 8px; padding: 1px 8px; font-weight: 600; }
 
+  /* 키워드 · 프롬프트 */
+  .kw-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .kw { padding: 18px; display: flex; flex-direction: column; gap: 2px; }
+  .kw b { color: var(--olive-dk); font-size: 17px; }
+  .kw span { font-size: 14.5px; }
+  .kw small { color: var(--muted); font-size: 13px; }
+  .tag { display: inline-block; background: var(--olive-lt); color: var(--olive-dk); border-radius: 999px; padding: 1px 10px; font-size: 13.5px; font-weight: 600; margin: 2px 6px 2px 0; white-space: nowrap; }
+  .apply { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .ap { padding: 22px; display: flex; flex-direction: column; gap: 14px; transition: translate 300ms var(--ease), box-shadow 300ms var(--ease), border-color 300ms var(--ease); }
+  .ap:hover { translate: 0 -2px; box-shadow: var(--shadow); border-color: var(--olive-lt); }
+  .ap-top { display: flex; align-items: center; gap: 12px; }
+  .ap-top b { display: block; font-size: 17px; }
+  .ap-top span { color: var(--muted); font-size: 14px; }
+  .avatar.sm { width: 44px; height: 44px; font-size: 17px; }
+  .ap-tags { display: flex; flex-wrap: wrap; }
+  .tag.plus { background: transparent; border: 1px dashed var(--olive); color: var(--olive); }
+  .ap p { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .prompt { position: relative; background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--olive); border-radius: 16px; }
+  .prompt pre { margin: 0; padding: 22px 24px; white-space: pre-wrap; word-break: keep-all; font-family: inherit; font-size: 14.5px; line-height: 1.75; }
+  .copy { position: absolute; top: 12px; right: 12px; height: 36px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: background-color 250ms var(--ease), border-color 250ms var(--ease); }
+  .copy:hover { background: var(--olive-lt); border-color: var(--olive); }
+  .copy:focus-visible { outline: 2px solid var(--olive); outline-offset: 2px; }
+
+  /* 컬러 테마 (06의 색은 견본이라 이 문서 팔레트와 별개) */
+  .swatches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .sw-item { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 2px; }
+  .sw-item i { display: block; height: 72px; border-radius: 14px; border: 1px solid var(--line); margin-bottom: 10px; }
+  .sw-item span { color: var(--muted); font-size: 14px; }
+  .gift-demo { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .g-card { background: #ffffff; border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+  .g-art { aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; font-size: 48px; }
+  .g-body { padding: 14px 16px; display: flex; flex-direction: column; gap: 2px; }
+  .g-body code { align-self: flex-start; }
+  .theme-notes { margin-top: 24px; display: grid; gap: 16px; }
+  .theme-notes p { margin: 4px 0 0; }
+
   footer.doc-foot { border-top: 1px solid var(--line); padding: 32px 0 56px; color: var(--muted); font-size: 13px; }
   footer.doc-foot .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
@@ -157,6 +193,11 @@
     section.part { padding: 64px 0; }
     .part-head h2 { font-size: 24px; }
     .person, .story { padding: 22px; }
+    .kw-grid { grid-template-columns: 1fr 1fr; }
+    .swatches { grid-template-columns: 1fr; }
+    .gift-demo { grid-template-columns: 1fr 1fr; }
+    .apply { grid-template-columns: 1fr; }
+    .prompt pre { padding: 56px 18px 18px; }
     .steps li { padding-left: 36px; }
     .person dl div { grid-template-columns: 1fr; gap: 2px; }
     .feat { padding: 20px; }
@@ -166,7 +207,7 @@
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation: none !important; transition: none !important; }
     .js .reveal { opacity: 1; translate: none; }
-    .feat:hover { translate: none; }
+    .feat:hover, .ap:hover { translate: none; }
   }
 </style>
 <script>
@@ -233,6 +274,17 @@
     box.classList.add('ready');
     go(0); restart();
     });
+
+    // 프롬프트 복사 버튼
+    document.querySelectorAll('.copy').forEach((b) => b.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(document.getElementById(b.dataset.target).textContent);
+        b.textContent = '복사했어요';
+      } catch (e) {
+        b.textContent = '직접 선택해서 복사해 주세요';
+      }
+      setTimeout(() => { b.textContent = '복사'; }, 2000);
+    }));
   });
 </script>
 </head>
@@ -242,7 +294,7 @@
   <div class="wrap">
     <a class="logo" href="#top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>Gift Finder 기능 정의서</a>
     <nav class="toc" aria-label="목차">
-      <a href="#s1">페르소나</a><a href="#s2">시나리오</a><a href="#s3">기능</a><a href="#s4">데이터</a>
+      <a href="#s1">페르소나</a><a href="#s2">시나리오</a><a href="#s3">기능</a><a href="#s4">데이터</a><a href="#s5">키워드</a><a href="#s6">컬러</a>
     </nav>
   </div>
 </header>
@@ -271,7 +323,7 @@
               </div>
               <dl>
                 <div><dt>온 이유</dt><dd>선배 승진 선물 (5만 원 안)</dd></div>
-                <div><dt>보는 상황</dt><dd>퇴근길 지하철, 휴대폰</dd></div>
+                <div><dt>보는 상황</dt><dd>지하철, 휴대폰</dd></div>
                 <div><dt>꼭 보고 싶은 것</dt><dd class="key">추천 이유와 가격</dd></div>
               </dl>
             </article>
@@ -509,6 +561,7 @@
             <tr><td><code>who</code></td><td>목록</td><td>누구에게 (여러 개 가능)</td></tr>
             <tr><td><code>budget</code></td><td>선택 1개</td><td>예산 4개 중 하나</td></tr>
             <tr><td><code>occasion</code></td><td>목록</td><td>어떤 날 (여러 개 가능)</td></tr>
+            <tr><td><code>keywords</code></td><td>목록 (2개)</td><td>키워드. 예: #실용적, #고급스러운 (<a href="#s5">05</a> 참고)</td></tr>
             <tr><td><code>price</code></td><td>글자</td><td>가격. 예: 약 4만 원대</td></tr>
             <tr><td><code>reason</code></td><td>글자</td><td>추천 이유 한 줄 (카드)</td></tr>
             <tr><td><code>detail</code></td><td>글자</td><td>추천 이유 자세히 (<code>더 보기</code>)</td></tr>
@@ -529,9 +582,91 @@
           </tbody>
         </table>
       </div>
+    </div>
+  </section>
 
-      <h3>공유 링크 <small class="sub">저장 안 함</small></h3>
-      <p>고른 조건 3개를 링크 주소 끝에 붙여서 보내요.<br><code>.../gift-finder.html?who=직장동료&amp;budget=3-5&amp;day=축하</code></p>
+  <!-- 05 -->
+  <section class="part" id="s5">
+    <div class="wrap">
+      <div class="part-head"><span class="label">05</span><h2>키워드와 선물 목록 프롬프트</h2><p>선물마다 키워드 2개를 붙이고, 상황에 어울리는 키워드의 선물을 먼저 추천해요.</p></div>
+
+      <h3>키워드 8개</h3>
+      <div class="kw-grid">
+        <div class="card kw"><b>#실용적</b><span>매일 쓰는 물건</span><small>텀블러, 무선 충전기</small></div>
+        <div class="card kw"><b>#감성적</b><span>분위기와 마음을 전하는 물건</span><small>캔들, 드라이플라워</small></div>
+        <div class="card kw"><b>#고급스러운</b><span>받았을 때 격이 느껴지는 물건</span><small>만년필, 브랜드 핸드크림</small></div>
+        <div class="card kw"><b>#가성비</b><span>가격보다 좋아 보이는 물건</span><small>디퓨저, 머그잔 세트</small></div>
+        <div class="card kw"><b>#건강</b><span>몸을 챙겨 주는 물건</span><small>마사지기, 차 세트</small></div>
+        <div class="card kw"><b>#휴식</b><span>쉬는 시간을 선물하는 물건</span><small>입욕제, 수면 안대</small></div>
+        <div class="card kw"><b>#오래 쓰는</b><span>몇 년 두고 쓰는 물건</span><small>가죽 지갑, 우산</small></div>
+        <div class="card kw"><b>#취향</b><span>받는 사람 취미에 맞춘 물건</span><small>원두 세트, 책</small></div>
+      </div>
+
+      <h3>상황별 어울리는 키워드</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>어떤 날</th><th>잘 맞는 키워드</th><th>이유</th></tr></thead>
+          <tbody>
+            <tr><td>생일</td><td><span class="tag">#취향</span><span class="tag">#오래 쓰는</span></td><td>그 사람을 잘 아는 날이라서</td></tr>
+            <tr><td>기념일</td><td><span class="tag">#감성적</span><span class="tag">#고급스러운</span></td><td>특별한 날을 기억하게 하려고</td></tr>
+            <tr><td>감사</td><td><span class="tag">#가성비</span><span class="tag">#감성적</span></td><td>부담은 적게, 마음은 분명하게</td></tr>
+            <tr><td>집들이</td><td><span class="tag">#실용적</span><span class="tag">#감성적</span></td><td>새 집에 바로 놓아 둘 수 있게</td></tr>
+            <tr><td>축하</td><td><span class="tag">#실용적</span><span class="tag">#고급스러운</span></td><td>새 출발에 쓸 수 있는 좋은 물건</td></tr>
+            <tr><td>응원</td><td><span class="tag">#휴식</span><span class="tag">#건강</span></td><td>지친 사람에게 쉼을 주려고</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>페르소나에 적용하면</h3>
+      <div class="apply">
+        <div class="card ap">
+          <div class="ap-top"><div class="avatar sm" aria-hidden="true">지</div><div><b>지은 씨</b><span>선배 승진 축하</span></div></div>
+          <div class="ap-tags"><span class="tag">#실용적</span><span class="tag">#고급스러운</span></div>
+          <p>축하 선물이라 새 출발에 쓸 수 있는 좋은 물건으로</p>
+        </div>
+        <div class="card ap">
+          <div class="ap-top"><div class="avatar sm b" aria-hidden="true">도</div><div><b>도현 씨</b><span>친구 집들이</span></div></div>
+          <div class="ap-tags"><span class="tag">#실용적</span><span class="tag">#감성적</span><span class="tag plus">+ #가성비</span></div>
+          <p>"싸 보이지 않게"가 중요하니 #가성비도 함께</p>
+        </div>
+        <div class="card ap">
+          <div class="ap-top"><div class="avatar sm c" aria-hidden="true">민</div><div><b>민서 씨</b><span>엄마 생신</span></div></div>
+          <div class="ap-tags"><span class="tag">#오래 쓰는</span><span class="tag plus">+ #건강</span></div>
+          <p>부모님이 잘 쓸 수 있어야 하니 #건강도 함께</p>
+        </div>
+      </div>
+
+      <h3>사이트 추천 규칙에 더할 한 줄 <small class="sub">선택</small></h3>
+      <div class="prompt">
+        <button type="button" class="copy" data-target="pr2">복사</button>
+<pre id="pr2">추천할 때, 고른 "어떤 날"에 어울리는 키워드를 가진 선물을 먼저 보여 주고, 카드에 키워드 2개를 태그로 표시해 줘.</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section class="part alt" id="s6">
+    <div class="wrap">
+      <div class="part-head"><span class="label">06</span><h2>컬러 테마</h2></div>
+
+      <div class="swatches">
+        <div class="sw-item"><i style="background:#F7F5EF"></i><b>메인 배경</b><span>아이보리 <code>#F7F5EF</code></span></div>
+        <div class="sw-item"><i style="background:#FFFFFF"></i><b>카드 본문</b><span>화이트 <code>#FFFFFF</code></span></div>
+        <div class="sw-item"><i style="background:#78856A"></i><b>포인트 컬러</b><span>올리브 그린 <code>#78856A</code></span></div>
+      </div>
+
+      <h3>선물 이모티콘 배경 <small class="sub">카드마다 번갈아 적용</small></h3>
+      <div class="gift-demo">
+        <div class="g-card"><div class="g-art" style="background:#E9E3D5" aria-hidden="true">☕</div><div class="g-body"><b>웜 베이지</b><code>#E9E3D5</code></div></div>
+        <div class="g-card"><div class="g-art" style="background:#E3E8DA" aria-hidden="true">🌿</div><div class="g-body"><b>세이지 그린</b><code>#E3E8DA</code></div></div>
+        <div class="g-card"><div class="g-art" style="background:#F0E1DC" aria-hidden="true">🌷</div><div class="g-body"><b>더스티 로즈</b><code>#F0E1DC</code></div></div>
+        <div class="g-card"><div class="g-art" style="background:#E2E8ED" aria-hidden="true">🕯️</div><div class="g-body"><b>더스티 블루</b><code>#E2E8ED</code></div></div>
+      </div>
+
+      <div class="card theme-notes">
+        <div><b>디자인 스타일</b><p>선물 이모티콘은 중앙에 크게 배치하고, 배경색은 은은하게 사용해 줘. 카드 모서리는 둥글게 처리하고 여백을 충분히 확보해 줘.</p></div>
+        <div><b>전체 분위기</b><p>20~30대를 위한 깔끔하고 세련된 미니멀 디자인으로 만들어 줘.</p></div>
+      </div>
     </div>
   </section>
 </main>
