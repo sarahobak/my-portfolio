@@ -6,164 +6,163 @@
 <title>Gift Finder 기획안</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
-  /* 기획안 페이지도 Gift Finder 디자인 시스템(5-1)의 10가지 색만 사용 */
+  /* 색상 변수: 포인트 #e63b7a 기준, 바탕 60 : 보조 30 : 포인트 10 */
   :root {
     color-scheme: light;
-    --bg: #f7f3ea;
-    --bg2: #efe8da;
-    --card: #fffdf8;
-    --olive: #5e6b3f;
-    --olive-dk: #4a5531;
-    --olive-lt: #e5e8d6;
-    --text: #2e2b26;
-    --muted: #6e685d;
-    --disabled: #a8a296;
-    --line: #e2dacb;
+    --bg: #ffffff;          /* 바탕 60% */
+    --surface: #f4f0f2;     /* 보조 30% */
+    --point: #e63b7a;       /* 포인트 10%: 버튼과 작은 강조에만 */
+    --point-hover: #e63b7a; /* 포인트 호버 */
+    --on-point: #000000;    /* 포인트 위 글자 */
+    --text-title: #28151c;  /* 제목 글자 (본문도 사용) */
+    --text-sub: #694f58;    /* 보조 글자 */
+    --text-accent: #d31b5f; /* 강조 글자 · 링크 · 아이콘 */
+    --border: #e2d9dd;      /* 테두리 */
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0;
     background: var(--bg);
-    color: var(--text);
+    color: var(--text-title);
     font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
     font-size: 16px;
     line-height: 1.7;
     word-break: keep-all;
     -webkit-font-smoothing: antialiased;
   }
-  a { color: var(--olive); text-underline-offset: 3px; }
+  a { color: var(--text-accent); text-underline-offset: 3px; }
   .wrap { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
-  code { font-family: inherit; font-size: 0.88em; background: var(--olive-lt); border-radius: 6px; padding: 1px 6px; }
+  code { font-family: inherit; font-size: 0.88em; background: var(--surface); border-radius: 6px; padding: 1px 6px; }
 
   /* 문서 헤더 */
-  .doc-head { position: sticky; top: 0; z-index: 10; background: rgba(247, 243, 234, 0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .doc-head { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
   .doc-head .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 64px; }
-  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--olive-dk); font-size: 18px; text-decoration: none; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--text-title); font-size: 18px; text-decoration: none; }
   .logo svg { width: 20px; height: 20px; }
   .toc { display: flex; gap: 20px; overflow-x: auto; scrollbar-width: none; }
-  .toc a { color: var(--muted); text-decoration: none; font-size: 14px; white-space: nowrap; }
-  .toc a:hover { color: var(--text); }
+  .toc a { color: var(--text-sub); text-decoration: none; font-size: 14px; white-space: nowrap; }
+  .toc a:hover { color: var(--text-title); }
 
   /* 표지 */
   .cover { padding: 96px 0 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
-  .label { font-size: 13px; font-weight: 600; letter-spacing: 0.12em; color: var(--olive); text-transform: uppercase; }
+  .label { font-size: 13px; font-weight: 600; letter-spacing: 0.12em; color: var(--text-accent); text-transform: uppercase; }
   .cover h1 { font-size: 44px; line-height: 1.3; letter-spacing: -0.02em; margin: 14px 0 18px; }
-  .cover p { color: var(--muted); font-size: 17px; max-width: 460px; margin: 0; }
+  .cover p { color: var(--text-sub); font-size: 17px; max-width: 460px; margin: 0; }
   .facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
-  .facts span { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 6px 14px; font-size: 14px; }
-  .stack { position: relative; height: 340px; background: var(--bg2); border-radius: 32px; overflow: hidden; }
+  .facts span { border: 1px solid var(--border); background: var(--bg); border-radius: 999px; padding: 6px 14px; font-size: 14px; }
+  .stack { position: relative; height: 340px; background: var(--surface); border-radius: 32px; overflow: hidden; }
   .stack .m-card { position: absolute; width: 190px; }
   .stack .m-card:nth-child(1) { left: 12%; top: 18%; transform: rotate(-6deg); }
   .stack .m-card:nth-child(2) { left: 34%; top: 12%; transform: rotate(2deg); z-index: 2; }
   .stack .m-card:nth-child(3) { left: 56%; top: 22%; transform: rotate(7deg); }
 
   /* 섹션 */
-  section.part { padding: 96px 0; border-top: 1px solid var(--line); scroll-margin-top: 64px; }
-  section.part.alt { background: var(--bg2); }
+  section.part { padding: 96px 0; border-top: 1px solid var(--border); scroll-margin-top: 64px; }
+  section.part.alt { background: var(--surface); }
   .part-head { margin-bottom: 40px; }
   .part-head h2 { font-size: 32px; line-height: 1.35; letter-spacing: -0.015em; margin: 8px 0 0; }
-  .part-head p { color: var(--muted); margin: 10px 0 0; max-width: 640px; }
+  .part-head p { color: var(--text-sub); margin: 10px 0 0; max-width: 640px; }
   h3 { font-size: 20px; letter-spacing: -0.01em; margin: 48px 0 16px; }
   h3:first-child { margin-top: 0; }
   h4 { font-size: 16px; margin: 0 0 8px; }
   p { margin: 0 0 12px; }
   ul, ol { margin: 0; padding-left: 20px; }
   li + li { margin-top: 6px; }
-  .muted { color: var(--muted); font-size: 14px; }
+  .muted { color: var(--text-sub); font-size: 14px; }
 
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 28px; }
+  .card { background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 28px; }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 
   /* 표 */
-  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 20px; background: var(--card); }
+  .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 20px; background: var(--bg); }
   table { width: 100%; border-collapse: collapse; font-size: 15px; }
-  th, td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  th { background: var(--olive-lt); font-weight: 600; font-size: 14px; white-space: nowrap; }
+  th, td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: var(--surface); font-weight: 600; font-size: 14px; white-space: nowrap; }
   tr:last-child td { border-bottom: none; }
   td:first-child { font-weight: 600; white-space: nowrap; }
-  .yes { color: var(--olive); font-weight: 700; }
-  .no { color: var(--muted); font-weight: 700; }
+  .yes { color: var(--text-accent); font-weight: 700; }
+  .no { color: var(--text-sub); font-weight: 700; }
 
   /* 미니 목업 공용 */
-  .chip { display: inline-flex; align-items: center; height: 36px; padding: 0 16px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); font-size: 14px; }
-  .chip.on { background: var(--olive); border-color: var(--olive); color: var(--card); font-weight: 600; }
-  .chip.hover { background: var(--olive-lt); }
+  .chip { display: inline-flex; align-items: center; height: 36px; padding: 0 16px; border: 1px solid var(--border); border-radius: 999px; background: var(--bg); font-size: 14px; }
+  .chip.on { background: var(--point); border-color: var(--point); color: var(--on-point); font-weight: 600; }
+  .chip.hover { background: var(--surface); }
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 24px; border-radius: 999px; font-weight: 600; font-size: 15px; white-space: nowrap; }
-  .btn.main { background: var(--olive); color: var(--card); }
-  .btn.main.dk { background: var(--olive-dk); }
-  .btn.main.off { background: var(--line); color: var(--disabled); }
-  .btn.sub { border: 1px solid var(--line); color: var(--text); }
-  .btn.sub.hover { background: var(--olive-lt); border-color: var(--olive); }
+  .btn.main { background: var(--point); color: var(--on-point); }
+  .btn.main.dk { background: var(--point-hover); }
+  .btn.main.off { background: var(--border); color: var(--text-sub); }
+  .btn.sub { border: 1px solid var(--border); color: var(--text-title); }
+  .btn.sub.hover { background: var(--surface); border-color: var(--point); }
   .btn.lg { height: 56px; padding: 0 32px; font-size: 16px; }
   .btn.sm { height: 40px; padding: 0 20px; font-size: 14px; }
-  .tlink { color: var(--olive); font-weight: 600; font-size: 14px; }
-  .m-card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; font-size: 13px; }
-  .m-card .art { aspect-ratio: 4 / 3; background: var(--bg2); display: flex; align-items: center; justify-content: center; position: relative; color: var(--olive); }
+  .tlink { color: var(--text-accent); font-weight: 600; font-size: 14px; }
+  .m-card { background: var(--bg); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; font-size: 13px; }
+  .m-card .art { aspect-ratio: 4 / 3; background: var(--surface); display: flex; align-items: center; justify-content: center; position: relative; color: var(--text-accent); }
   .m-card .art svg { width: 40px; height: 40px; }
-  .m-card .rank { position: absolute; left: 10px; top: 10px; background: var(--card); border-radius: 999px; padding: 1px 9px; font-size: 11px; font-weight: 600; color: var(--text); }
+  .m-card .rank { position: absolute; left: 10px; top: 10px; background: var(--bg); border-radius: 999px; padding: 1px 9px; font-size: 11px; font-weight: 600; color: var(--text-title); }
   .m-card .body { padding: 14px 16px 16px; }
   .m-card b { display: block; font-size: 15px; }
-  .m-card .price { color: var(--muted); font-size: 12px; }
+  .m-card .price { color: var(--text-sub); font-size: 12px; }
   .m-card p { margin: 6px 0 8px; font-size: 12.5px; line-height: 1.55; }
   .tags { display: flex; gap: 4px; margin-bottom: 10px; }
-  .tags span { background: var(--olive-lt); border-radius: 999px; padding: 1px 8px; font-size: 11px; }
+  .tags span { background: var(--surface); border-radius: 999px; padding: 1px 8px; font-size: 11px; }
 
   /* 구조도 */
   .sitemap { display: grid; grid-template-columns: 280px 1fr; gap: 24px; align-items: start; }
-  .sm-page { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 12px; display: grid; gap: 8px; font-size: 13px; }
-  .sm-page div { border-radius: 12px; padding: 10px 12px; background: var(--bg); border: 1px dashed var(--line); }
-  .sm-page .hd { background: var(--olive-lt); border-style: solid; border-color: var(--olive-lt); font-weight: 600; }
-  .sm-page .core { background: var(--olive); color: var(--card); border-color: var(--olive); font-weight: 600; }
-  .sm-page small { display: block; color: inherit; opacity: 0.75; font-size: 11.5px; }
+  .sm-page { background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 12px; display: grid; gap: 8px; font-size: 13px; }
+  .sm-page div { border-radius: 12px; padding: 10px 12px; background: var(--bg); border: 1px dashed var(--border); }
+  .sm-page .hd { background: var(--surface); border-style: solid; border-color: var(--surface); font-weight: 600; }
+  .sm-page .core { background: var(--surface); border: 1px solid var(--point); font-weight: 600; }
+  .sm-page small { display: block; color: var(--text-sub); font-weight: 400; font-size: 11.5px; }
 
   /* 메인 화면 와이어프레임 */
-  .browser { background: var(--card); border: 1px solid var(--line); border-radius: 24px; overflow: hidden; }
-  .browser-bar { height: 36px; display: flex; align-items: center; gap: 6px; padding: 0 16px; border-bottom: 1px solid var(--line); }
-  .browser-bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+  .browser { background: var(--bg); border: 1px solid var(--border); border-radius: 24px; overflow: hidden; }
+  .browser-bar { height: 36px; display: flex; align-items: center; gap: 6px; padding: 0 16px; border-bottom: 1px solid var(--border); }
+  .browser-bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--border); }
   .site { background: var(--bg); font-size: 13px; }
-  .s-head { display: flex; align-items: center; justify-content: space-between; height: 56px; padding: 0 28px; border-bottom: 1px solid var(--line); }
-  .s-head nav { display: flex; gap: 22px; align-items: center; color: var(--muted); }
-  .s-head nav .cur { color: var(--olive); box-shadow: 0 2px 0 var(--olive); padding-bottom: 2px; }
+  .s-head { display: flex; align-items: center; justify-content: space-between; height: 56px; padding: 0 28px; border-bottom: 1px solid var(--border); }
+  .s-head nav { display: flex; gap: 22px; align-items: center; color: var(--text-sub); }
+  .s-head nav .cur { color: var(--text-accent); box-shadow: 0 2px 0 var(--point); padding-bottom: 2px; }
   .s-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; padding: 44px 28px; align-items: center; }
   .s-hero h5 { font-size: 26px; line-height: 1.3; letter-spacing: -0.02em; margin: 8px 0 10px; }
-  .s-hero p { color: var(--muted); margin: 0 0 16px; }
+  .s-hero p { color: var(--text-sub); margin: 0 0 16px; }
   .s-hero .btns { display: flex; gap: 8px; flex-wrap: wrap; }
-  .s-hero .trust { margin-top: 14px; color: var(--muted); font-size: 12px; }
-  .s-hero .pic { height: 180px; background: var(--bg2); border-radius: 24px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 16px; }
+  .s-hero .trust { margin-top: 14px; color: var(--text-sub); font-size: 12px; }
+  .s-hero .pic { height: 180px; background: var(--surface); border-radius: 24px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 16px; }
   .s-hero .pic .m-card { width: 30%; font-size: 10px; }
   .s-hero .pic .m-card .body { padding: 8px; }
   .s-hero .pic .m-card b { font-size: 11px; }
-  .s-sec { padding: 36px 28px; border-top: 1px solid var(--line); }
-  .s-sec.alt { background: var(--bg2); }
+  .s-sec { padding: 36px 28px; border-top: 1px solid var(--border); }
+  .s-sec.alt { background: var(--surface); }
   .s-sec h6 { font-size: 18px; margin: 4px 0 18px; letter-spacing: -0.01em; }
-  .s-finder { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 22px; max-width: 620px; margin: 0 auto; }
+  .s-finder { background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 22px; max-width: 620px; margin: 0 auto; }
   .q { margin-bottom: 16px; }
   .q-t { display: flex; align-items: center; gap: 8px; font-weight: 600; margin-bottom: 8px; }
-  .q-n { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--olive); color: var(--olive); font-size: 11px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
-  .q-n.done { background: var(--olive); color: var(--card); }
+  .q-n { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--text-accent); color: var(--text-accent); font-size: 11px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
+  .q-n.done { background: var(--point); border-color: var(--point); color: var(--on-point); }
   .q .chips { display: flex; flex-wrap: wrap; gap: 6px; }
   .q .chip { height: 30px; padding: 0 12px; font-size: 12px; }
-  .s-sum { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid var(--line); padding-top: 14px; flex-wrap: wrap; }
-  .s-sum span { color: var(--muted); }
-  .s-sum b { color: var(--text); }
+  .s-sum { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid var(--border); padding-top: 14px; flex-wrap: wrap; }
+  .s-sum span { color: var(--text-sub); }
+  .s-sum b { color: var(--text-title); }
   .s-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
   .s-actions { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
   .s-occ { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .occ { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px; }
-  .occ svg { width: 22px; height: 22px; color: var(--olive); }
+  .occ { background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 14px; }
+  .occ svg { width: 22px; height: 22px; color: var(--text-accent); }
   .occ b { display: block; margin-top: 4px; }
-  .occ span { display: block; color: var(--muted); font-size: 11.5px; margin-bottom: 6px; }
-  .s-notice { background: var(--bg2); text-align: center; color: var(--muted); padding: 16px; font-size: 12px; border-top: 1px solid var(--line); }
-  .s-foot { display: flex; justify-content: space-between; padding: 18px 28px; color: var(--muted); font-size: 12px; }
-  .pin { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--olive-dk); color: var(--card); font-size: 11px; font-weight: 700; vertical-align: middle; margin-left: 6px; }
+  .occ span { display: block; color: var(--text-sub); font-size: 11.5px; margin-bottom: 6px; }
+  .s-notice { background: var(--surface); text-align: center; color: var(--text-sub); padding: 16px; font-size: 12px; border-top: 1px solid var(--border); }
+  .s-foot { display: flex; justify-content: space-between; padding: 18px 28px; color: var(--text-sub); font-size: 12px; }
+  .pin { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--text-title); color: var(--bg); font-size: 11px; font-weight: 700; vertical-align: middle; margin-left: 6px; }
 
   /* 영역 설명 목록 */
   .areas { display: grid; gap: 12px; margin-top: 32px; }
-  .area { display: grid; grid-template-columns: 56px 200px 1fr; gap: 20px; padding: 20px 24px; background: var(--card); border: 1px solid var(--line); border-radius: 20px; }
-  .area .n { font-weight: 700; color: var(--olive); }
+  .area { display: grid; grid-template-columns: 56px 200px 1fr; gap: 20px; padding: 20px 24px; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; }
+  .area .n { font-weight: 700; color: var(--text-accent); }
   .area h4 { margin: 0; }
   .area ul { font-size: 15px; }
 
@@ -171,63 +170,63 @@
   .menu-card h4 { font-size: 18px; display: flex; align-items: center; gap: 8px; }
   .menu-card h4 code { font-size: 12px; font-weight: 500; }
   .menu-card dl { margin: 16px 0 0; display: grid; gap: 12px; font-size: 15px; }
-  .menu-card dt { font-size: 13px; color: var(--muted); }
+  .menu-card dt { font-size: 13px; color: var(--text-sub); }
   .menu-card dd { margin: 2px 0 0; }
 
   /* 팔레트 */
   .palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; list-style: none; padding: 0; margin: 0; }
   .palette li { margin: 0; font-size: 14px; }
-  .sw { height: 80px; border-radius: 16px; border: 1px solid var(--line); margin-bottom: 10px; }
+  .sw { height: 80px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 10px; }
   .palette b { display: block; }
-  .palette small { display: block; color: var(--muted); font-size: 12.5px; line-height: 1.5; }
+  .palette small { display: block; color: var(--text-sub); font-size: 12.5px; line-height: 1.5; }
 
   /* 타입 스케일 */
-  .type-row { display: grid; grid-template-columns: 180px 1fr 200px; gap: 20px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--line); }
-  .type-row:first-child { border-top: 1px solid var(--line); }
-  .type-row .meta { color: var(--muted); font-size: 13px; }
+  .type-row { display: grid; grid-template-columns: 180px 1fr 200px; gap: 20px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--border); }
+  .type-row:first-child { border-top: 1px solid var(--border); }
+  .type-row .meta { color: var(--text-sub); font-size: 13px; }
 
   /* 상태 데모 */
   .demo-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-  .demo-cap { display: block; color: var(--muted); font-size: 12px; margin-top: 6px; }
-  .skel { height: 120px; border-radius: 16px; background: var(--bg2); }
+  .demo-cap { display: block; color: var(--text-sub); font-size: 12px; margin-top: 6px; }
+  .skel { height: 120px; border-radius: 16px; background: var(--surface); }
 
   /* 반응형 비교 */
   .devices { display: grid; grid-template-columns: 1.6fr 1fr 0.7fr; gap: 20px; align-items: start; }
-  .device { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 12px; font-size: 11px; }
-  .device .cap { text-align: center; color: var(--muted); font-size: 12px; margin-top: 10px; }
+  .device { background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 12px; font-size: 11px; }
+  .device .cap { text-align: center; color: var(--text-sub); font-size: 12px; margin-top: 10px; }
   .dv { display: grid; gap: 6px; }
-  .dv div { background: var(--bg2); border-radius: 8px; height: 18px; }
-  .dv .hd { background: var(--olive-lt); }
+  .dv div { background: var(--surface); border-radius: 8px; height: 18px; }
+  .dv .hd { background: var(--point); }
   .dv .row { display: grid; gap: 6px; background: none; height: auto; }
-  .dv .row div { height: 44px; background: var(--bg); border: 1px solid var(--line); }
+  .dv .row div { height: 44px; background: var(--bg); border: 1px solid var(--border); }
   .dv .tall { height: 64px; }
-  .dv .find { height: 52px; background: var(--card); border: 1px solid var(--line); }
+  .dv .find { height: 52px; background: var(--bg); border: 1px solid var(--border); }
 
   /* 단계 */
   .steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; counter-reset: s; }
-  .steps li { margin: 0; counter-increment: s; background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 18px 16px; font-size: 14px; }
-  .steps li::before { content: "STEP " counter(s); display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: var(--olive); margin-bottom: 6px; }
+  .steps li { margin: 0; counter-increment: s; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 18px 16px; font-size: 14px; }
+  .steps li::before { content: "STEP " counter(s); display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: var(--text-accent); margin-bottom: 6px; }
   .steps b { display: block; font-size: 15px; margin-bottom: 4px; }
-  .steps .clicks { display: block; color: var(--muted); font-size: 12px; margin-top: 6px; }
+  .steps .clicks { display: block; color: var(--text-sub); font-size: 12px; margin-top: 6px; }
 
   /* 레퍼런스 */
   .refs { display: grid; gap: 16px; }
-  .ref { display: grid; grid-template-columns: 220px 1fr 1fr 1fr; gap: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 22px 24px; font-size: 14.5px; }
+  .ref { display: grid; grid-template-columns: 220px 1fr 1fr 1fr; gap: 20px; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 22px 24px; font-size: 14.5px; }
   .ref h4 { margin: 0 0 4px; }
   .ref a { font-size: 13px; word-break: break-all; }
-  .ref .k { display: block; font-size: 12px; color: var(--olive); font-weight: 700; letter-spacing: 0.04em; margin-bottom: 4px; }
+  .ref .k { display: block; font-size: 12px; color: var(--text-accent); font-weight: 700; letter-spacing: 0.04em; margin-bottom: 4px; }
 
   /* 최종 지침 */
-  .prompt { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--olive); border-radius: 20px; padding: 28px 32px; font-size: 15px; }
+  .prompt { background: var(--bg); border: 1px solid var(--border); border-left: 4px solid var(--point); border-radius: 20px; padding: 28px 32px; font-size: 15px; }
   .prompt p { margin: 0 0 12px; }
   .prompt ol { margin: 0 0 12px; }
-  .prompt b { color: var(--olive-dk); }
-  .prompt .ph { color: var(--muted); }
+  .prompt b { color: var(--text-title); }
+  .prompt .ph { color: var(--text-sub); }
   ul.checks { list-style: none; padding: 0; display: grid; gap: 10px; }
   ul.checks li { position: relative; margin: 0; padding-left: 30px; }
-  ul.checks li::before { content: ""; position: absolute; left: 0; top: 4px; width: 18px; height: 18px; border: 1.5px solid var(--olive); border-radius: 6px; }
+  ul.checks li::before { content: ""; position: absolute; left: 0; top: 4px; width: 18px; height: 18px; border: 1.5px solid var(--text-accent); border-radius: 6px; }
 
-  footer.doc-foot { border-top: 1px solid var(--line); padding: 32px 0 56px; color: var(--muted); font-size: 13px; }
+  footer.doc-foot { border-top: 1px solid var(--border); padding: 32px 0 56px; color: var(--text-sub); font-size: 13px; }
   footer.doc-foot .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
   @media (max-width: 1023px) {
@@ -264,7 +263,7 @@
     .prompt { padding: 22px; }
   }
   /* 모션: 차분하게, 대부분 200~500ms */
-  :root { --ease: cubic-bezier(0.22, 0.61, 0.36, 1); --shadow: 0 10px 24px rgba(46, 43, 38, 0.08); }
+  :root { --ease: cubic-bezier(0.22, 0.61, 0.36, 1); --shadow: 0 10px 24px color-mix(in srgb, var(--text-title) 8%, transparent); }
   @keyframes rise { from { opacity: 0; translate: 0 16px; } }
 
   /* 페이지 진입: 표지 글 → 카드 순서로 아래에서 위로 */
@@ -287,7 +286,7 @@
     transition: translate 300ms var(--ease), box-shadow 300ms var(--ease), border-color 300ms var(--ease);
   }
   .card:hover, .m-card:hover, .area:hover, .ref:hover, .steps li:hover, .occ:hover {
-    translate: 0 -2px; box-shadow: var(--shadow); border-color: var(--olive-lt);
+    translate: 0 -2px; box-shadow: var(--shadow); border-color: var(--point);
   }
   .m-card .art svg { transition: scale 300ms var(--ease); }
   .m-card:hover .art svg { scale: 1.06; }
@@ -295,8 +294,8 @@
   /* 버튼 · 칩 · 링크: 색과 크기가 부드럽게 반응 */
   .btn, .chip { transition: background-color 250ms var(--ease), border-color 250ms var(--ease), color 250ms var(--ease), scale 200ms var(--ease); }
   .btn:hover { scale: 1.02; }
-  .btn.main:not(.off):hover { background: var(--olive-dk); }
-  .btn.sub:hover, .chip:not(.on):hover { background: var(--olive-lt); border-color: var(--olive); }
+  .btn.main:not(.off):hover { background: var(--point-hover); }
+  .btn.sub:hover, .chip:not(.on):hover { background: var(--surface); border-color: var(--point); }
   .btn:active, .chip:active { scale: 0.98; }
   .toc a, .logo, a { transition: color 200ms var(--ease); }
 
@@ -380,7 +379,7 @@
       <h3>핵심 가치와 화면에서 지키는 방법</h3>
       <div class="grid4">
         <div class="card"><h4>간편함</h4><p class="muted">질문 3개, 클릭 5번이면 결과. 화면 이동 없이 한 페이지 안에서 끝</p></div>
-        <div class="card"><h4>세련된 디자인</h4><p class="muted">웜 아이보리 + 올리브 그린 중심, 넉넉한 여백, 장식 최소화</p></div>
+        <div class="card"><h4>세련된 디자인</h4><p class="muted">흰 바탕 + 분홍 포인트 하나, 넉넉한 여백, 장식 최소화</p></div>
         <div class="card"><h4>신뢰감</h4><p class="muted">추천 이유를 한 줄씩, "판매하지 않음 · 가격은 참고용"을 숨기지 않고 표시</p></div>
         <div class="card"><h4>편리한 탐색</h4><p class="muted">조건으로 찾기와 상황별로 둘러보기, 두 가지 길만 제공</p></div>
       </div>
@@ -415,7 +414,7 @@
       <h3>최종 상단 메뉴</h3>
       <div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
         <span class="logo"><svg aria-hidden="true"><use href="#i-gift"/></svg>Gift Finder</span>
-        <span style="display:flex;gap:28px;align-items:center;flex-wrap:wrap;font-size:15px"><span style="color:var(--olive);box-shadow:0 2px 0 var(--olive)">선물 찾기</span><span style="color:var(--muted)">상황별 선물</span><span style="color:var(--muted)">이용 방법</span><span class="btn main sm">추천받기</span></span>
+        <span style="display:flex;gap:28px;align-items:center;flex-wrap:wrap;font-size:15px"><span style="color:var(--text-accent);box-shadow:0 2px 0 var(--point)">선물 찾기</span><span style="color:var(--text-sub)">상황별 선물</span><span style="color:var(--text-sub)">이용 방법</span><span class="btn main sm">추천받기</span></span>
       </div>
 
       <h3>사이트 구조 · 한 페이지 안에서 스크롤 이동</h3>
@@ -432,7 +431,7 @@
         <div class="card">
           <ul>
             <li>모든 메뉴는 <b>별도 페이지 없이</b> 같은 페이지 안의 영역으로 부드럽게 스크롤 이동</li>
-            <li>메뉴를 누르면 해당 영역으로 이동하고, 그 메뉴 글자 아래에 올리브색 밑줄</li>
+            <li>메뉴를 누르면 해당 영역으로 이동하고, 그 메뉴 글자 아래에 포인트색 밑줄</li>
             <li>스크롤로 영역을 지나갈 때도 지금 보는 영역의 메뉴에 밑줄이 따라감</li>
             <li>주소 뒤에 <code>#finder</code> <code>#occasions</code> <code>#guide</code>가 붙어 링크로 공유 가능</li>
             <li>상황별 선물 → 선물 찾기, 이용 방법 → 선물 찾기로 이어지는 버튼이 있어 어디서든 핵심 기능으로 돌아옴</li>
@@ -507,13 +506,13 @@
       <p class="muted" style="margin-top:12px">이용 방법 영역(⑤)은 4번 메뉴 상세에서 설명합니다.</p>
 
       <div class="areas">
-        <div class="area"><span class="n">1</span><h4>헤더와 로고</h4><ul><li>높이 PC 72px · 모바일 60px, 스크롤해도 위에 고정</li><li>왼쪽: 선물 상자 선 아이콘(20px) + "Gift Finder" 20px · 굵기 700 · 딥 올리브</li><li>배경은 메인 배경색 90% + 뒤가 살짝 흐려 보이게, 스크롤하면 아래 1px 구분선</li><li>로고를 누르면 맨 위로</li></ul></div>
-        <div class="area"><span class="n">2</span><h4>상단 메뉴와 버튼</h4><ul><li>메뉴 15px · 굵기 500 · 보조 글자색, 간격 36px</li><li>오버 시 본문 글자색, 현재 영역은 올리브 + 2px 밑줄</li><li><code>추천받기</code> 높이 40px · 좌우 20px · 올리브 알약</li><li>모바일: 메뉴는 숨기고 작은 추천받기 + ☰(44×44px)</li></ul></div>
+        <div class="area"><span class="n">1</span><h4>헤더와 로고</h4><ul><li>높이 PC 72px · 모바일 60px, 스크롤해도 위에 고정</li><li>왼쪽: 선물 상자 선 아이콘(20px) + "Gift Finder" 20px · 굵기 700 · 제목 글자색</li><li>배경은 메인 배경색 90% + 뒤가 살짝 흐려 보이게, 스크롤하면 아래 1px 구분선</li><li>로고를 누르면 맨 위로</li></ul></div>
+        <div class="area"><span class="n">2</span><h4>상단 메뉴와 버튼</h4><ul><li>메뉴 15px · 굵기 500 · 보조 글자색, 간격 36px</li><li>오버 시 제목 글자색, 현재 영역은 강조 글자색 + 포인트색 2px 밑줄</li><li><code>추천받기</code> 높이 40px · 좌우 20px · 포인트색 알약</li><li>모바일: 메뉴는 숨기고 작은 추천받기 + ☰(44×44px)</li></ul></div>
         <div class="area"><span class="n">3</span><h4>메인 소개 영역</h4><ul><li>PC 글 6 : 그림 6 2단, 모바일 글 → 그림 1단, 위아래 여백 PC 96px · 모바일 56px</li><li>라벨 <code>GIFT FINDER</code> 13px → 제목 44px(모바일 30px) → 설명 17px · 최대 폭 440px</li><li>버튼 아래 "회원가입 없음 · 판매 없음 · 1분 완성" 14px</li><li>오른쪽: 보조 배경색 둥근 사각형(모서리 32px) 안에 선물 카드 3장이 살짝 겹친 그림</li></ul></div>
         <div class="area"><span class="n">4</span><h4>선물 추천 시작 버튼</h4><ul><li>높이 56px · 좌우 32px · 17px 굵기 600 · 오른쪽 → 아이콘</li><li>첫 화면에서 스크롤 없이 보여야 함</li><li>누르면 선물 찾기로 부드럽게 이동, 첫 칩에 키보드 초점</li></ul></div>
-        <div class="area"><span class="n">5</span><h4>선물 조건 선택 영역</h4><ul><li>라벨 + 제목 "세 가지만 알려 주세요", 흰 카드 한 장(최대 폭 760px, 안쪽 여백 40px · 모바일 24px)</li><li>질문 3개를 위에서 아래로, 질문 사이 32px · 칩 사이 8px</li><li>번호 원(24px)은 고르면 올리브로 채워지고 ✓</li><li>카드 아래 선택 요약 + <code>선물 3개 추천받기</code>(56px), 미완료 시 비활성 + "2개 더 고르면…" 안내</li></ul></div>
+        <div class="area"><span class="n">5</span><h4>선물 조건 선택 영역</h4><ul><li>라벨 + 제목 "세 가지만 알려 주세요", 흰 카드 한 장(최대 폭 760px, 안쪽 여백 40px · 모바일 24px)</li><li>질문 3개를 위에서 아래로, 질문 사이 32px · 칩 사이 8px</li><li>번호 원(24px)은 고르면 포인트색으로 채워지고 ✓</li><li>카드 아래 선택 요약 + <code>선물 3개 추천받기</code>(56px), 미완료 시 비활성 + "2개 더 고르면…" 안내</li></ul></div>
         <div class="area"><span class="n">6</span><h4>추천 결과 영역</h4><ul><li>처음엔 숨김 → 0.4초 로딩 자리표시 → 결과 + 결과 위치로 이동</li><li>제목 "친구에게 줄 3~5만 원대 생일 선물이에요" 28px</li><li>제목 아래 작은 조건 칩 3개(누르면 선택 영역으로 돌아가 수정)</li><li>카드 PC 3칸(간격 24px) · 모바일 1칸</li></ul></div>
-        <div class="area"><span class="n">7</span><h4>추천 선물 카드</h4><ul><li>그림 4:3(보조 배경 + 올리브 선 아이콘 48px) → <code>추천 1</code> 배지 → 이름 18px → 가격대 14px → 이유 15px(두 줄까지) → 태그 2개 → <code>상품 찾아보기 ↗</code></li><li>모서리 20px · 1px 테두리 · 안쪽 여백 20px, 같은 줄 카드 높이 통일, 링크는 항상 맨 아래</li><li>아래에 <code>다른 선물 3개 보기</code> · <code>조건 바꾸기</code></li></ul></div>
+        <div class="area"><span class="n">7</span><h4>추천 선물 카드</h4><ul><li>그림 4:3(보조 배경 + 강조색 선 아이콘 48px) → <code>추천 1</code> 배지 → 이름 18px → 가격대 14px → 이유 15px(두 줄까지) → 태그 2개 → <code>상품 찾아보기 ↗</code></li><li>모서리 20px · 1px 테두리 · 안쪽 여백 20px, 같은 줄 카드 높이 통일, 링크는 항상 맨 아래</li><li>아래에 <code>다른 선물 3개 보기</code> · <code>조건 바꾸기</code></li></ul></div>
         <div class="area"><span class="n">8</span><h4>하단 안내 및 푸터</h4><ul><li>보조 배경색 띠: "판매하지 않아요 · 가격대는 참고용" 14px · 위아래 32px</li><li>푸터 PC 2단(로고 + 한 줄 소개 / 메뉴 반복), 모바일 1단 가운데</li><li>맨 아래 1px 구분선 → <code>© 2026 Gift Finder</code> 13px</li></ul></div>
       </div>
     </div>
@@ -579,38 +578,37 @@
   <!-- 5 -->
   <section class="part" id="p5">
     <div class="wrap">
-      <div class="part-head"><span class="label">05 · Design System</span><h2>컬러, 글꼴, 버튼, 카드 등 디자인 시스템</h2><p>테마 색은 <b>웜 아이보리 · 올리브 그린 · 차콜</b> 3가지. 나머지는 모두 이 3가지의 밝기만 바꾼 색입니다. 이 페이지도 아래 10가지 색만 사용했어요.</p></div>
+      <div class="part-head"><span class="label">05 · Design System</span><h2>컬러, 글꼴, 버튼, 카드 등 디자인 시스템</h2><p>포인트 <b>#E63B7A</b>를 기준으로 <b>바탕 60 : 보조 30 : 포인트 10</b> 비율로 씁니다. 넓은 면은 바탕색과 보조색으로 채우고, 포인트색은 버튼과 작은 강조에만 씁니다. 이 페이지도 아래 색만 사용했어요.</p></div>
 
       <h3>컬러 시스템</h3>
       <ul class="palette">
-        <li><div class="sw" style="background:#f7f3ea"></div><b>웜 아이보리</b><small>#F7F3EA<br>메인 배경색</small></li>
-        <li><div class="sw" style="background:#efe8da"></div><b>샌드</b><small>#EFE8DA<br>보조 배경색 · 카드 그림 영역</small></li>
-        <li><div class="sw" style="background:#fffdf8"></div><b>크림 화이트</b><small>#FFFDF8<br>카드 배경</small></li>
-        <li><div class="sw" style="background:#5e6b3f"></div><b>올리브 그린</b><small>#5E6B3F<br>포인트 · 주 버튼 · 선택</small></li>
-        <li><div class="sw" style="background:#4a5531"></div><b>딥 올리브</b><small>#4A5531<br>버튼 오버 · 로고</small></li>
-        <li><div class="sw" style="background:#e5e8d6"></div><b>세이지 틴트</b><small>#E5E8D6<br>태그 · 칩 오버</small></li>
-        <li><div class="sw" style="background:#2e2b26"></div><b>차콜</b><small>#2E2B26<br>본문 글자색</small></li>
-        <li><div class="sw" style="background:#6e685d"></div><b>웜 그레이</b><small>#6E685D<br>보조 글자색</small></li>
-        <li><div class="sw" style="background:#a8a296"></div><b>라이트 그레이</b><small>#A8A296<br>비활성 글자</small></li>
-        <li><div class="sw" style="background:#e2dacb"></div><b>베이지 라인</b><small>#E2DACB<br>테두리 · 구분선</small></li>
+        <li><div class="sw" style="background:var(--bg)"></div><b>바탕</b><small>#FFFFFF<br>60% · 페이지 · 카드</small></li>
+        <li><div class="sw" style="background:var(--surface)"></div><b>보조</b><small>#F4F0F2<br>30% · 번갈아 나오는 영역 · 표 머리글 · 태그</small></li>
+        <li><div class="sw" style="background:var(--point)"></div><b>포인트</b><small>#E63B7A<br>10% · 주 버튼 · 선택 · 작은 강조</small></li>
+        <li><div class="sw" style="background:var(--point-hover)"></div><b>포인트 호버</b><small>#E63B7A<br>주 버튼 오버 · 누름</small></li>
+        <li><div class="sw" style="background:var(--on-point)"></div><b>포인트 위 글자</b><small>#000000<br>포인트색 위의 글자</small></li>
+        <li><div class="sw" style="background:var(--text-title)"></div><b>제목 글자</b><small>#28151C<br>제목 · 본문</small></li>
+        <li><div class="sw" style="background:var(--text-sub)"></div><b>보조 글자</b><small>#694F58<br>설명 · 가격 · 비활성</small></li>
+        <li><div class="sw" style="background:var(--text-accent)"></div><b>강조 글자</b><small>#D31B5F<br>라벨 · 링크 · 아이콘</small></li>
+        <li><div class="sw" style="background:var(--border)"></div><b>테두리</b><small>#E2D9DD<br>테두리 · 구분선 · 비활성 버튼</small></li>
       </ul>
-      <p class="muted" style="margin-top:16px">명암 대비: 차콜/아이보리 12.7:1 · 웜 그레이/아이보리 5.0:1 · 올리브 위 흰 글자 5.7:1로 모두 본문 기준 4.5:1 이상. 빨강·주황 같은 경고색은 쓰지 않습니다.</p>
+      <p class="muted" style="margin-top:16px">명암 대비: 제목 글자/바탕 17.2:1 · 보조 글자/보조 6.5:1 · 강조 글자/보조 4.5:1 · 포인트 위 글자/포인트 5.2:1 · 비활성 버튼 5.3:1로 모두 본문 기준 4.5:1 이상. 빨강·주황 같은 경고색은 쓰지 않습니다.</p>
 
       <h3>버튼 및 선택 상태</h3>
       <div class="grid3">
         <div class="card">
           <h4>주 버튼</h4>
-          <div class="demo-row"><span><span class="btn main">기본</span><span class="demo-cap">#5E6B3F</span></span><span><span class="btn main dk">오버·누름</span><span class="demo-cap">#4A5531</span></span><span><span class="btn main off">비활성</span><span class="demo-cap">#E2DACB · #A8A296</span></span></div>
+          <div class="demo-row"><span><span class="btn main">기본</span><span class="demo-cap">#E63B7A</span></span><span><span class="btn main dk">오버·누름</span><span class="demo-cap">#E63B7A</span></span><span><span class="btn main off">비활성</span><span class="demo-cap">#E2D9DD · #694F58</span></span></div>
         </div>
         <div class="card">
           <h4>보조 버튼 · 텍스트 버튼</h4>
-          <div class="demo-row"><span><span class="btn sub">기본</span><span class="demo-cap">투명 · 테두리 #E2DACB</span></span><span><span class="btn sub hover">오버</span><span class="demo-cap">#E5E8D6 · 테두리 #5E6B3F</span></span></div>
+          <div class="demo-row"><span><span class="btn sub">기본</span><span class="demo-cap">투명 · 테두리 #E2D9DD</span></span><span><span class="btn sub hover">오버</span><span class="demo-cap">#F4F0F2 · 테두리 #E63B7A</span></span></div>
           <div class="demo-row" style="margin-top:12px"><span class="tlink">상품 찾아보기 ↗</span><span class="tlink">이 상황으로 찾기 →</span></div>
         </div>
         <div class="card">
           <h4>칩 (선택 메뉴)</h4>
-          <div class="demo-row"><span><span class="chip">기본</span><span class="demo-cap">#FFFDF8</span></span><span><span class="chip hover">오버</span><span class="demo-cap">#E5E8D6</span></span><span><span class="chip on">선택</span><span class="demo-cap">#5E6B3F · 흰 글자</span></span></div>
-          <p class="muted" style="margin:12px 0 0">키보드 초점: 올리브 2px 바깥 테두리, 간격 2px</p>
+          <div class="demo-row"><span><span class="chip">기본</span><span class="demo-cap">#FFFFFF</span></span><span><span class="chip hover">오버</span><span class="demo-cap">#F4F0F2</span></span><span><span class="chip on">선택</span><span class="demo-cap">#E63B7A · #000000 글자</span></span></div>
+          <p class="muted" style="margin:12px 0 0">키보드 초점: 강조 글자색 2px 바깥 테두리, 간격 2px</p>
         </div>
       </div>
 
@@ -620,7 +618,7 @@
         <div class="type-row"><span class="meta">영역 제목</span><span style="font-size:32px;font-weight:700;line-height:1.35;letter-spacing:-0.015em">세 가지만 알려 주세요</span><span class="meta">32px · 모바일 24px · 700 · 1.35</span></div>
         <div class="type-row"><span class="meta">카드 제목</span><span style="font-size:18px;font-weight:600">핸드드립 입문 세트</span><span class="meta">18px · 600 · 1.4</span></div>
         <div class="type-row"><span class="meta">메인 설명 · 본문</span><span style="font-size:16px">누구에게, 얼마로, 어떤 날인지 고르면 어울리는 선물 3개를 추천해 드려요.</span><span class="meta">17px · 16px · 400 · 1.7</span></div>
-        <div class="type-row"><span class="meta">보조 설명 · 가격</span><span style="font-size:14px;color:var(--muted)">약 4만 원대</span><span class="meta">14px · 400 · 1.6</span></div>
+        <div class="type-row"><span class="meta">보조 설명 · 가격</span><span style="font-size:14px;color:var(--text-sub)">약 4만 원대</span><span class="meta">14px · 400 · 1.6</span></div>
         <div class="type-row"><span class="meta">버튼</span><span style="font-size:16px;font-weight:600">선물 3개 추천받기</span><span class="meta">16px (큰 버튼 17px) · 600</span></div>
         <div class="type-row"><span class="meta">영문 라벨</span><span class="label">02 · Gift Finder</span><span class="meta">13px · 600 · 0.12em · 대문자</span></div>
         <div class="type-row"><span class="meta">태그 · 배지</span><span class="tags" style="margin:0"><span style="font-size:12px">#실용적</span><span style="font-size:12px">#데일리</span></span><span class="meta">12px · 500</span></div>
@@ -630,7 +628,7 @@
         <ul>
           <li>단어 중간에서 줄이 바뀌지 않게 <b>단어 단위 줄바꿈</b></li>
           <li>한 줄은 한글 35~40자(약 640px)를 넘기지 않기</li>
-          <li>순수 검정 대신 차콜, 순수 흰색 대신 크림 화이트로 눈부심 줄이기</li>
+          <li>본문은 순수 검정 대신 제목 글자색(#28151C)으로 눈부심 줄이기</li>
           <li>제목만 자간을 살짝 좁히고 본문 자간은 그대로</li>
           <li>14px보다 작은 글자는 태그·배지에만, 문단 사이는 글자 크기의 1배 이상</li>
         </ul>
@@ -641,19 +639,19 @@
         <table>
           <thead><tr><th>컴포넌트</th><th>모양 · 크기</th><th>색상</th><th>모서리 · 간격</th></tr></thead>
           <tbody>
-            <tr><td>큰 주 버튼</td><td>높이 56px · 좌우 32px · 17px</td><td>올리브 / 크림 화이트 글자</td><td>알약 · 아이콘 간격 8px</td></tr>
-            <tr><td>주 버튼 · 보조 버튼</td><td>높이 48px · 좌우 24px · 16px</td><td>올리브 / 투명 + 베이지 테두리</td><td>알약 · 버튼 사이 12px</td></tr>
-            <tr><td>작은 주 버튼</td><td>높이 40px · 좌우 20px · 14px</td><td>올리브</td><td>알약 (헤더 추천받기)</td></tr>
-            <tr><td>입력창 · 선택 메뉴</td><td>입력창 없음. 선택은 모두 칩: 높이 44px · 좌우 18px · 15px</td><td>크림 화이트 + 베이지 테두리 / 선택 시 올리브</td><td>알약 · 칩 사이 8px · 드롭다운 쓰지 않음</td></tr>
-            <tr><td>선물 추천 카드</td><td>그림 4:3 + 본문, 안쪽 여백 20px</td><td>크림 화이트 · 그림 영역 샌드</td><td>모서리 20px · 카드 사이 24px(모바일 16px)</td></tr>
-            <tr><td>상황 카드</td><td>선 아이콘 28px + 이름 18px + 설명 14px</td><td>크림 화이트 · 오버 시 테두리 올리브</td><td>모서리 20px · 안쪽 여백 24px</td></tr>
-            <tr><td>아이콘</td><td>선 굵기 1.5px 라인 아이콘, 16 · 20 · 28 · 48px 네 가지</td><td>올리브 또는 웜 그레이</td><td>채워진 아이콘 · 컬러 이모지 쓰지 않음</td></tr>
-            <tr><td>PC 메뉴</td><td>15px · 간격 36px</td><td>웜 그레이 → 현재 올리브 + 2px 밑줄</td><td>밑줄은 글자 아래 6px</td></tr>
+            <tr><td>큰 주 버튼</td><td>높이 56px · 좌우 32px · 17px</td><td>포인트색 / #000000 글자</td><td>알약 · 아이콘 간격 8px</td></tr>
+            <tr><td>주 버튼 · 보조 버튼</td><td>높이 48px · 좌우 24px · 16px</td><td>포인트색 / 투명 + 테두리색</td><td>알약 · 버튼 사이 12px</td></tr>
+            <tr><td>작은 주 버튼</td><td>높이 40px · 좌우 20px · 14px</td><td>포인트색</td><td>알약 (헤더 추천받기)</td></tr>
+            <tr><td>입력창 · 선택 메뉴</td><td>입력창 없음. 선택은 모두 칩: 높이 44px · 좌우 18px · 15px</td><td>바탕색 + 테두리색 / 선택 시 포인트색</td><td>알약 · 칩 사이 8px · 드롭다운 쓰지 않음</td></tr>
+            <tr><td>선물 추천 카드</td><td>그림 4:3 + 본문, 안쪽 여백 20px</td><td>바탕색 · 그림 영역 보조색</td><td>모서리 20px · 카드 사이 24px(모바일 16px)</td></tr>
+            <tr><td>상황 카드</td><td>선 아이콘 28px + 이름 18px + 설명 14px</td><td>바탕색 · 오버 시 테두리 포인트색</td><td>모서리 20px · 안쪽 여백 24px</td></tr>
+            <tr><td>아이콘</td><td>선 굵기 1.5px 라인 아이콘, 16 · 20 · 28 · 48px 네 가지</td><td>강조 글자색 또는 보조 글자색</td><td>채워진 아이콘 · 컬러 이모지 쓰지 않음</td></tr>
+            <tr><td>PC 메뉴</td><td>15px · 간격 36px</td><td>보조 글자색 → 현재 강조 글자색 + 포인트색 2px 밑줄</td><td>밑줄은 글자 아래 6px</td></tr>
             <tr><td>모바일 메뉴 패널</td><td>헤더 아래 화면 폭 전체, 한 줄 56px · 18px</td><td>메인 배경 + 줄 사이 구분선</td><td>맨 아래 큰 주 버튼, 고르거나 ×로 닫힘</td></tr>
           </tbody>
         </table>
       </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px;color:var(--olive)">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px;color:var(--text-accent)">
         <svg width="28" height="28" aria-hidden="true"><use href="#i-gift"/></svg><svg width="28" height="28" aria-hidden="true"><use href="#i-cake"/></svg><svg width="28" height="28" aria-hidden="true"><use href="#i-heart"/></svg><svg width="28" height="28" aria-hidden="true"><use href="#i-flower"/></svg><svg width="28" height="28" aria-hidden="true"><use href="#i-home"/></svg><svg width="28" height="28" aria-hidden="true"><use href="#i-star"/></svg><svg width="28" height="28" aria-hidden="true"><use href="#i-cup"/></svg>
         <span class="muted">선물 · 생일 · 기념일 · 감사 · 집들이 · 축하 · 응원 아이콘 예시 (Lucide 같은 무료 라인 아이콘 스타일)</span>
       </div>
@@ -664,10 +662,10 @@
           <table>
             <thead><tr><th>요소</th><th>마우스 오버</th><th>선택 · 현재</th></tr></thead>
             <tbody>
-              <tr><td>메뉴</td><td>본문 글자색</td><td>올리브 + 밑줄</td></tr>
-              <tr><td>칩</td><td>세이지 틴트 배경</td><td>올리브 + 흰 글자 굵게</td></tr>
+              <tr><td>메뉴</td><td>제목 글자색</td><td>강조 글자색 + 포인트색 밑줄</td></tr>
+              <tr><td>칩</td><td>보조색 배경</td><td>포인트색 + #000000 글자 굵게</td></tr>
               <tr><td>선물 카드</td><td>2px 위로 + 아주 옅은 그림자</td><td>—</td></tr>
-              <tr><td>상황 카드</td><td>테두리 올리브</td><td>—</td></tr>
+              <tr><td>상황 카드</td><td>테두리 포인트색</td><td>—</td></tr>
               <tr><td>텍스트 버튼</td><td>밑줄</td><td>—</td></tr>
             </tbody>
           </table>
@@ -677,7 +675,7 @@
             <thead><tr><th>상태</th><th>화면</th></tr></thead>
             <tbody>
               <tr><td>선택 미완료</td><td>추천 버튼 비활성 + "2개 더 고르면 추천받을 수 있어요"</td></tr>
-              <tr><td>로딩</td><td>0.4초, 카드 3장 자리에 샌드색 사각형이 은은하게 깜빡임</td></tr>
+              <tr><td>로딩</td><td>0.4초, 카드 3장 자리에 보조색 사각형이 은은하게 깜빡임</td></tr>
               <tr><td>결과 부족</td><td>조건을 넓혀 채우고 "비슷한 선물도 함께 골랐어요"</td></tr>
               <tr><td>결과 없음</td><td>선물 상자 아이콘 + "조건에 맞는 선물을 찾지 못했어요" + 조건 바꾸기</td></tr>
               <tr><td>모두 봄</td><td>"추천을 모두 봤어요. 처음부터 다시 보여 드릴게요"</td></tr>
@@ -784,7 +782,7 @@
         <h4>접근성과 가독성</h4>
         <ul>
           <li>모바일에서 누르는 모든 것은 최소 44×44px</li>
-          <li>키보드만으로 모든 칩·버튼 조작 가능, 초점은 올리브 테두리로 분명히</li>
+          <li>키보드만으로 모든 칩·버튼 조작 가능, 초점은 강조 글자색 테두리로 분명히</li>
           <li>칩 묶음은 "질문 + 선택지"로 묶어 화면 읽기 프로그램이 "누구에게 주나요? 친구, 선택됨"처럼 읽게</li>
           <li>결과가 나타나면 화면 읽기 프로그램이 "추천 결과 3개"를 알려 주게</li>
           <li>색만으로 상태를 구분하지 않기 (선택된 칩은 색 + 굵은 글자, 번호 원은 색 + ✓)</li>
@@ -803,7 +801,7 @@
           <div><h4>walnut.</h4><a href="https://walnuuut.com" target="_blank" rel="noopener">https://walnuuut.com ↗</a><p class="muted" style="margin:6px 0 0">일본 후쿠오카 프리랜서 크리에이터 포트폴리오</p></div>
           <div><span class="k">참고할 요소</span>흑백 무채색(#000 · #fff · #f6f6f6) 위주와 넓은 여백, 영문 소문자 메뉴(about · design · photograph · travel · news · contact), 영문+현지어 2줄 영역 제목, 완전히 둥근 알약 버튼, "view more" 텍스트 링크, 날짜+제목 한 줄 목록, "pick up 01" 번호 붙은 작업 소개</div>
           <div><span class="k">적용할 부분</span>영역 라벨을 영문 대문자 + 한글 제목 2줄로(<code>01 · 선물 찾기</code> / "세 가지만 알려 주세요"), 알약 버튼, 번호 붙은 단계 표시, 담백한 텍스트 링크</div>
-          <div><span class="k">차별화</span>흑백 대신 웜 아이보리 + 올리브, 사진 포트폴리오 대신 선물 카드와 선택 기능 중심, 개인 브랜드 감성 문구 대신 정보 중심 문장</div>
+          <div><span class="k">차별화</span>흑백 대신 흰 바탕 + 분홍 포인트, 사진 포트폴리오 대신 선물 카드와 선택 기능 중심, 개인 브랜드 감성 문구 대신 정보 중심 문장</div>
         </div>
         <div class="ref">
           <div><h4>29CM</h4><a href="https://www.29cm.co.kr" target="_blank" rel="noopener">https://www.29cm.co.kr ↗</a><p class="muted" style="margin:6px 0 0">감도 깊은 셀렉션을 내세운 국내 큐레이션 커머스</p></div>
@@ -833,7 +831,7 @@
           <div><h4>HAY</h4><a href="https://www.hay.com" target="_blank" rel="noopener">https://www.hay.com ↗</a><p class="muted" style="margin:6px 0 0">덴마크 디자인 가구·소품 브랜드</p></div>
           <div><span class="k">참고할 요소</span>정돈된 상품 카드 격자, 큰 상품 그림 아래 짧은 이름</div>
           <div><span class="k">적용할 부분</span>카드 정보 순서(그림 → 이름 → 가격 → 설명)</div>
-          <div><span class="k">차별화</span>원색 대신 차분한 올리브, 가격 대신 "가격대"로 표시</div>
+          <div><span class="k">차별화</span>여러 원색 대신 분홍 포인트 하나, 가격 대신 "가격대"로 표시</div>
         </div>
       </div>
 
@@ -864,10 +862,10 @@
       <div class="prompt">
         <p><b>Gift Finder 선물 추천 웹페이지를 만들어 줘.</b></p>
         <p><b>형태:</b> 한 페이지짜리 웹페이지. 로그인·회원가입·결제·데이터베이스·외부 API는 쓰지 마. 메뉴를 누르면 같은 페이지 안의 영역으로 부드럽게 스크롤해.</p>
-        <p><b>대상과 분위기:</b> 20~30대. 웜 아이보리와 올리브 그린 중심의 차분하고 세련된 미니멀 디자인. 유치하거나 화려한 요소(이모지, 캐릭터, 원색, 과한 애니메이션)는 빼 줘.</p>
-        <p><b>색상:</b> 배경 #F7F3EA, 보조 배경 #EFE8DA, 카드 #FFFDF8, 포인트 #5E6B3F, 포인트 진하게 #4A5531, 포인트 연하게 #E5E8D6, 본문 글자 #2E2B26, 보조 글자 #6E685D, 비활성 글자 #A8A296, 테두리 #E2DACB. 이 외의 색은 쓰지 마.</p>
+        <p><b>대상과 분위기:</b> 20~30대. 흰 바탕에 분홍 포인트를 쓴 차분하고 세련된 미니멀 디자인. 유치하거나 화려한 요소(이모지, 캐릭터, 원색, 과한 애니메이션)는 빼 줘.</p>
+        <p><b>색상:</b> 바탕(60%) #FFFFFF, 보조(30%) #F4F0F2, 포인트(10%) #E63B7A, 포인트 호버 #E63B7A, 포인트 위 글자 #000000, 제목·본문 글자 #28151C, 보조 글자 #694F58, 강조 글자 #D31B5F, 테두리 #E2D9DD. 넓은 면은 바탕색과 보조색으로 채우고, 포인트색은 버튼과 작은 강조에만 써. 모든 글자는 배경과 대비 4.5:1 이상으로 해 줘. 이 외의 색은 쓰지 마.</p>
         <p><b>글꼴:</b> Pretendard. 메인 제목 44px(모바일 30px) 굵기 700, 영역 제목 32px(모바일 24px), 카드 제목 18px 굵기 600, 본문 16px 줄 간격 1.7, 보조 설명 14px. 한글은 단어 단위로 줄바꿈하고 한 줄은 640px를 넘지 않게.</p>
-        <p><b>헤더(고정):</b> 왼쪽 선물 상자 선 아이콘 + "Gift Finder" 로고, 오른쪽에 메뉴 "선물 찾기 · 상황별 선물 · 이용 방법"과 올리브색 알약 버튼 "추천받기". 지금 보고 있는 영역의 메뉴는 올리브색 밑줄. 모바일에서는 메뉴를 ☰ 버튼으로 접고, 누르면 아래로 펼쳐지는 패널로.</p>
+        <p><b>헤더(고정):</b> 왼쪽 선물 상자 선 아이콘 + "Gift Finder" 로고, 오른쪽에 메뉴 "선물 찾기 · 상황별 선물 · 이용 방법"과 포인트색 알약 버튼 "추천받기". 지금 보고 있는 영역의 메뉴는 강조 글자색 + 포인트색 밑줄. 모바일에서는 메뉴를 ☰ 버튼으로 접고, 누르면 아래로 펼쳐지는 패널로.</p>
         <p><b>영역 순서:</b></p>
         <ol>
           <li>메인 소개: 작은 라벨 "GIFT FINDER", 제목 "고민은 줄이고, 마음은 정확하게", 설명 한 줄, 버튼 "선물 추천 시작하기"(주) · "이용 방법 보기"(보조), 그 아래 "회원가입 없음 · 판매 없음 · 1분 완성". PC는 오른쪽에 선물 카드 3장이 겹친 미리보기 그림.</li>
@@ -878,8 +876,8 @@
           <li>하단 안내 띠: "Gift Finder는 상품을 판매하지 않아요. 가격대는 참고용이며 실제 가격은 쇼핑몰에서 확인해 주세요."</li>
           <li>푸터: 로고, 한 줄 소개, 메뉴 반복, © 2026 Gift Finder.</li>
         </ol>
-        <p><b>선물 카드:</b> 모서리 20px, 1px 테두리, 위에 4:3 그림 영역(보조 배경색 + 올리브 선 아이콘), 왼쪽 위 "추천 1" 배지, 선물 이름, 가격대, 추천 이유 한 줄, 태그 2개, 맨 아래 "상품 찾아보기 ↗"(네이버쇼핑 검색 결과를 새 창으로). 마우스를 올리면 2px 위로.</p>
-        <p><b>버튼과 칩:</b> 모두 알약 모양. 큰 버튼 높이 56px, 보통 48px, 칩 44px. 선택된 칩은 올리브 배경 + 흰 글자. 키보드 초점은 올리브 2px 테두리.</p>
+        <p><b>선물 카드:</b> 모서리 20px, 1px 테두리, 위에 4:3 그림 영역(보조 배경색 + 강조 글자색 선 아이콘), 왼쪽 위 "추천 1" 배지, 선물 이름, 가격대, 추천 이유 한 줄, 태그 2개, 맨 아래 "상품 찾아보기 ↗"(네이버쇼핑 검색 결과를 새 창으로). 마우스를 올리면 2px 위로.</p>
+        <p><b>버튼과 칩:</b> 모두 알약 모양. 큰 버튼 높이 56px, 보통 48px, 칩 44px. 선택된 칩은 포인트색 배경 + #000000 글자. 키보드 초점은 강조 글자색 2px 테두리.</p>
         <p><b>추천 규칙:</b> 아래 선물 목록에서 세 조건이 모두 맞는 선물 중 3개를 무작위로. 모자라면 '어떤 날'을 빼고, 그래도 모자라면 예산 한 칸 아래에서 채우고 "비슷한 선물도 함께 골랐어요"라고 알려 줘. "다른 선물 3개 보기"는 이미 본 선물을 빼고 다시 3개.</p>
         <p><b>반응형:</b> 1024px 이상 PC, 768~1023px 태블릿, 767px 이하 모바일. 모바일은 모두 1단, 상황 카드만 2칸. 누르는 것은 모두 44px 이상.</p>
         <p><b>접근성:</b> 키보드로 모두 조작 가능, 질문과 칩을 묶어 화면 읽기 프로그램이 읽을 수 있게, 결과가 나타나면 알려 주기, 움직임 줄이기 설정 존중.</p>
@@ -901,7 +899,7 @@
             <li>결과가 항상 3개, 다른 선물 보기에서 같은 선물이 바로 반복되지 않는다</li>
             <li>상황 카드를 누르면 '어떤 날'이 미리 선택되어 있다</li>
             <li>휴대폰에서 메뉴가 ☰으로 접히고 결과 카드가 세로로 쌓인다</li>
-            <li>색이 10가지에서 벗어나지 않고 이모지가 없다</li>
+            <li>지정한 색에서 벗어나지 않고 모든 글자 대비가 4.5:1 이상이며 이모지가 없다</li>
             <li>하단에 "판매하지 않음 · 가격은 참고용" 안내가 있다</li>
           </ul>
         </div>
