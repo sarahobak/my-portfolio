@@ -6,18 +6,18 @@
 <title>Gift Finder 기획안</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
-  /* 색상 변수: 포인트 #e63b7a 기준, 바탕 60 : 보조 30 : 포인트 10 */
+  /* 색상 변수: 포인트 #f9d3e0 기준, 바탕 60 : 보조 30 : 포인트 10 */
   :root {
     color-scheme: light;
     --bg: #ffffff;          /* 바탕 60% */
-    --surface: #f4f0f2;     /* 보조 30% */
-    --point: #e63b7a;       /* 포인트 10%: 버튼과 작은 강조에만 */
-    --point-hover: #e63b7a; /* 포인트 호버 */
-    --on-point: #000000;    /* 포인트 위 글자 */
+    --surface: #f9f6f7;     /* 보조 30% */
+    --point: #f9d3e0;       /* 포인트 10%: 버튼과 작은 강조에만 */
+    --point-hover: #f4afc7; /* 포인트 호버 */
+    --on-point: #28151C;    /* 포인트 위 글자 */
     --text-title: #28151c;  /* 제목 글자 (본문도 사용) */
     --text-sub: #694f58;    /* 보조 글자 */
-    --text-accent: #d31b5f; /* 강조 글자 · 링크 · 아이콘 */
-    --border: #e2d9dd;      /* 테두리 */
+    --text-accent: #d41d5b; /* 강조 글자 · 링크 · 아이콘 */
+    --border: #e2d9dc;      /* 테두리 */
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -386,7 +386,7 @@
 
       <h3>톤 앤 매너</h3>
       <ul>
-        <li><b>차분하게:</b> 느낌표·이모지 남발 금지. "선물 고민, 3분이면 충분해요"처럼 담백한 문장</li>
+        <li><b>차분하게:</b> 느낌표 남발 금지. 이모지는 아이콘 자리에만 쓰고 문장에는 넣지 않음. "선물 고민, 3분이면 충분해요"처럼 담백한 문장</li>
         <li><b>구체적으로:</b> "좋은 선물" 대신 "매일 쓰는 물건이라 부담 없이 고마움을 전할 수 있어요"</li>
         <li><b>유치하지 않게:</b> 캐릭터·무지개색 파스텔·과한 움직임 사용하지 않음</li>
       </ul>
@@ -506,13 +506,13 @@
       <p class="muted" style="margin-top:12px">이용 방법 영역(⑤)은 4번 메뉴 상세에서 설명합니다.</p>
 
       <div class="areas">
-        <div class="area"><span class="n">1</span><h4>헤더와 로고</h4><ul><li>높이 PC 72px · 모바일 60px, 스크롤해도 위에 고정</li><li>왼쪽: 선물 상자 선 아이콘(20px) + "Gift Finder" 20px · 굵기 700 · 제목 글자색</li><li>배경은 메인 배경색 90% + 뒤가 살짝 흐려 보이게, 스크롤하면 아래 1px 구분선</li><li>로고를 누르면 맨 위로</li></ul></div>
+        <div class="area"><span class="n">1</span><h4>헤더와 로고</h4><ul><li>높이 PC 72px · 모바일 60px, 스크롤해도 위에 고정</li><li>왼쪽: 선물 상자 이모지 🎁(22px) + "Gift Finder" 20px · 굵기 700 · 제목 글자색</li><li>배경은 메인 배경색 90% + 뒤가 살짝 흐려 보이게, 스크롤하면 아래 1px 구분선</li><li>로고를 누르면 맨 위로</li></ul></div>
         <div class="area"><span class="n">2</span><h4>상단 메뉴와 버튼</h4><ul><li>메뉴 15px · 굵기 500 · 보조 글자색, 간격 36px</li><li>오버 시 제목 글자색, 현재 영역은 강조 글자색 + 포인트색 2px 밑줄</li><li><code>추천받기</code> 높이 40px · 좌우 20px · 포인트색 알약</li><li>모바일: 메뉴는 숨기고 작은 추천받기 + ☰(44×44px)</li></ul></div>
         <div class="area"><span class="n">3</span><h4>메인 소개 영역</h4><ul><li>PC 글 6 : 그림 6 2단, 모바일 글 → 그림 1단, 위아래 여백 PC 96px · 모바일 56px</li><li>라벨 <code>GIFT FINDER</code> 13px → 제목 44px(모바일 30px) → 설명 17px · 최대 폭 440px</li><li>버튼 아래 "회원가입 없음 · 판매 없음 · 1분 완성" 14px</li><li>오른쪽: 보조 배경색 둥근 사각형(모서리 32px) 안에 선물 카드 3장이 살짝 겹친 그림</li></ul></div>
         <div class="area"><span class="n">4</span><h4>선물 추천 시작 버튼</h4><ul><li>높이 56px · 좌우 32px · 17px 굵기 600 · 오른쪽 → 아이콘</li><li>첫 화면에서 스크롤 없이 보여야 함</li><li>누르면 선물 찾기로 부드럽게 이동, 첫 칩에 키보드 초점</li></ul></div>
         <div class="area"><span class="n">5</span><h4>선물 조건 선택 영역</h4><ul><li>라벨 + 제목 "세 가지만 알려 주세요", 흰 카드 한 장(최대 폭 760px, 안쪽 여백 40px · 모바일 24px)</li><li>질문 3개를 위에서 아래로, 질문 사이 32px · 칩 사이 8px</li><li>번호 원(24px)은 고르면 포인트색으로 채워지고 ✓</li><li>카드 아래 선택 요약 + <code>선물 3개 추천받기</code>(56px), 미완료 시 비활성 + "2개 더 고르면…" 안내</li></ul></div>
         <div class="area"><span class="n">6</span><h4>추천 결과 영역</h4><ul><li>처음엔 숨김 → 0.4초 로딩 자리표시 → 결과 + 결과 위치로 이동</li><li>제목 "친구에게 줄 3~5만 원대 생일 선물이에요" 28px</li><li>제목 아래 작은 조건 칩 3개(누르면 선택 영역으로 돌아가 수정)</li><li>카드 PC 3칸(간격 24px) · 모바일 1칸</li></ul></div>
-        <div class="area"><span class="n">7</span><h4>추천 선물 카드</h4><ul><li>그림 4:3(보조 배경 + 강조색 선 아이콘 48px) → <code>추천 1</code> 배지 → 이름 18px → 가격대 14px → 이유 15px(두 줄까지) → 태그 2개 → <code>상품 찾아보기 ↗</code></li><li>모서리 20px · 1px 테두리 · 안쪽 여백 20px, 같은 줄 카드 높이 통일, 링크는 항상 맨 아래</li><li>아래에 <code>다른 선물 3개 보기</code> · <code>조건 바꾸기</code></li></ul></div>
+        <div class="area"><span class="n">7</span><h4>추천 선물 카드</h4><ul><li>그림 4:3(보조 배경 + 선물별 이모지 64px) → <code>추천 1</code> 배지 → 이름 18px → 가격대 14px → 이유 15px(두 줄까지) → 태그 2개 → <code>상품 찾아보기 ↗</code></li><li>모서리 20px · 1px 테두리 · 안쪽 여백 20px, 같은 줄 카드 높이 통일, 링크는 항상 맨 아래</li><li>아래에 <code>다른 선물 3개 보기</code> · <code>조건 바꾸기</code></li></ul></div>
         <div class="area"><span class="n">8</span><h4>하단 안내 및 푸터</h4><ul><li>보조 배경색 띠: "판매하지 않아요 · 가격대는 참고용" 14px · 위아래 32px</li><li>푸터 PC 2단(로고 + 한 줄 소개 / 메뉴 반복), 모바일 1단 가운데</li><li>맨 아래 1px 구분선 → <code>© 2026 Gift Finder</code> 13px</li></ul></div>
       </div>
     </div>
@@ -539,7 +539,7 @@
             <div><dt>목적</dt><dd>조건을 정하기 전 상황별로 어떤 선물이 있는지 둘러보기</dd></div>
             <div><dt>클릭하면</dt><dd>상황별 선물 영역으로 스크롤</dd></div>
             <div><dt>화면 항목</dt><dd>제목 "어떤 날의 선물인가요?", 상황 카드 6장(생일 · 기념일 · 감사 · 집들이 · 축하 · 응원·위로)</dd></div>
-            <div><dt>카드 구성</dt><dd>선 아이콘 28px + 이름 18px + 한 줄 설명 + 대표 선물 3개 이름 + <code>이 상황으로 찾기 →</code></dd></div>
+            <div><dt>카드 구성</dt><dd>이모지 36px + 이름 18px + 한 줄 설명 + 대표 선물 3개 이름 + <code>이 상황으로 찾기 →</code></dd></div>
             <div><dt>다른 메뉴와 연결</dt><dd>버튼을 누르면 선물 찾기의 '어떤 날'을 미리 선택하고 이동 → 남은 두 질문만 고르면 끝</dd></div>
             <div><dt>배치</dt><dd>PC 3칸 × 2줄, 모바일 2칸 × 3줄(대표 선물 숨김)</dd></div>
           </dl>
@@ -569,7 +569,7 @@
         </div>
         <div class="card">
           <h4>선물 목록 (60개 내외)</h4>
-          <p class="muted" style="margin:0">칸: 선물 이름 · 받는 사람(여러 개) · 예산(하나) · 어떤 날(여러 개) · 가격대 · 추천 이유 · 태그 2개 · 아이콘. 받는 사람과 예산의 모든 조합에서 최소 3개가 나오게 준비합니다.</p>
+          <p class="muted" style="margin:0">칸: 선물 이름 · 받는 사람(여러 개) · 예산(하나) · 어떤 날(여러 개) · 가격대 · 추천 이유 · 태그 2개 · 이모지. 받는 사람과 예산의 모든 조합에서 최소 3개가 나오게 준비합니다.</p>
         </div>
       </div>
     </div>
@@ -578,36 +578,36 @@
   <!-- 5 -->
   <section class="part" id="p5">
     <div class="wrap">
-      <div class="part-head"><span class="label">05 · Design System</span><h2>컬러, 글꼴, 버튼, 카드 등 디자인 시스템</h2><p>포인트 <b>#E63B7A</b>를 기준으로 <b>바탕 60 : 보조 30 : 포인트 10</b> 비율로 씁니다. 넓은 면은 바탕색과 보조색으로 채우고, 포인트색은 버튼과 작은 강조에만 씁니다. 이 페이지도 아래 색만 사용했어요.</p></div>
+      <div class="part-head"><span class="label">05 · Design System</span><h2>컬러, 글꼴, 버튼, 카드 등 디자인 시스템</h2><p>포인트 <b>#F9D3E0</b>를 기준으로 <b>바탕 60 : 보조 30 : 포인트 10</b> 비율로 씁니다. 넓은 면은 바탕색과 보조색으로 채우고, 포인트색은 버튼과 작은 강조에만 씁니다. 이 페이지도 아래 색만 사용했어요.</p></div>
 
       <h3>컬러 시스템</h3>
       <ul class="palette">
         <li><div class="sw" style="background:var(--bg)"></div><b>바탕</b><small>#FFFFFF<br>60% · 페이지 · 카드</small></li>
-        <li><div class="sw" style="background:var(--surface)"></div><b>보조</b><small>#F4F0F2<br>30% · 번갈아 나오는 영역 · 표 머리글 · 태그</small></li>
-        <li><div class="sw" style="background:var(--point)"></div><b>포인트</b><small>#E63B7A<br>10% · 주 버튼 · 선택 · 작은 강조</small></li>
-        <li><div class="sw" style="background:var(--point-hover)"></div><b>포인트 호버</b><small>#E63B7A<br>주 버튼 오버 · 누름</small></li>
-        <li><div class="sw" style="background:var(--on-point)"></div><b>포인트 위 글자</b><small>#000000<br>포인트색 위의 글자</small></li>
+        <li><div class="sw" style="background:var(--surface)"></div><b>보조</b><small>#F9F6F7<br>30% · 번갈아 나오는 영역 · 표 머리글 · 태그</small></li>
+        <li><div class="sw" style="background:var(--point)"></div><b>포인트</b><small>#F9D3E0<br>10% · 주 버튼 · 선택 · 작은 강조</small></li>
+        <li><div class="sw" style="background:var(--point-hover)"></div><b>포인트 호버</b><small>#F4AFC7<br>주 버튼 오버 · 누름</small></li>
+        <li><div class="sw" style="background:var(--on-point)"></div><b>포인트 위 글자</b><small>#28151C<br>포인트색 위의 글자</small></li>
         <li><div class="sw" style="background:var(--text-title)"></div><b>제목 글자</b><small>#28151C<br>제목 · 본문</small></li>
         <li><div class="sw" style="background:var(--text-sub)"></div><b>보조 글자</b><small>#694F58<br>설명 · 가격 · 비활성</small></li>
-        <li><div class="sw" style="background:var(--text-accent)"></div><b>강조 글자</b><small>#D31B5F<br>라벨 · 링크 · 아이콘</small></li>
-        <li><div class="sw" style="background:var(--border)"></div><b>테두리</b><small>#E2D9DD<br>테두리 · 구분선 · 비활성 버튼</small></li>
+        <li><div class="sw" style="background:var(--text-accent)"></div><b>강조 글자</b><small>#D41D5B<br>라벨 · 링크 · 아이콘</small></li>
+        <li><div class="sw" style="background:var(--border)"></div><b>테두리</b><small>#E2D9DC<br>테두리 · 구분선 · 비활성 버튼</small></li>
       </ul>
-      <p class="muted" style="margin-top:16px">명암 대비: 제목 글자/바탕 17.2:1 · 보조 글자/보조 6.5:1 · 강조 글자/보조 4.5:1 · 포인트 위 글자/포인트 5.2:1 · 비활성 버튼 5.3:1로 모두 본문 기준 4.5:1 이상. 빨강·주황 같은 경고색은 쓰지 않습니다.</p>
+      <p class="muted" style="margin-top:16px">명암 대비: 제목 글자/바탕 17.3:1 · 보조 글자/보조 6.8:1 · 강조 글자/보조 4.7:1 · 포인트 위 글자/포인트 12.7:1 · 포인트 위 글자/포인트 호버 9.7:1 · 비활성 버튼 5.3:1로 모두 본문 기준 4.5:1 이상. 빨강·주황 같은 경고색은 쓰지 않습니다.</p>
 
       <h3>버튼 및 선택 상태</h3>
       <div class="grid3">
         <div class="card">
           <h4>주 버튼</h4>
-          <div class="demo-row"><span><span class="btn main">기본</span><span class="demo-cap">#E63B7A</span></span><span><span class="btn main dk">오버·누름</span><span class="demo-cap">#E63B7A</span></span><span><span class="btn main off">비활성</span><span class="demo-cap">#E2D9DD · #694F58</span></span></div>
+          <div class="demo-row"><span><span class="btn main">기본</span><span class="demo-cap">#F9D3E0</span></span><span><span class="btn main dk">오버·누름</span><span class="demo-cap">#F4AFC7</span></span><span><span class="btn main off">비활성</span><span class="demo-cap">#E2D9DC · #694F58</span></span></div>
         </div>
         <div class="card">
           <h4>보조 버튼 · 텍스트 버튼</h4>
-          <div class="demo-row"><span><span class="btn sub">기본</span><span class="demo-cap">투명 · 테두리 #E2D9DD</span></span><span><span class="btn sub hover">오버</span><span class="demo-cap">#F4F0F2 · 테두리 #E63B7A</span></span></div>
+          <div class="demo-row"><span><span class="btn sub">기본</span><span class="demo-cap">투명 · 테두리 #E2D9DC</span></span><span><span class="btn sub hover">오버</span><span class="demo-cap">#F9F6F7 · 테두리 #F9D3E0</span></span></div>
           <div class="demo-row" style="margin-top:12px"><span class="tlink">상품 찾아보기 ↗</span><span class="tlink">이 상황으로 찾기 →</span></div>
         </div>
         <div class="card">
           <h4>칩 (선택 메뉴)</h4>
-          <div class="demo-row"><span><span class="chip">기본</span><span class="demo-cap">#FFFFFF</span></span><span><span class="chip hover">오버</span><span class="demo-cap">#F4F0F2</span></span><span><span class="chip on">선택</span><span class="demo-cap">#E63B7A · #000000 글자</span></span></div>
+          <div class="demo-row"><span><span class="chip">기본</span><span class="demo-cap">#FFFFFF</span></span><span><span class="chip hover">오버</span><span class="demo-cap">#F9F6F7</span></span><span><span class="chip on">선택</span><span class="demo-cap">#F9D3E0 · #28151C 글자</span></span></div>
           <p class="muted" style="margin:12px 0 0">키보드 초점: 강조 글자색 2px 바깥 테두리, 간격 2px</p>
         </div>
       </div>
@@ -639,21 +639,21 @@
         <table>
           <thead><tr><th>컴포넌트</th><th>모양 · 크기</th><th>색상</th><th>모서리 · 간격</th></tr></thead>
           <tbody>
-            <tr><td>큰 주 버튼</td><td>높이 56px · 좌우 32px · 17px</td><td>포인트색 / #000000 글자</td><td>알약 · 아이콘 간격 8px</td></tr>
+            <tr><td>큰 주 버튼</td><td>높이 56px · 좌우 32px · 17px</td><td>포인트색 / #28151C 글자</td><td>알약 · 아이콘 간격 8px</td></tr>
             <tr><td>주 버튼 · 보조 버튼</td><td>높이 48px · 좌우 24px · 16px</td><td>포인트색 / 투명 + 테두리색</td><td>알약 · 버튼 사이 12px</td></tr>
             <tr><td>작은 주 버튼</td><td>높이 40px · 좌우 20px · 14px</td><td>포인트색</td><td>알약 (헤더 추천받기)</td></tr>
             <tr><td>입력창 · 선택 메뉴</td><td>입력창 없음. 선택은 모두 칩: 높이 44px · 좌우 18px · 15px</td><td>바탕색 + 테두리색 / 선택 시 포인트색</td><td>알약 · 칩 사이 8px · 드롭다운 쓰지 않음</td></tr>
             <tr><td>선물 추천 카드</td><td>그림 4:3 + 본문, 안쪽 여백 20px</td><td>바탕색 · 그림 영역 보조색</td><td>모서리 20px · 카드 사이 24px(모바일 16px)</td></tr>
-            <tr><td>상황 카드</td><td>선 아이콘 28px + 이름 18px + 설명 14px</td><td>바탕색 · 오버 시 테두리 포인트색</td><td>모서리 20px · 안쪽 여백 24px</td></tr>
-            <tr><td>아이콘</td><td>선 굵기 1.5px 라인 아이콘, 16 · 20 · 28 · 48px 네 가지</td><td>강조 글자색 또는 보조 글자색</td><td>채워진 아이콘 · 컬러 이모지 쓰지 않음</td></tr>
+            <tr><td>상황 카드</td><td>이모지 36px + 이름 18px + 설명 14px</td><td>바탕색 · 오버 시 테두리 포인트색</td><td>모서리 20px · 안쪽 여백 24px</td></tr>
+            <tr><td>아이콘</td><td>내용은 이모지(22 · 32 · 36 · 56 · 64px), 기능은 선 굵기 1.5px 라인 아이콘(16 · 20px)</td><td>라인 아이콘은 강조 글자색 또는 보조 글자색</td><td>이모지: 로고 · 선물 카드 · 상황 · 단계 / 라인: 화살표 · 체크 · 메뉴 · 닫기 · 찜 · 공유</td></tr>
             <tr><td>PC 메뉴</td><td>15px · 간격 36px</td><td>보조 글자색 → 현재 강조 글자색 + 포인트색 2px 밑줄</td><td>밑줄은 글자 아래 6px</td></tr>
             <tr><td>모바일 메뉴 패널</td><td>헤더 아래 화면 폭 전체, 한 줄 56px · 18px</td><td>메인 배경 + 줄 사이 구분선</td><td>맨 아래 큰 주 버튼, 고르거나 ×로 닫힘</td></tr>
           </tbody>
         </table>
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px;color:var(--text-accent)">
-        <svg width="28" height="28" aria-hidden="true"><use href="#i-gift"/></svg><svg width="28" height="28" aria-hidden="true"><use href="#i-cake"/></svg><svg width="28" height="28" aria-hidden="true"><use href="#i-heart"/></svg><svg width="28" height="28" aria-hidden="true"><use href="#i-flower"/></svg><svg width="28" height="28" aria-hidden="true"><use href="#i-home"/></svg><svg width="28" height="28" aria-hidden="true"><use href="#i-star"/></svg><svg width="28" height="28" aria-hidden="true"><use href="#i-cup"/></svg>
-        <span class="muted">선물 · 생일 · 기념일 · 감사 · 집들이 · 축하 · 응원 아이콘 예시 (Lucide 같은 무료 라인 아이콘 스타일)</span>
+        <span style="font-size:28px;line-height:1" aria-hidden="true">🎁</span><span style="font-size:28px;line-height:1" aria-hidden="true">🎂</span><span style="font-size:28px;line-height:1" aria-hidden="true">💝</span><span style="font-size:28px;line-height:1" aria-hidden="true">🌷</span><span style="font-size:28px;line-height:1" aria-hidden="true">🏠</span><span style="font-size:28px;line-height:1" aria-hidden="true">🎉</span><span style="font-size:28px;line-height:1" aria-hidden="true">🫶</span>
+        <span class="muted">선물 · 생일 · 기념일 · 감사 · 집들이 · 축하 · 응원 이모지 (버튼 기능 아이콘은 라인 아이콘 그대로)</span>
       </div>
 
       <h3>마우스 오버 · 필요한 상태</h3>
@@ -663,7 +663,7 @@
             <thead><tr><th>요소</th><th>마우스 오버</th><th>선택 · 현재</th></tr></thead>
             <tbody>
               <tr><td>메뉴</td><td>제목 글자색</td><td>강조 글자색 + 포인트색 밑줄</td></tr>
-              <tr><td>칩</td><td>보조색 배경</td><td>포인트색 + #000000 글자 굵게</td></tr>
+              <tr><td>칩</td><td>보조색 배경</td><td>포인트색 + #28151C 글자 굵게</td></tr>
               <tr><td>선물 카드</td><td>2px 위로 + 아주 옅은 그림자</td><td>—</td></tr>
               <tr><td>상황 카드</td><td>테두리 포인트색</td><td>—</td></tr>
               <tr><td>텍스트 버튼</td><td>밑줄</td><td>—</td></tr>
@@ -677,7 +677,7 @@
               <tr><td>선택 미완료</td><td>추천 버튼 비활성 + "2개 더 고르면 추천받을 수 있어요"</td></tr>
               <tr><td>로딩</td><td>0.4초, 카드 3장 자리에 보조색 사각형이 은은하게 깜빡임</td></tr>
               <tr><td>결과 부족</td><td>조건을 넓혀 채우고 "비슷한 선물도 함께 골랐어요"</td></tr>
-              <tr><td>결과 없음</td><td>선물 상자 아이콘 + "조건에 맞는 선물을 찾지 못했어요" + 조건 바꾸기</td></tr>
+              <tr><td>결과 없음</td><td>🎁 이모지 + "조건에 맞는 선물을 찾지 못했어요" + 조건 바꾸기</td></tr>
               <tr><td>모두 봄</td><td>"추천을 모두 봤어요. 처음부터 다시 보여 드릴게요"</td></tr>
               <tr><td>새 창 링크</td><td>링크 옆 ↗ 아이콘으로 표시</td></tr>
             </tbody>
@@ -862,22 +862,23 @@
       <div class="prompt">
         <p><b>Gift Finder 선물 추천 웹페이지를 만들어 줘.</b></p>
         <p><b>형태:</b> 한 페이지짜리 웹페이지. 로그인·회원가입·결제·데이터베이스·외부 API는 쓰지 마. 메뉴를 누르면 같은 페이지 안의 영역으로 부드럽게 스크롤해.</p>
-        <p><b>대상과 분위기:</b> 20~30대. 흰 바탕에 분홍 포인트를 쓴 차분하고 세련된 미니멀 디자인. 유치하거나 화려한 요소(이모지, 캐릭터, 원색, 과한 애니메이션)는 빼 줘.</p>
-        <p><b>색상:</b> 바탕(60%) #FFFFFF, 보조(30%) #F4F0F2, 포인트(10%) #E63B7A, 포인트 호버 #E63B7A, 포인트 위 글자 #000000, 제목·본문 글자 #28151C, 보조 글자 #694F58, 강조 글자 #D31B5F, 테두리 #E2D9DD. 넓은 면은 바탕색과 보조색으로 채우고, 포인트색은 버튼과 작은 강조에만 써. 모든 글자는 배경과 대비 4.5:1 이상으로 해 줘. 이 외의 색은 쓰지 마.</p>
+        <p><b>대상과 분위기:</b> 20~30대. 흰 바탕에 분홍 포인트를 쓴 차분하고 세련된 미니멀 디자인. 유치하거나 화려한 요소(캐릭터, 원색, 과한 애니메이션)는 빼 줘. 이모지는 아이콘 자리에만 쓰고 문장에는 넣지 마.</p>
+        <p><b>색상:</b> 바탕(60%) #FFFFFF, 보조(30%) #F9F6F7, 포인트(10%) #F9D3E0, 포인트 호버 #F4AFC7, 포인트 위 글자 #28151C, 제목·본문 글자 #28151C, 보조 글자 #694F58, 강조 글자 #D41D5B, 테두리 #E2D9DC. 넓은 면은 바탕색과 보조색으로 채우고, 포인트색은 버튼과 작은 강조에만 써. 모든 글자는 배경과 대비 4.5:1 이상으로 해 줘. 이 외의 색은 쓰지 마.</p>
         <p><b>글꼴:</b> Pretendard. 메인 제목 44px(모바일 30px) 굵기 700, 영역 제목 32px(모바일 24px), 카드 제목 18px 굵기 600, 본문 16px 줄 간격 1.7, 보조 설명 14px. 한글은 단어 단위로 줄바꿈하고 한 줄은 640px를 넘지 않게.</p>
-        <p><b>헤더(고정):</b> 왼쪽 선물 상자 선 아이콘 + "Gift Finder" 로고, 오른쪽에 메뉴 "선물 찾기 · 상황별 선물 · 이용 방법"과 포인트색 알약 버튼 "추천받기". 지금 보고 있는 영역의 메뉴는 강조 글자색 + 포인트색 밑줄. 모바일에서는 메뉴를 ☰ 버튼으로 접고, 누르면 아래로 펼쳐지는 패널로.</p>
+        <p><b>헤더(고정):</b> 왼쪽 🎁 이모지 + "Gift Finder" 로고, 오른쪽에 메뉴 "선물 찾기 · 상황별 선물 · 이용 방법"과 포인트색 알약 버튼 "추천받기". 지금 보고 있는 영역의 메뉴는 강조 글자색 + 포인트색 밑줄. 모바일에서는 메뉴를 ☰ 버튼으로 접고, 누르면 아래로 펼쳐지는 패널로.</p>
         <p><b>영역 순서:</b></p>
         <ol>
           <li>메인 소개: 작은 라벨 "GIFT FINDER", 제목 "고민은 줄이고, 마음은 정확하게", 설명 한 줄, 버튼 "선물 추천 시작하기"(주) · "이용 방법 보기"(보조), 그 아래 "회원가입 없음 · 판매 없음 · 1분 완성". PC는 오른쪽에 선물 카드 3장이 겹친 미리보기 그림.</li>
           <li>선물 찾기: 흰 카드 한 장 안에 질문 3개를 알약 모양 칩으로. ① 누구에게 주나요? 연인·친구·부모님·직장 동료·형제자매·나에게 ② 예산은 얼마인가요? 3만 원 이하·3~5만 원·5~10만 원·10만 원 이상 ③ 어떤 날인가요? 생일·기념일·감사·집들이·축하(취업·승진)·응원·위로. 질문마다 하나만 선택. 카드 아래에 고른 조건 요약과 "선물 3개 추천받기" 버튼. 3개를 다 고르기 전에는 버튼을 비활성으로 하고 "N개 더 고르면 추천받을 수 있어요"를 보여 줘.</li>
           <li>추천 결과: 버튼을 누르면 0.4초 로딩 후 나타나고 그 위치로 스크롤. 제목 "[받는 사람]에게 줄 [예산] [어떤 날] 선물이에요", 카드 3개(PC 가로 3칸, 모바일 세로), 아래에 "다른 선물 3개 보기" · "조건 바꾸기" 버튼.</li>
-          <li>상황별 선물: 카드 6장(생일·기념일·감사·집들이·축하·응원·위로). 카드마다 선 아이콘, 이름, 한 줄 설명, 대표 선물 3개, "이 상황으로 찾기 →". 누르면 선물 찾기의 '어떤 날'을 그 상황으로 미리 선택하고 선물 찾기 영역으로 이동.</li>
+          <li>상황별 선물: 카드 6장(생일·기념일·감사·집들이·축하·응원·위로). 카드마다 이모지(🎂 💝 🌷 🏠 🎉 🫶), 이름, 한 줄 설명, 대표 선물 3개, "이 상황으로 찾기 →". 누르면 선물 찾기의 '어떤 날'을 그 상황으로 미리 선택하고 선물 찾기 영역으로 이동.</li>
           <li>이용 방법: 3단계(조건 고르기 → 추천받기 → 쇼핑몰에서 확인하기), 서비스 소개 한 문단(판매하지 않음, 광고비로 순서를 바꾸지 않음), 펼쳐 보는 자주 묻는 질문 4개, "지금 선물 찾기" 버튼.</li>
           <li>하단 안내 띠: "Gift Finder는 상품을 판매하지 않아요. 가격대는 참고용이며 실제 가격은 쇼핑몰에서 확인해 주세요."</li>
           <li>푸터: 로고, 한 줄 소개, 메뉴 반복, © 2026 Gift Finder.</li>
         </ol>
-        <p><b>선물 카드:</b> 모서리 20px, 1px 테두리, 위에 4:3 그림 영역(보조 배경색 + 강조 글자색 선 아이콘), 왼쪽 위 "추천 1" 배지, 선물 이름, 가격대, 추천 이유 한 줄, 태그 2개, 맨 아래 "상품 찾아보기 ↗"(네이버쇼핑 검색 결과를 새 창으로). 마우스를 올리면 2px 위로.</p>
-        <p><b>버튼과 칩:</b> 모두 알약 모양. 큰 버튼 높이 56px, 보통 48px, 칩 44px. 선택된 칩은 포인트색 배경 + #000000 글자. 키보드 초점은 강조 글자색 2px 테두리.</p>
+        <p><b>선물 카드:</b> 모서리 20px, 1px 테두리, 위에 4:3 그림 영역(보조 배경색 + 가운데에 선물마다 어울리는 큰 이모지), 왼쪽 위 "추천 1" 배지, 선물 이름, 가격대, 추천 이유 한 줄, 태그 2개, 맨 아래 "상품 찾아보기 ↗"(네이버쇼핑 검색 결과를 새 창으로). 마우스를 올리면 2px 위로.</p>
+        <p><b>아이콘:</b> 로고·선물 카드·상황 카드·이용 방법 단계는 이모지로, 화살표·체크·메뉴·닫기·찜 하트·공유 같은 버튼 기능 아이콘은 선 굵기 1.5px 선 아이콘으로.</p>
+        <p><b>버튼과 칩:</b> 모두 알약 모양. 큰 버튼 높이 56px, 보통 48px, 칩 44px. 선택된 칩은 포인트색 배경 + #28151C 글자. 키보드 초점은 강조 글자색 2px 테두리.</p>
         <p><b>추천 규칙:</b> 아래 선물 목록에서 세 조건이 모두 맞는 선물 중 3개를 무작위로. 모자라면 '어떤 날'을 빼고, 그래도 모자라면 예산 한 칸 아래에서 채우고 "비슷한 선물도 함께 골랐어요"라고 알려 줘. "다른 선물 3개 보기"는 이미 본 선물을 빼고 다시 3개.</p>
         <p><b>반응형:</b> 1024px 이상 PC, 768~1023px 태블릿, 767px 이하 모바일. 모바일은 모두 1단, 상황 카드만 2칸. 누르는 것은 모두 44px 이상.</p>
         <p><b>접근성:</b> 키보드로 모두 조작 가능, 질문과 칩을 묶어 화면 읽기 프로그램이 읽을 수 있게, 결과가 나타나면 알려 주기, 움직임 줄이기 설정 존중.</p>
@@ -886,7 +887,7 @@
 
       <h3>선물 목록 요청 예시</h3>
       <div class="prompt">
-        <p style="margin:0">20~30대가 주로 고민하는 선물 목록을 표로 60개 만들어 줘. 칸은 선물 이름, 받는 사람(연인·친구·부모님·직장 동료·형제자매·나에게 중 여러 개), 예산(3만 원 이하·3~5만 원·5~10만 원·10만 원 이상 중 하나), 어떤 날(생일·기념일·감사·집들이·축하·응원·위로 중 여러 개), 가격대(예: 약 3만 원대), 추천 이유(한 줄, 차분한 말투), 태그 2개, 어울리는 선 아이콘 이름. 받는 사람과 예산의 모든 조합에서 최소 3개가 나오게 해 줘.</p>
+        <p style="margin:0">20~30대가 주로 고민하는 선물 목록을 표로 60개 만들어 줘. 칸은 선물 이름, 받는 사람(연인·친구·부모님·직장 동료·형제자매·나에게 중 여러 개), 예산(3만 원 이하·3~5만 원·5~10만 원·10만 원 이상 중 하나), 어떤 날(생일·기념일·감사·집들이·축하·응원·위로 중 여러 개), 가격대(예: 약 3만 원대), 추천 이유(한 줄, 차분한 말투), 태그 2개, 어울리는 이모지 1개. 받는 사람과 예산의 모든 조합에서 최소 3개가 나오게 해 줘.</p>
       </div>
 
       <div class="grid2" style="margin-top:32px">
@@ -899,7 +900,7 @@
             <li>결과가 항상 3개, 다른 선물 보기에서 같은 선물이 바로 반복되지 않는다</li>
             <li>상황 카드를 누르면 '어떤 날'이 미리 선택되어 있다</li>
             <li>휴대폰에서 메뉴가 ☰으로 접히고 결과 카드가 세로로 쌓인다</li>
-            <li>지정한 색에서 벗어나지 않고 모든 글자 대비가 4.5:1 이상이며 이모지가 없다</li>
+            <li>지정한 색에서 벗어나지 않고 모든 글자 대비가 4.5:1 이상이며 이모지는 아이콘 자리에만 있고 문장에는 없다</li>
             <li>하단에 "판매하지 않음 · 가격은 참고용" 안내가 있다</li>
           </ul>
         </div>
@@ -913,7 +914,7 @@
           </ul>
           <h4 style="margin-top:24px">정해야 할 것</h4>
           <ul>
-            <li>카드 그림: 선 아이콘 vs 직접 찍은·무료 사진</li>
+            <li>카드 그림: 이모지 그대로 vs 직접 찍은·무료 사진</li>
             <li>선물 목록 60개 최종 검토 (가격대 확인)</li>
             <li>사용할 AI 제작 도구와 공개할 주소</li>
             <li>나중에 광고·제휴 링크를 넣을지 (넣으면 하단 안내에 함께 표시)</li>
