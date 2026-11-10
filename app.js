@@ -138,6 +138,56 @@
     return 'https://search.shopping.naver.com/search/all?query=' + encodeURIComponent(name);
   }
 
+  /* 사진 (images/CREDITS.md 참고) */
+  var IMAGES = {
+    candle:     { src: 'images/candle.jpg',     alt: '나무 받침 위에 켜 둔 흰 기둥 초' },
+    beauty:     { src: 'images/beauty.jpg',     alt: '흰 바탕 위 뚜껑을 연 분홍 크림 용기' },
+    coffee:     { src: 'images/coffee.jpg',     alt: '금색 손잡이가 달린 흰 머그잔' },
+    flowers:    { src: 'images/flowers.jpg',    alt: '분홍 바탕 위 분홍·흰 꽃다발' },
+    stationery: { src: 'images/stationery.jpg', alt: '흰 책상 위 펼친 노트와 금색 펜' },
+    dessert:    { src: 'images/dessert.jpg',    alt: '상자에 담긴 초콜릿 트러플' },
+    jewelry:    { src: 'images/jewelry.jpg',    alt: '분홍 접시 위 금색 귀걸이 한 쌍' },
+    home:       { src: 'images/home-decor.jpg', alt: '흰 테이블 위 마른 꽃을 꽂은 유리 화병' },
+    plush:      { src: 'images/plush.jpg',      alt: '분홍 의자에 앉은 곰 인형' },
+    cake:       { src: 'images/birthday-cake.jpg', alt: '초를 꽂아 불을 붙인 흰 생크림 케이크' }
+  };
+  var DEFAULT_IMAGE = 'images/default-neutral.jpg';
+
+  // 사진과 잘 맞는 선물만 연결. 나머지는 지금처럼 선 아이콘 그림을 씀
+  var GIFT_IMAGE = {
+    2: 'candle',
+    3: 'beauty', 5: 'beauty', 18: 'beauty', 41: 'beauty',
+    1: 'coffee', 4: 'coffee', 7: 'coffee', 8: 'coffee', 16: 'coffee', 25: 'coffee', 30: 'coffee', 35: 'coffee',
+    9: 'flowers', 28: 'flowers',
+    12: 'stationery', 32: 'stationery',
+    49: 'jewelry',
+    13: 'home', 17: 'home', 21: 'home'
+  };
+  var OCC_IMAGE = {
+    birthday: 'cake', anniversary: 'flowers', thanks: 'candle',
+    housewarming: 'home', congrats: 'stationery', cheer: 'plush'
+  };
+
+  function imgHTML(key, size) {
+    var im = IMAGES[key];
+    if (!im) return '';
+    return '<img class="photo" src="' + im.src + '" alt="' + escapeHTML(im.alt) + '" width="' + size + '" height="' + size + '" loading="lazy" decoding="async">';
+  }
+
+  // 사진을 못 불러오면 깨진 그림 대신 기본 이미지로, 그것도 안 되면 사진을 빼고 아이콘 그림을 보여 줌
+  document.addEventListener('error', function (e) {
+    var img = e.target;
+    if (!img || img.tagName !== 'IMG' || !img.classList.contains('photo')) return;
+    if (img.getAttribute('data-fallback')) {
+      var box = img.parentNode;
+      img.remove();
+      if (box) box.classList.remove('has-photo');
+      return;
+    }
+    img.setAttribute('data-fallback', '1');
+    img.src = DEFAULT_IMAGE;
+  }, true);
+
   var toastTimer;
   function toast(msg) {
     var el = $('#toast');
@@ -262,16 +312,19 @@
     }).join('');
   }
 
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+
   function cardHTML(item, rank) {
     var g = item.gift;
     var on = isWished(g.id);
     var detailId = 'detail-' + (++cardSeq);
     return '<article class="gift-card is-new" data-gift="' + g.id + '">' +
-      '<div class="gift-thumb">' + icon(g.icon, 64) +
+      '<div class="gift-thumb gift-thumb--t' + (g.id % 3) + (GIFT_IMAGE[g.id] ? ' has-photo' : '') + '">' + icon(g.icon, 72) + imgHTML(GIFT_IMAGE[g.id], 800) +
         '<span class="badge">' + (item.similar ? '비슷한 추천 ' : '추천 ') + rank + '</span>' +
         '<button class="wish-btn' + (on ? ' is-on' : '') + '" type="button" data-wish="' + g.id + '" aria-pressed="' + on + '" aria-label="' + escapeHTML(g.name) + ' 찜하기">' + icon('heart', 20) + '</button>' +
       '</div>' +
       '<div class="gift-body">' +
+        '<p class="gift-no">No. ' + pad2(g.id) + '</p>' +
         '<h3 class="gift-name">' + escapeHTML(g.name) + '</h3>' +
         '<p class="gift-price">' + escapeHTML(g.price) + '</p>' +
         '<p class="gift-reason">' + escapeHTML(g.reason) + '</p>' +
@@ -286,7 +339,7 @@
   }
 
   function skeletonHTML() {
-    var one = '<div class="skeleton" aria-hidden="true"><div class="skeleton-thumb"></div><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>';
+    var one = '<div class="skeleton" aria-hidden="true"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div></div>';
     return one + one + one;
   }
 
@@ -430,7 +483,7 @@
     $('#wishList').innerHTML = list.map(function (w) {
       var g = GIFT_BY_ID[w.gift_id];
       return '<li class="wish-item">' +
-        '<div class="wish-thumb">' + icon(g.icon, 32) + '</div>' +
+        '<div class="wish-thumb' + (GIFT_IMAGE[g.id] ? ' has-photo' : '') + '">' + icon(g.icon, 32) + imgHTML(GIFT_IMAGE[g.id], 160) + '</div>' +
         '<div><p class="wish-name">' + escapeHTML(g.name) + '</p>' +
           '<p class="wish-meta">' + escapeHTML(g.price) + ' · #' + g.keywords.map(escapeHTML).join(' #') + '</p>' +
           '<a class="text-btn" href="' + shopURL(g.name) + '" target="_blank" rel="noopener noreferrer">상품 찾아보기' + icon('external', 16) + '<span class="sr-only">(새 창)</span></a></div>' +
@@ -521,7 +574,7 @@
     var isTouch = window.matchMedia('(pointer: coarse)').matches;
     if (navigator.share && isTouch) {
       navigator.share({
-        title: 'Gift Finder 선물 추천',
+        title: 'GIFTÉ 선물 추천',
         text: $('#resultTitle').textContent,
         url: url
       }).catch(function () { /* 사용자가 공유 창을 닫음 */ });
@@ -546,26 +599,80 @@
   /* ======================================================
      8. 상황별 선물
      ====================================================== */
-  function renderOccasions() {
-    $('#occasionGrid').innerHTML = OCC.map(function (o) {
-      var reps = preferKeywords(GIFTS.filter(function (g) { return g.occasion.indexOf(o.id) > -1; }), o.id)
-        .slice(0, 3).map(function (g) { return escapeHTML(g.name); }).join(' · ');
-      return '<article class="occasion-card">' + icon(o.icon, 36) +
-        '<h3>' + escapeHTML(titleOf(o) === '응원' ? '응원·위로' : titleOf(o)) + '</h3>' +
+  var OCC_EN = { birthday: 'Birthday', anniversary: 'Anniversary', thanks: 'Thanks', housewarming: 'Housewarming', congrats: 'Job & Graduation', cheer: 'Cheer up' };
+  // 카테고리 카드에 크게 보여 줄 날 (나머지는 아래 '그 밖의 날'로)
+  var FEATURED_OCC = ['birthday', 'anniversary', 'congrats', 'housewarming'];
+  var CARD_LABEL = { congrats: '취업·졸업' };
+
+  function occasionCardHTML(o, i) {
+    var reps = preferKeywords(GIFTS.filter(function (g) { return g.occasion.indexOf(o.id) > -1; }), o.id)
+      .slice(0, 3).map(function (g) { return escapeHTML(g.name); }).join(' · ');
+    return '<article class="occasion-card occasion-card--' + o.id + '">' +
+      '<div class="occasion-media has-photo">' + icon(o.icon, 40) + imgHTML(OCC_IMAGE[o.id], 800) +
+        '<span class="occasion-no">' + pad2(i + 1) + '</span></div>' +
+      '<div class="occasion-body">' +
+        '<p class="occasion-en" lang="en" aria-hidden="true">' + OCC_EN[o.id] + '</p>' +
+        '<h3>' + escapeHTML(CARD_LABEL[o.id] || titleOf(o)) + '</h3>' +
         '<p class="occasion-desc">' + escapeHTML(o.desc) + '</p>' +
         '<p class="occasion-reps"><strong>대표 선물</strong> ' + reps + '</p>' +
-        '<button class="text-btn" type="button" data-occasion="' + o.id + '">이 상황으로 찾기' + icon('arrowRight', 16) + '</button>' +
-      '</article>';
+        '<button class="text-btn" type="button" data-occasion="' + o.id + '">이 날의 선물 찾기' + icon('arrowRight', 16) + '</button>' +
+      '</div>' +
+    '</article>';
+  }
+
+  /* 생일 캘린더 카드: 이번 달 달력 + 오늘 표시 */
+  function calendarCardHTML() {
+    var now = new Date();
+    var y = now.getFullYear(), m = now.getMonth(), today = now.getDate();
+    var first = new Date(y, m, 1).getDay();
+    var days = new Date(y, m + 1, 0).getDate();
+    var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var cells = '';
+    ['일', '월', '화', '수', '목', '금', '토'].forEach(function (d) { cells += '<span class="cal-dow">' + d + '</span>'; });
+    for (var b = 0; b < first; b++) cells += '<span class="cal-day is-blank"></span>';
+    for (var d = 1; d <= days; d++) {
+      cells += '<span class="cal-day' + (d === today ? ' is-today' : '') + (d < today ? ' is-past' : '') + '"' +
+        (d === today ? ' aria-current="date"' : '') + '>' + d + '</span>';
+    }
+    var left = days - today;
+    return '<article class="calendar-card" aria-labelledby="calTitle">' +
+      '<div class="cal-head">' +
+        '<p class="cal-kicker" lang="en">Birthday calendar</p>' +
+        '<p class="cal-month" lang="en">' + MONTHS[m] + ' <span>' + y + '</span></p>' +
+      '</div>' +
+      '<div class="cal-grid" role="img" aria-label="' + y + '년 ' + (m + 1) + '월 달력, 오늘은 ' + today + '일">' + cells + '</div>' +
+      '<div class="cal-foot">' +
+        '<h3 id="calTitle">이번 달 생일, 미리 챙겨요</h3>' +
+        '<p>' + (m + 1) + '월은 ' + left + '일 남았어요. 생일 선물은 일주일 전에 고르면 여유 있어요.</p>' +
+        '<button class="btn btn-primary btn-md" type="button" data-occasion="birthday">생일 선물 찾기' + icon('arrowRight', 16) + '</button>' +
+      '</div>' +
+    '</article>';
+  }
+
+  function renderOccasions() {
+    var html = '';
+    FEATURED_OCC.forEach(function (id, i) {
+      html += occasionCardHTML(find(OCC, id), i);
+      if (id === 'birthday') html += calendarCardHTML();
+    });
+    $('#occasionGrid').innerHTML = html;
+
+    var rest = OCC.filter(function (o) { return FEATURED_OCC.indexOf(o.id) < 0; });
+    $('#occasionMore').innerHTML = '<p class="occasion-more-label">그 밖의 날</p>' + rest.map(function (o) {
+      return '<button class="more-chip" type="button" data-occasion="' + o.id + '">' +
+        '<span lang="en">' + OCC_EN[o.id] + '</span>' + escapeHTML(titleOf(o) === '응원' ? '응원·위로' : titleOf(o)) + icon('arrowRight', 16) + '</button>';
     }).join('');
   }
 
-  $('#occasionGrid').addEventListener('click', function (e) {
+  function onOccasionClick(e) {
     var btn = e.target.closest('[data-occasion]');
     if (!btn) return;
     setChoice('occ', btn.getAttribute('data-occasion'));
     updateFinder();
     focusFinder();
-  });
+  }
+  $('#occasionGrid').addEventListener('click', onOccasionClick);
+  $('#occasionMore').addEventListener('click', onOccasionClick);
 
   /* ======================================================
      9. 헤더 · 메뉴 · 스크롤
@@ -652,6 +759,10 @@
      10. 시작
      ====================================================== */
   hydrateIcons();
+  // app.js보다 먼저 실패한 사진(메인 배너 등)도 기본 이미지로 바꿈
+  $$('img.photo').forEach(function (img) {
+    if (img.complete && !img.naturalWidth) img.dispatchEvent(new Event('error'));
+  });
   renderQuestions();
   renderOccasions();
   updateFinder();

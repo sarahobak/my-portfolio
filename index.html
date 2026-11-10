@@ -3,25 +3,34 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gift Finder · 선물 고민, 3분이면 충분해요</title>
-  <meta name="description" content="누구에게, 얼마로, 어떤 날인지 고르면 어울리는 선물 3개를 추천해 드려요. 회원가입 없음 · 판매 없음.">
+  <title>GIFTÉ · 고민 없는 선물 큐레이션</title>
+  <meta name="description" content="누구에게, 얼마로, 어떤 날인지 고르면 어울리는 선물 3개를 골라 드려요. 회원가입 없음 · 판매 없음.">
+  <meta name="theme-color" content="#F4F2EC">
+  <meta property="og:image" content="images/hero-still-life.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <a class="skip-link" href="#finder">선물 찾기로 바로 가기</a>
 
+  <!-- 상단 띠 -->
+  <div class="top-strip">
+    <p class="container">
+      <span>회원가입 없음</span><span class="dot" aria-hidden="true"></span><span>판매 없음</span><span class="dot" aria-hidden="true"></span><span>직접 고른 선물 60개</span>
+    </p>
+  </div>
+
   <!-- 헤더 -->
   <header class="site-header" id="siteHeader">
     <div class="container header-inner">
-      <a class="logo" href="#top" aria-label="Gift Finder 맨 위로">
-        <span class="icon" data-icon="gift" data-size="22"></span>
-        <span>Gift Finder</span>
-      </a>
+      <a class="logo" href="#top" aria-label="GIFTÉ 맨 위로">GIFTÉ</a>
 
       <nav class="main-nav" aria-label="주요 메뉴">
         <a href="#finder" data-nav="finder">선물 찾기</a>
-        <a href="#occasions" data-nav="occasions">상황별 선물</a>
+        <a href="#occasions" data-nav="occasions">카테고리</a>
         <a href="#guide" data-nav="guide">이용 방법</a>
       </nav>
 
@@ -42,7 +51,7 @@
     <div class="mobile-menu" id="mobileMenu" hidden>
       <nav class="container" aria-label="모바일 메뉴">
         <a href="#finder" data-nav="finder">선물 찾기</a>
-        <a href="#occasions" data-nav="occasions">상황별 선물</a>
+        <a href="#occasions" data-nav="occasions">카테고리</a>
         <a href="#guide" data-nav="guide">이용 방법</a>
         <a class="btn btn-primary btn-lg btn-block" href="#finder" data-start>선물 추천받기</a>
       </nav>
@@ -50,18 +59,21 @@
   </header>
 
   <main id="top">
-    <!-- ① 메인 소개 -->
+    <!-- ① 메인 -->
     <section class="hero" aria-labelledby="heroTitle">
       <div class="container hero-inner">
         <div class="hero-text">
-          <p class="eyebrow">GIFT FINDER</p>
-          <h1 id="heroTitle">고민은 줄이고,<br>마음은 정확하게</h1>
-          <p class="hero-desc">누구에게, 얼마로, 어떤 날인지 고르면 어울리는 선물 3개를 추천해 드려요.</p>
+          <p class="kicker"><span>Vol. 01</span><span class="rule" aria-hidden="true"></span><span>Gift Curation</span></p>
+          <h1 id="heroTitle" lang="en">
+            <span class="hero-line">Good gift.</span>
+            <span class="hero-line">No <mark>guessing.</mark></span>
+          </h1>
+          <p class="hero-desc">누구에게, 얼마로, 어떤 날인지만 고르세요. <br>직접 고른 선물 60개 중에서 어울리는 3개를 골라 드려요.</p>
           <div class="hero-buttons">
             <a class="btn btn-primary btn-lg" href="#finder" data-start>
-              선물 추천 시작하기 <span class="icon" data-icon="arrowRight" data-size="16"></span>
+              선물 찾기 <span class="icon" data-icon="arrowRight" data-size="18"></span>
             </a>
-            <a class="btn btn-secondary btn-md" href="#guide">이용 방법 보기</a>
+            <a class="link-arrow" href="#occasions">카테고리 둘러보기 <span class="icon" data-icon="arrowRight" data-size="16"></span></a>
           </div>
           <ul class="trust">
             <li><span class="icon" data-icon="check" data-size="16"></span>회원가입 없음</li>
@@ -70,32 +82,39 @@
           </ul>
         </div>
 
-        <div class="hero-visual" aria-hidden="true">
-          <div class="mini-card mini-card--1">
-            <div class="mini-thumb"><span class="icon" data-icon="coffee" data-size="56"></span></div>
-            <p class="mini-name">핸드드립 세트</p>
-            <p class="mini-price">약 4만 원대</p>
+        <figure class="hero-visual">
+          <div class="hero-photo has-photo">
+            <span class="icon" data-icon="gift" data-size="96"></span>
+            <img class="photo" src="images/hero-still-life.jpg" alt="자연광이 드는 흰 테이블 위 세라믹 컵, 안경을 올린 책, 켜 둔 향초" width="1200" height="1500" fetchpriority="high">
           </div>
-          <div class="mini-card mini-card--2">
-            <div class="mini-thumb"><span class="icon" data-icon="candle" data-size="56"></span></div>
-            <p class="mini-name">소이 향초</p>
-            <p class="mini-price">약 2만 원대</p>
+          <!-- 라임색 브랜드 카드 (그래픽) -->
+          <div class="brand-card" aria-hidden="true">
+            <p class="brand-card-mark">GIFTÉ</p>
+            <p class="brand-card-sub">Curated<br>gift card</p>
+            <p class="brand-card-no">No. 060</p>
           </div>
-          <div class="mini-card mini-card--3">
-            <div class="mini-thumb"><span class="icon" data-icon="pen" data-size="56"></span></div>
-            <p class="mini-name">만년필</p>
-            <p class="mini-price">약 8만 원대</p>
-          </div>
-        </div>
+          <span class="shape-dot" aria-hidden="true"></span>
+          <span class="shape-line" aria-hidden="true"></span>
+          <figcaption class="hero-caption"><span>Still life</span> 세라믹 컵 · 소설 한 권 · 소이 향초</figcaption>
+        </figure>
       </div>
     </section>
 
+    <!-- 흐르는 띠 -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Birthday</span><span>Anniversary</span><span>Graduation</span><span>Housewarming</span><span>Thanks</span><span>Cheer up</span>
+        <span>Birthday</span><span>Anniversary</span><span>Graduation</span><span>Housewarming</span><span>Thanks</span><span>Cheer up</span>
+      </div>
+    </div>
+
     <!-- ② 선물 찾기 -->
-    <section class="section section--sub" id="finder" aria-labelledby="finderTitle">
-      <div class="container">
-        <header class="section-head section-head--center">
-          <p class="eyebrow">01 · 선물 찾기</p>
-          <h2 id="finderTitle">세 가지만 알려 주세요</h2>
+    <section class="section" id="finder" aria-labelledby="finderTitle">
+      <div class="container finder-layout">
+        <header class="finder-intro">
+          <p class="eyebrow"><span class="eyebrow-no">01</span>선물 찾기</p>
+          <h2 id="finderTitle"><span class="en" lang="en">Find the gift.</span>세 가지만 알려 주세요</h2>
+          <p class="section-desc">받는 사람, 예산, 그날. 세 가지를 고르면 직접 고른 선물 60개 중에서 가장 잘 맞는 선물을 골라 드려요.</p>
         </header>
 
         <form class="finder-card" id="finderForm" novalidate>
@@ -108,7 +127,7 @@
             </div>
             <div class="finder-submit">
               <button class="btn btn-primary btn-lg" type="submit" id="recommendBtn" disabled aria-describedby="finderHint">
-                선물 3개 추천받기 <span class="icon" data-icon="arrowRight" data-size="16"></span>
+                선물 3개 추천받기 <span class="icon" data-icon="arrowRight" data-size="18"></span>
               </button>
               <p class="finder-hint" id="finderHint">3개 더 고르면 추천받을 수 있어요</p>
             </div>
@@ -122,12 +141,12 @@
       <div class="container">
         <header class="result-head">
           <div>
-            <p class="eyebrow">02 · 추천 결과</p>
+            <p class="eyebrow"><span class="eyebrow-no">02</span>추천 결과</p>
             <h2 id="resultTitle" tabindex="-1">추천 결과</h2>
             <div class="cond-chips" id="condChips"></div>
           </div>
-          <button class="btn btn-secondary btn-md" type="button" id="shareBtn">
-            <span class="icon" data-icon="share" data-size="16"></span> 공유하기
+          <button class="btn btn-ghost btn-md" type="button" id="shareBtn">
+            <span class="icon" data-icon="share" data-size="18"></span> 공유하기
           </button>
         </header>
 
@@ -141,94 +160,108 @@
         <div class="result-empty" id="resultEmpty" hidden>
           <span class="icon" data-icon="gift" data-size="56"></span>
           <p>조건에 맞는 선물이 없어요.</p>
-          <button class="btn btn-secondary btn-md" type="button" data-rechoose>다시 고르기</button>
+          <button class="btn btn-ghost btn-md" type="button" data-rechoose>다시 고르기</button>
         </div>
 
         <div class="result-actions" id="resultActions">
-          <button class="btn btn-secondary btn-md" type="button" id="moreBtn">
-            <span class="icon" data-icon="plus" data-size="16"></span> 2개 더
+          <button class="btn btn-ghost btn-md" type="button" id="moreBtn">
+            <span class="icon" data-icon="plus" data-size="18"></span> 2개 더
           </button>
-          <button class="btn btn-secondary btn-md" type="button" data-rechoose>다시 고르기</button>
+          <button class="btn btn-ghost btn-md" type="button" data-rechoose>다시 고르기</button>
         </div>
         <p class="sr-only" id="resultLive" aria-live="polite"></p>
       </div>
     </section>
 
-    <!-- ④ 상황별 선물 -->
+    <!-- ④ 카테고리 -->
     <section class="section section--sub" id="occasions" aria-labelledby="occasionsTitle">
       <div class="container">
-        <header class="section-head">
-          <p class="eyebrow">03 · 상황별 선물</p>
-          <h2 id="occasionsTitle">어떤 날의 선물인가요?</h2>
+        <header class="section-head section-head--split">
+          <div>
+            <p class="eyebrow"><span class="eyebrow-no">03</span>카테고리</p>
+            <h2 id="occasionsTitle"><span class="en" lang="en">By occasion.</span>어떤 날의 선물인가요?</h2>
+          </div>
+          <p class="section-desc">날을 먼저 고르면 그날에 어울리는 선물부터 보여 드려요.</p>
         </header>
         <div class="occasion-grid" id="occasionGrid"></div>
+        <div class="occasion-more" id="occasionMore"></div>
       </div>
     </section>
 
     <!-- ⑤ 이용 방법 -->
     <section class="section" id="guide" aria-labelledby="guideTitle">
       <div class="container">
-        <header class="section-head">
-          <p class="eyebrow">04 · 이용 방법</p>
-          <h2 id="guideTitle">세 걸음이면 끝나요</h2>
+        <header class="section-head section-head--split">
+          <div>
+            <p class="eyebrow"><span class="eyebrow-no">04</span>이용 방법</p>
+            <h2 id="guideTitle"><span class="en" lang="en">How it works.</span>세 걸음이면 끝나요</h2>
+          </div>
         </header>
 
         <ol class="steps">
           <li class="step">
-            <span class="icon" data-icon="sliders" data-size="36"></span>
-            <p class="step-num">1</p>
+            <p class="step-num">01</p>
+            <span class="icon" data-icon="sliders" data-size="28"></span>
             <h3>조건 고르기</h3>
             <p>누구에게, 얼마로, 어떤 날인지 하나씩 눌러 주세요.</p>
           </li>
           <li class="step">
-            <span class="icon" data-icon="gift" data-size="36"></span>
-            <p class="step-num">2</p>
+            <p class="step-num">02</p>
+            <span class="icon" data-icon="gift" data-size="28"></span>
             <h3>추천받기</h3>
             <p>어울리는 선물 3개와 추천 이유를 바로 보여 드려요.</p>
           </li>
           <li class="step">
-            <span class="icon" data-icon="external" data-size="36"></span>
-            <p class="step-num">3</p>
+            <p class="step-num">03</p>
+            <span class="icon" data-icon="external" data-size="28"></span>
             <h3>쇼핑몰에서 확인하기</h3>
             <p>마음에 드는 선물은 쇼핑몰 검색으로 가격을 확인해요.</p>
           </li>
         </ol>
 
-        <div class="about">
-          <h3>Gift Finder는요</h3>
-          <p>Gift Finder는 20~30대가 자주 고민하는 선물 상황을 모아, 직접 고른 선물 목록에서 추천해 드리는 페이지예요. 상품을 판매하거나 광고비를 받고 순서를 바꾸지 않아요.</p>
-        </div>
-
-        <div class="faq">
-          <h3>자주 묻는 질문</h3>
-          <div class="faq-list" id="faqList">
-            <details>
-              <summary>상품을 파나요? <span class="icon" data-icon="chevronDown" data-size="20"></span></summary>
-              <p>아니요. Gift Finder는 선물 아이디어만 추천해요. <strong>상품 찾아보기</strong>를 누르면 쇼핑몰 검색 결과가 새 창으로 열리고, 구매는 그 쇼핑몰에서 직접 하시면 돼요.</p>
-            </details>
-            <details>
-              <summary>가격은 정확한가요? <span class="icon" data-icon="chevronDown" data-size="20"></span></summary>
-              <p>카드의 가격대는 흔히 볼 수 있는 가격을 바탕으로 한 참고용이에요. 실제 가격은 브랜드와 시기에 따라 달라지니 쇼핑몰에서 확인해 주세요.</p>
-            </details>
-            <details>
-              <summary>추천은 어떻게 고르나요? <span class="icon" data-icon="chevronDown" data-size="20"></span></summary>
-              <p>직접 고른 선물 60개 중에서 세 조건이 모두 맞는 선물을 먼저 보여 드려요. 그날에 어울리는 키워드를 가진 선물이 앞에 오고, 같은 조건 안에서는 순서를 섞어요. 맞는 선물이 모자라면 조건을 조금 넓혀 비슷한 선물을 함께 보여 드려요.</p>
-            </details>
-            <details>
-              <summary>내 정보가 저장되나요? <span class="icon" data-icon="chevronDown" data-size="20"></span></summary>
-              <p>회원가입이 없고, 고른 조건은 새로고침하면 사라져요. 찜한 선물만 지금 쓰는 브라우저에 저장되고, 다른 기기나 서버로는 보내지 않아요.</p>
-            </details>
+        <div class="guide-bottom">
+          <div class="about">
+            <h3>GIFTÉ는요</h3>
+            <p>GIFTÉ는 20~30대가 자주 고민하는 선물 상황을 모아, 직접 고른 선물 목록에서 추천해 드리는 페이지예요. 상품을 판매하거나 광고비를 받고 순서를 바꾸지 않아요.</p>
           </div>
-        </div>
 
-        <div class="guide-cta">
-          <a class="btn btn-primary btn-md" href="#finder" data-start>지금 선물 찾기 <span class="icon" data-icon="arrowRight" data-size="16"></span></a>
+          <div class="faq">
+            <h3>자주 묻는 질문</h3>
+            <div class="faq-list" id="faqList">
+              <details>
+                <summary>상품을 파나요? <span class="icon" data-icon="plus" data-size="20"></span></summary>
+                <p>아니요. GIFTÉ는 선물 아이디어만 추천해요. <strong>상품 찾아보기</strong>를 누르면 쇼핑몰 검색 결과가 새 창으로 열리고, 구매는 그 쇼핑몰에서 직접 하시면 돼요.</p>
+              </details>
+              <details>
+                <summary>가격은 정확한가요? <span class="icon" data-icon="plus" data-size="20"></span></summary>
+                <p>카드의 가격대는 흔히 볼 수 있는 가격을 바탕으로 한 참고용이에요. 실제 가격은 브랜드와 시기에 따라 달라지니 쇼핑몰에서 확인해 주세요.</p>
+              </details>
+              <details>
+                <summary>추천은 어떻게 고르나요? <span class="icon" data-icon="plus" data-size="20"></span></summary>
+                <p>직접 고른 선물 60개 중에서 세 조건이 모두 맞는 선물을 먼저 보여 드려요. 그날에 어울리는 키워드를 가진 선물이 앞에 오고, 같은 조건 안에서는 순서를 섞어요. 맞는 선물이 모자라면 조건을 조금 넓혀 비슷한 선물을 함께 보여 드려요.</p>
+              </details>
+              <details>
+                <summary>내 정보가 저장되나요? <span class="icon" data-icon="plus" data-size="20"></span></summary>
+                <p>회원가입이 없고, 고른 조건은 새로고침하면 사라져요. 찜한 선물만 지금 쓰는 브라우저에 저장되고, 다른 기기나 서버로는 보내지 않아요.</p>
+              </details>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 하단 안내 -->
-    <p class="notice-band">Gift Finder는 상품을 판매하지 않아요. 가격대는 참고용이며 실제 가격은 쇼핑몰에서 확인해 주세요.</p>
+    <!-- 마무리 -->
+    <section class="cta-band" aria-label="선물 찾기 시작">
+      <div class="container cta-inner">
+        <p class="cta-title" lang="en">Good gift.<br>No guessing.</p>
+        <div class="guide-cta">
+          <p class="cta-desc">오늘의 선물 고민, 1분이면 끝나요.</p>
+          <a class="btn btn-primary btn-lg" href="#finder" data-start>지금 선물 찾기 <span class="icon" data-icon="arrowRight" data-size="18"></span></a>
+        </div>
+      </div>
+    </section>
+
+    <p class="notice-band">GIFTÉ는 상품을 판매하지 않아요. 가격대는 참고용이며 실제 가격은 쇼핑몰에서 확인해 주세요. 사진은 분위기를 보여 주는 예시예요.</p>
   </main>
 
   <!-- 푸터 -->
@@ -236,16 +269,17 @@
     <div class="container">
       <div class="footer-top">
         <div>
-          <a class="logo" href="#top"><span class="icon" data-icon="gift" data-size="22"></span><span>Gift Finder</span></a>
-          <p class="footer-desc">고민될 때 꺼내 보는 선물 추천</p>
+          <a class="logo" href="#top">GIFTÉ</a>
+          <p class="footer-desc">고민될 때 꺼내 보는 선물 큐레이션</p>
         </div>
         <nav class="footer-nav" aria-label="하단 메뉴">
           <a href="#finder">선물 찾기</a>
-          <a href="#occasions">상황별 선물</a>
+          <a href="#occasions">카테고리</a>
           <a href="#guide">이용 방법</a>
         </nav>
       </div>
-      <p class="copyright">© 2026 Gift Finder</p>
+      <p class="footer-word" aria-hidden="true">GIFTÉ</p>
+      <p class="copyright">© 2026 GIFTÉ · Photos from Unsplash</p>
     </div>
   </footer>
 
@@ -261,7 +295,7 @@
     <p class="drawer-note">이 브라우저에만 저장돼요. 다른 기기에서는 보이지 않아요.</p>
     <ul class="wish-list" id="wishList"></ul>
     <div class="wish-empty" id="wishEmpty">
-      <span class="icon" data-icon="heart" data-size="56"></span>
+      <span class="icon" data-icon="heart" data-size="48"></span>
       <p>아직 찜한 선물이 없어요.<br>추천 카드의 하트를 눌러 모아 보세요.</p>
     </div>
   </aside>
