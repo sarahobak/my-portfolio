@@ -83,15 +83,11 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   stroke-linecap: round; stroke-linejoin: round;
 }
 
-/* 이모지 아이콘 (선물·상황·단계 등 내용 아이콘) */
-.emoji {
-  display: inline-block; flex-shrink: 0;
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
-  font-size: var(--s, 24px); line-height: 1;
-  font-style: normal;
-}
-.gift-thumb .emoji { transition: transform .2s; }
-.gift-card:hover .gift-thumb .emoji { transform: scale(1.06); }
+/* 큰 그림 아이콘은 선을 조금 가늘게 */
+.gift-thumb .icon svg, .mini-thumb .icon svg, .wish-thumb .icon svg,
+.result-empty .icon svg, .wish-empty .icon svg { stroke-width: 1.1; }
+.gift-thumb .icon { transition: transform .2s; }
+.gift-card:hover .gift-thumb .icon { transform: scale(1.06); }
 
 /* ---------- 버튼 ---------- */
 .btn {

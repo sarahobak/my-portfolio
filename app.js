@@ -57,11 +57,6 @@
       '" viewBox="0 0 24 24" focusable="false">' + (ICONS[name] || ICONS.gift) + '</svg></span>';
   }
 
-  /** 내용 아이콘(선물·상황)은 이모지로. 기능 버튼 아이콘은 위의 선 아이콘을 그대로 씀 */
-  function emoji(ch, size) {
-    return '<span class="emoji" aria-hidden="true" style="--s:' + (size || 24) + 'px">' + (ch || '🎁') + '</span>';
-  }
-
   function hydrateIcons(root) {
     (root || document).querySelectorAll('[data-icon]').forEach(function (el) {
       var size = el.getAttribute('data-size') || 20;
@@ -90,12 +85,12 @@
     { id: 'b4', label: '10만 원 이상', title: '10만 원 이상' }
   ];
   var OCC = [
-    { id: 'birthday', label: '생일', emoji: '🎂', desc: '취향을 아는 사이라면, 오래 쓰는 물건으로', keywords: ['취향', '오래 쓰는'] },
-    { id: 'anniversary', label: '기념일', emoji: '💝', desc: '둘만의 날을 기억하게 하는 선물', keywords: ['감성적', '고급스러운'] },
-    { id: 'thanks', label: '감사', emoji: '🌷', desc: '부담은 적게, 마음은 분명하게', keywords: ['가성비', '감성적'] },
-    { id: 'housewarming', label: '집들이', emoji: '🏠', desc: '새 공간에 바로 놓아 둘 수 있는 것', keywords: ['실용적', '감성적'] },
-    { id: 'congrats', label: '축하(취업·승진)', title: '축하', emoji: '🎉', desc: '새 출발을 응원하는 실용적인 선물', keywords: ['실용적', '고급스러운'] },
-    { id: 'cheer', label: '응원·위로', title: '응원', emoji: '🫶', desc: '말 대신 건네는 작은 쉼', keywords: ['휴식', '건강'] }
+    { id: 'birthday', label: '생일', icon: 'cake', desc: '취향을 아는 사이라면, 오래 쓰는 물건으로', keywords: ['취향', '오래 쓰는'] },
+    { id: 'anniversary', label: '기념일', icon: 'heart', desc: '둘만의 날을 기억하게 하는 선물', keywords: ['감성적', '고급스러운'] },
+    { id: 'thanks', label: '감사', icon: 'flower', desc: '부담은 적게, 마음은 분명하게', keywords: ['가성비', '감성적'] },
+    { id: 'housewarming', label: '집들이', icon: 'home', desc: '새 공간에 바로 놓아 둘 수 있는 것', keywords: ['실용적', '감성적'] },
+    { id: 'congrats', label: '축하(취업·승진)', title: '축하', icon: 'star', desc: '새 출발을 응원하는 실용적인 선물', keywords: ['실용적', '고급스러운'] },
+    { id: 'cheer', label: '응원·위로', title: '응원', icon: 'sparkle', desc: '말 대신 건네는 작은 쉼', keywords: ['휴식', '건강'] }
   ];
 
   var QUESTIONS = [
@@ -272,7 +267,7 @@
     var on = isWished(g.id);
     var detailId = 'detail-' + (++cardSeq);
     return '<article class="gift-card is-new" data-gift="' + g.id + '">' +
-      '<div class="gift-thumb">' + emoji(g.emoji, 64) +
+      '<div class="gift-thumb">' + icon(g.icon, 64) +
         '<span class="badge">' + (item.similar ? '비슷한 추천 ' : '추천 ') + rank + '</span>' +
         '<button class="wish-btn' + (on ? ' is-on' : '') + '" type="button" data-wish="' + g.id + '" aria-pressed="' + on + '" aria-label="' + escapeHTML(g.name) + ' 찜하기">' + icon('heart', 20) + '</button>' +
       '</div>' +
@@ -435,7 +430,7 @@
     $('#wishList').innerHTML = list.map(function (w) {
       var g = GIFT_BY_ID[w.gift_id];
       return '<li class="wish-item">' +
-        '<div class="wish-thumb">' + emoji(g.emoji, 32) + '</div>' +
+        '<div class="wish-thumb">' + icon(g.icon, 32) + '</div>' +
         '<div><p class="wish-name">' + escapeHTML(g.name) + '</p>' +
           '<p class="wish-meta">' + escapeHTML(g.price) + ' · #' + g.keywords.map(escapeHTML).join(' #') + '</p>' +
           '<a class="text-btn" href="' + shopURL(g.name) + '" target="_blank" rel="noopener noreferrer">상품 찾아보기' + icon('external', 16) + '<span class="sr-only">(새 창)</span></a></div>' +
@@ -555,7 +550,7 @@
     $('#occasionGrid').innerHTML = OCC.map(function (o) {
       var reps = preferKeywords(GIFTS.filter(function (g) { return g.occasion.indexOf(o.id) > -1; }), o.id)
         .slice(0, 3).map(function (g) { return escapeHTML(g.name); }).join(' · ');
-      return '<article class="occasion-card">' + emoji(o.emoji, 36) +
+      return '<article class="occasion-card">' + icon(o.icon, 36) +
         '<h3>' + escapeHTML(titleOf(o) === '응원' ? '응원·위로' : titleOf(o)) + '</h3>' +
         '<p class="occasion-desc">' + escapeHTML(o.desc) + '</p>' +
         '<p class="occasion-reps"><strong>대표 선물</strong> ' + reps + '</p>' +
