@@ -25,3 +25,46 @@
 GIFTÉ 리뉴얼 뒤로는 `banner-gift-box.jpg`, `default.jpg`(분홍 리본 상자)를 화면에서 쓰지 않아요. 파일은 지우지 않고 남겨 뒀어요.
 
 크기: 상품·카테고리용 800×800(1:1), 배너 1600×900(16:9). Unsplash 이미지 서버에서 잘라 받았어요.
+
+---
+
+## 카테고리 이미지 (03 카테고리 슬라이드) · `images/category/`
+
+모두 각 사진 페이지에서 **Unsplash License**(무료)임을 확인했어요.
+
+| 파일 | 카테고리 | 원본 사진 | 작가 |
+| --- | --- | --- | --- |
+| occ-birthday.jpg | 생일 | https://unsplash.com/photos/OiJDyCr3Ohk | Delfina Iacub |
+| occ-anniversary.jpg | 기념일 | https://unsplash.com/photos/56PnO1-lHbs | Annie Spratt |
+| occ-congrats.jpg | 취업·졸업 | https://unsplash.com/photos/60-_Ta1Fcyk | Ella Deane |
+| occ-housewarming.jpg | 집들이 | https://unsplash.com/photos/-37ysvsiUbk | Diane Wuttke |
+| occ-thanks.jpg | 감사 | https://unsplash.com/photos/JJeb7OHQ7a8 | Jocelyn Morales |
+| occ-cheer.jpg | 응원·위로 | https://unsplash.com/photos/e6OdPHkf9yY | Jessica Fadel |
+
+### 카테고리 이미지 교체 기준
+
+새 사진으로 바꿀 때도 아래 조건을 모두 지켜 주세요.
+
+**1. 라이선스**
+- Unsplash License(무료) 사진만 써요. Unsplash+(유료), 출처를 알 수 없는 사진은 쓰지 않아요.
+- 바꾸면 이 표에 원본 링크와 작가를 꼭 적어요.
+
+**2. 구도와 소품**
+- 주인공 소품은 1~2개. 배경은 벽, 테이블처럼 단순한 면이에요.
+- 사람 얼굴, 손이 크게 나온 사진, 상표나 글자가 크게 보이는 사진, 리본처럼 장식이 많은 사진은 피해요.
+- 위아래 여백이 있어 4:3으로 잘라도 주인공이 잘리지 않는 사진을 골라요.
+
+**3. 색과 톤 (모든 카테고리 사진을 같은 값으로 맞춤)**
+- 웜그레이 `#4A4540`(어두운 곳), 그레이지 `#B0AAA2`(중간), 라이트그레이 `#F0EDE8`(밝은 곳)을 잇는 색 범위로 칠해요.
+- 평균 밝기 0.66, 대비(밝기 표준편차) 0.20을 목표로 맞추고, 원래 색은 6%만 남겨요.
+- 결과는 평균 밝기 0.74 ± 0.01, 채도 0.04~0.05 안이면 통과예요.
+- 처리 방법: 원본을 1000×750(4:3)으로 받아 6장 모두 위 값으로 똑같이 변환했어요. 사진마다 손으로 따로 보정하지 않아요.
+
+**4. 파일**
+- 1000×750 JPG, 품질 86%, 한 장 200KB 이하예요.
+- 파일 이름은 `occ-카테고리ID.jpg` (`birthday`, `anniversary`, `congrats`, `housewarming`, `thanks`, `cheer`)예요.
+- alt에는 상품 이름이 아니라 사진에 실제로 보이는 것을 적어요. (`app.js`의 `IMAGES.occ_*`)
+
+**5. 교체 뒤 확인**
+- PC, 모바일에서 카드 6장 모두 사진이 뜨는지 확인해요.
+- 사진을 못 불러오면 기본 이미지(`default-neutral.jpg`)로 바뀌는지 확인해요.

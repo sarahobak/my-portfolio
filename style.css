@@ -1,23 +1,22 @@
 /* ==========================================================
    GIFTÉ · 에디토리얼 선물 큐레이션
-   오프화이트 바탕 · 블랙 타이포그래피 · 라임 그린 포인트
-   코발트 블루는 작은 그래픽에만
+   밀키 아이보리 바탕 · 차콜 블랙 타이포그래피
+   로즈 핑크는 메인 CTA 버튼과 브랜드 카드에만, 블러쉬 핑크는 안내 띠와 제목 밑줄에만
    ========================================================== */
 :root {
-  --bg: #F4F2EC;            /* 오프화이트 */
-  --surface: #FBFAF6;       /* 카드 면 */
-  --bg-sub: #EAE7DF;        /* 보조 면 */
-  --text: #111111;          /* 블랙 */
-  --text-sub: #5C5A55;      /* 보조 글자 */
-  --line: #D9D5CB;          /* 얇은 선 */
-  --line-strong: #111111;   /* 진한 선 */
-  --lime: #D4F24A;          /* 라임 그린 포인트 */
-  --lime-deep: #BFE02E;     /* 라임 호버 */
-  --cobalt: #2445D6;        /* 코발트 블루 (그래픽 한정) */
-  --on-dark: #F4F2EC;
+  --bg: #FAF8F5;            /* 밀키 아이보리 */
+  --surface: #FFFFFF;       /* 카드 배경 */
+  --bg-sub: #F2EFEA;        /* 보조 면 (아이보리를 한 단계 진하게) */
+  --text: #252321;          /* 차콜 블랙 */
+  --text-sub: #6B6661;      /* 보조 글자 */
+  --line: #E4DFD8;          /* 얇은 선 */
+  --line-strong: #252321;   /* 진한 선 */
+  --pink: #D98291;          /* 메인 포인트: 로즈 핑크 (CTA 버튼·브랜드 카드에만) */
+  --blush: #F1D9DD;         /* 보조 포인트: 블러쉬 핑크 (안내 띠·제목 밑줄에만) */
+  --on-dark: #FAF8F5;
 
-  --overlay: rgba(17, 17, 17, .5);
-  --shadow: 0 24px 48px -24px rgba(17, 17, 17, .35);
+  --overlay: rgba(37, 35, 33, .45);
+  --shadow: 0 24px 48px -24px rgba(37, 35, 33, .3);
 
   --font-sans: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   --font-display: "Archivo", Pretendard, "Helvetica Neue", Arial, sans-serif;
@@ -59,10 +58,10 @@ em { font-style: normal; }
 mark { background: none; color: inherit; }
 [hidden] { display: none !important; }
 
-::selection { background: var(--lime); color: var(--text); }
+::selection { background: var(--blush); color: var(--text); }
 
 :focus-visible {
-  outline: 2px solid var(--cobalt);
+  outline: 2px solid var(--text);
   outline-offset: 3px;
 }
 
@@ -127,9 +126,13 @@ img.photo {
 .btn-sm { height: 40px; padding: 0 18px; font-size: 14px; }
 .btn-block { width: 100%; }
 
-/* 검정 버튼 → 호버하면 라임 */
+/* 기본 버튼은 차콜 */
 .btn-primary { background: var(--text); color: var(--on-dark); }
-.btn-primary:hover:not(:disabled) { background: var(--lime); color: var(--text); }
+.btn-primary:hover:not(:disabled) { background: #45413D; color: var(--on-dark); }
+/* 메인 CTA만 로즈 핑크 (글자는 차콜로 대비 확보) */
+.hero-buttons .btn-primary, #recommendBtn, .guide-cta .btn-primary { background: var(--pink); color: var(--text); }
+.hero-buttons .btn-primary:hover, #recommendBtn:hover:not(:disabled), .guide-cta .btn-primary:hover { background: var(--text); color: var(--on-dark); }
+#recommendBtn:disabled { background: var(--bg-sub); color: var(--text-sub); }
 .btn-primary:disabled { background: var(--bg-sub); color: var(--text-sub); cursor: not-allowed; }
 
 .btn-ghost { background: transparent; color: var(--text); border: 1.5px solid var(--text); }
@@ -164,14 +167,14 @@ img.photo {
 .icon-btn:hover { background: var(--bg-sub); }
 
 /* ---------- 상단 띠 ---------- */
-.top-strip { background: var(--text); color: var(--on-dark); font-size: 12px; font-weight: 500; letter-spacing: .02em; }
+.top-strip { background: var(--blush); color: var(--text); font-size: 12px; font-weight: 500; letter-spacing: .02em; }
 .top-strip p { display: flex; align-items: center; justify-content: center; gap: 14px; height: 34px; }
-.top-strip .dot { width: 6px; height: 6px; background: var(--lime); }
+.top-strip .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text); }
 
 /* ---------- 헤더 ---------- */
 .site-header {
   position: sticky; top: 0; z-index: 50;
-  background: rgba(244, 242, 236, .92);
+  background: rgba(250, 248, 245, .92);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid transparent;
@@ -194,7 +197,7 @@ img.photo {
 }
 .main-nav a::before {
   content: ""; position: absolute; left: 0; right: 0; bottom: 4px; z-index: -1;
-  height: 10px; background: var(--lime);
+  height: 8px; background: var(--blush);
   transform: scaleX(0); transform-origin: left;
   transition: transform .3s var(--ease);
 }
@@ -208,11 +211,11 @@ img.photo {
   font-size: 14px; font-weight: 700;
   transition: background-color .2s var(--ease);
 }
-.wish-open:hover { background: var(--lime); }
+.wish-open:hover { background: var(--surface); }
 .wish-count {
   display: inline-flex; align-items: center; justify-content: center;
   min-width: 22px; height: 22px; padding: 0 6px;
-  background: var(--text); color: var(--lime);
+  background: var(--text); color: var(--on-dark);
   font-family: var(--font-display); font-size: 12px; font-weight: 800; line-height: 1;
 }
 
@@ -231,7 +234,7 @@ img.photo {
   height: 64px; font-size: 22px; font-weight: 800; letter-spacing: -0.02em;
   border-bottom: 1px solid var(--line);
 }
-.mobile-menu a.is-current { text-decoration: underline; text-decoration-color: var(--lime); text-decoration-thickness: 6px; text-underline-offset: -2px; text-decoration-skip-ink: none; }
+.mobile-menu a.is-current { text-decoration: underline; text-decoration-color: var(--blush); text-decoration-thickness: 6px; text-underline-offset: -2px; text-decoration-skip-ink: none; }
 .mobile-menu .btn { margin-top: 24px; }
 
 /* ---------- 공통 영역 ---------- */
@@ -246,7 +249,7 @@ img.photo {
 .eyebrow-no {
   display: inline-flex; align-items: center; justify-content: center;
   min-width: 34px; height: 24px; padding: 0 6px;
-  background: var(--lime);
+  border: 1.5px solid var(--text);
   font-size: 13px; font-weight: 800; letter-spacing: 0;
 }
 
@@ -282,9 +285,13 @@ h2 .en {
 
 .hero h1 {
   margin-top: 32px;
-  font-size: clamp(56px, 6.1vw, 104px); font-weight: 900; line-height: .9; letter-spacing: -0.06em;
+  font-size: clamp(56px, 6.1vw, 104px); /* 컨테이너 단위를 모르는 브라우저용 */
+  font-size: clamp(44px, 11.4cqi, 112px); /* 왼쪽 글 영역 너비에 맞춰 크기를 정해서 사진 쪽으로 넘치지 않게 */
+  font-weight: 900; line-height: .9; letter-spacing: -0.06em;
   text-transform: uppercase;
 }
+/* 글 영역을 사진보다 앞에 둠 (혹시 겹쳐도 글자가 가려지지 않게) */
+.hero-text { position: relative; z-index: 3; min-width: 0; container-type: inline-size; }
 .hero-line { display: block; white-space: nowrap; }
 .hero-line:last-child { padding-left: .4em; }   /* 두 번째 줄을 들여 써서 비대칭으로 */
 .hero h1 mark {
@@ -294,7 +301,27 @@ h2 .en {
 }
 .hero h1 mark::before {
   content: ""; position: absolute; left: 0; right: 0; bottom: .06em; z-index: -1;
-  height: .42em; background: var(--lime);
+  height: .3em; background: var(--blush);
+  transform-origin: left center;
+}
+
+/* 메인 문구 등장: 줄 전체가 왼쪽 → 오른쪽으로 드러남 (GOOD GIFT. → NO GUESSING. → 밑줄) */
+.hero-line {
+  animation: line-reveal 1.05s cubic-bezier(.77, 0, .18, 1) both;
+}
+.hero-line:first-child { animation-delay: .15s; }
+.hero-line:last-child { animation-delay: .6s; }
+.hero h1 mark::before {
+  animation: underline-grow .8s cubic-bezier(.65, 0, .35, 1) 1.5s both;
+}
+@keyframes line-reveal {
+  /* 위아래·오른쪽은 넉넉히 열어 둬서 글자 끝이 잘리지 않게 */
+  from { clip-path: inset(-25% 100% -25% -10%); transform: translateX(-.06em); }
+  to   { clip-path: inset(-25% -10% -25% -10%); transform: none; }
+}
+@keyframes underline-grow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
 }
 
 .hero-desc {
@@ -322,8 +349,8 @@ h2 .en {
   width: 168px; aspect-ratio: 5 / 7;
   display: flex; flex-direction: column;
   padding: 16px 16px 14px;
-  background: var(--lime); color: var(--text);
-  box-shadow: 18px 22px 30px -18px rgba(17, 17, 17, .45);
+  background: #E85A8C; color: var(--text);   /* 브랜드 카드만 조금 더 선명한 핫 핑크 */
+  box-shadow: 18px 22px 30px -18px rgba(37, 35, 33, .35);
   transform: rotate(-6deg);
   transition: transform .5s var(--ease);
 }
@@ -336,11 +363,12 @@ h2 .en {
 .shape-dot {
   position: absolute; right: -18px; top: 38%; z-index: 2;
   width: 56px; height: 56px; border-radius: 50%;
-  background: var(--cobalt);
+  display: none;
 }
 .shape-line {
   position: absolute; right: 22%; top: -20px; z-index: 2;
-  width: 2px; height: 96px; background: var(--cobalt);
+  width: 2px; height: 96px;
+  display: none;
 }
 
 .hero-caption {
@@ -364,8 +392,8 @@ h2 .en {
 }
 .marquee span::after {
   content: ""; display: inline-block;
-  width: 12px; height: 12px; margin: 0 32px;
-  background: var(--lime);
+  width: 6px; height: 6px; margin: 0 32px;
+  border-radius: 50%; background: var(--blush);
 }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
@@ -395,7 +423,7 @@ h2 .en {
   transition: background-color .25s var(--ease);
 }
 .q-num .icon { display: none; }
-.question.is-done .q-num { background: var(--lime); }
+.question.is-done .q-num { background: var(--text); color: var(--on-dark); }
 .question.is-done .q-num .num-text { display: none; }
 .question.is-done .q-num .icon { display: inline-flex; }
 
@@ -412,8 +440,8 @@ h2 .en {
   transition: background-color .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
 }
 .chip span:hover { border-color: var(--text); }
-.chip input:checked + span { background: var(--text); border-color: var(--text); color: var(--lime); }
-.chip input:focus-visible + span { outline: 2px solid var(--cobalt); outline-offset: 2px; }
+.chip input:checked + span { background: var(--text); border-color: var(--text); color: var(--on-dark); }
+.chip input:focus-visible + span { outline: 2px solid var(--text); outline-offset: 2px; }
 
 .finder-foot { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 28px; }
 .summary-label { font-size: 12px; font-weight: 700; letter-spacing: .06em; color: var(--text-sub); }
@@ -441,10 +469,10 @@ h2 .en {
   font-size: 14px; font-weight: 600;
   transition: background-color .2s var(--ease);
 }
-.cond-chip:hover { background: var(--lime); }
+.cond-chip:hover { background: var(--bg-sub); }
 
 .result-note { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; font-size: 14px; color: var(--text-sub); }
-.result-note .icon { color: var(--cobalt); }
+.result-note .icon { color: var(--text); }
 
 .gift-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 56px 28px; align-items: start; }
 .gift-card { display: flex; flex-direction: column; }
@@ -460,8 +488,8 @@ h2 .en {
   overflow: hidden;
   background: var(--bg-sub); color: var(--text);
 }
-.gift-thumb--t1 { background: #E6E3DA; }
-.gift-thumb--t2 { background: #ECEADF; }
+.gift-thumb--t1 { background: #EFEBE5; }
+.gift-thumb--t2 { background: #F4F1EC; }
 .gift-thumb > .icon { position: relative; transition: transform .6s var(--ease); }
 .gift-card:hover .gift-thumb > .icon { transform: scale(1.08); }
 .gift-card:hover .gift-thumb img.photo { transform: scale(1.05); }
@@ -469,7 +497,7 @@ h2 .en {
 .badge {
   position: absolute; left: 12px; top: 12px; z-index: 1;
   padding: 7px 9px;
-  background: var(--lime);
+  background: var(--surface);
   font-size: 12px; font-weight: 700; line-height: 1; color: var(--text);
 }
 .wish-btn {
@@ -479,10 +507,10 @@ h2 .en {
   background: var(--surface); color: var(--text);
   transition: transform .2s var(--ease), background-color .2s var(--ease);
 }
-.wish-btn:hover { background: var(--lime); }
+.wish-btn:hover { background: var(--bg-sub); }
 .wish-btn:active { transform: scale(.92); }
-.wish-btn.is-on { background: var(--text); color: var(--lime); }
-.wish-btn.is-on svg { fill: var(--lime); stroke: var(--lime); }
+.wish-btn.is-on { background: var(--text); color: var(--on-dark); }
+.wish-btn.is-on svg { fill: var(--on-dark); stroke: var(--on-dark); }
 
 .gift-body { display: flex; flex-direction: column; flex: 1; padding: 20px 0 0; }
 .gift-no { font-size: 13px; font-weight: 800; letter-spacing: .02em; line-height: 1; color: var(--text-sub); }
@@ -495,7 +523,7 @@ h2 .en {
 .gift-reason { margin: 16px 0; padding-top: 16px; border-top: 1.5px solid var(--text); font-size: 15px; line-height: 1.7; }
 .gift-detail {
   margin-bottom: 16px; padding: 16px 18px;
-  background: var(--surface); border-left: 4px solid var(--lime);
+  background: var(--surface); border-left: 2px solid var(--text);
   font-size: 14px; line-height: 1.7;
 }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -522,24 +550,74 @@ h2 .en {
 }
 .result-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 64px; }
 
-/* ---------- ④ 카테고리 (비대칭 그리드) ---------- */
+/* ---------- ④ 카테고리 (가로 슬라이드) ---------- */
+/* 가로 스크롤 + 스냅: 손가락 스와이프는 브라우저 기본 동작, 화살표·인디케이터는 app.js */
 .occasion-grid {
-  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px;
+  --per-view: 3;            /* 한 화면에 보이는 카드 수 */
+  --gap: 24px;
+  display: flex; gap: var(--gap);
+  overflow-x: auto; overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  /* 카드 그림자가 잘리지 않게 안쪽 여백을 두고 같은 만큼 바깥으로 당김 */
+  padding: 2px 10px 12px 2px;
+  margin: -2px -10px -12px -2px;
+  scroll-padding-left: 2px;
+}
+.occasion-grid::-webkit-scrollbar { display: none; }
+/* 끊김 없이 흐르는 동안은 카드 경계에 붙는 스냅을 끔 (붙으면 흐름이 툭툭 끊김) */
+.occasion-grid.is-flowing { scroll-snap-type: none; scroll-behavior: auto; }
+.occasion-grid:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
+.occasion-grid > * {
+  flex: 0 0 calc((100% - var(--gap) * (var(--per-view) - 1)) / var(--per-view));
+  min-width: 0;
+  scroll-snap-align: start;
 }
 .occasion-card {
   position: relative;
   display: flex; flex-direction: column;
-  grid-column: span 4;
   background: var(--bg);
   border: 1.5px solid var(--text);
-  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+  transition: box-shadow .35s var(--ease);
 }
-.occasion-card:hover { transform: translateY(-4px); box-shadow: 8px 8px 0 var(--text); }
-/* 생일은 크게 */
-.occasion-card--birthday { grid-column: span 7; flex-direction: row; }
-.occasion-card--birthday .occasion-media { flex: 0 0 56%; aspect-ratio: auto; min-height: 100%; border-bottom: 0; border-right: 1.5px solid var(--text); }
-.occasion-card--birthday .occasion-body { justify-content: flex-end; }
-.occasion-card--birthday .occasion-en { font-size: clamp(36px, 3.6vw, 52px); }
+.occasion-card:hover { box-shadow: 6px 6px 0 var(--text); }
+
+/* 슬라이드 조작 영역 */
+.carousel-controls {
+  display: flex; align-items: center; gap: 24px;
+  margin-top: 28px;
+}
+.carousel-count {
+  min-width: 64px;
+  font-family: var(--font-display); font-size: 14px; font-weight: 800; letter-spacing: .02em;
+}
+.carousel-count span { color: var(--text-sub); font-weight: 600; }
+.carousel-dots { display: flex; align-items: center; gap: 4px; margin-right: auto; }
+.carousel-dot {
+  position: relative;
+  width: 32px; height: 44px;           /* 누르기 쉬운 크기 */
+}
+.carousel-dot::before {
+  content: ""; position: absolute; left: 4px; right: 4px; top: 50%;
+  height: 2px; margin-top: -1px;
+  background: var(--line);
+  transition: background-color .3s var(--ease), left .3s var(--ease), right .3s var(--ease);
+}
+.carousel-dot:hover::before { background: var(--text-sub); }
+.carousel-dot[aria-current="true"] { width: 56px; }
+.carousel-dot[aria-current="true"]::before { background: var(--text); height: 3px; margin-top: -1.5px; }
+.carousel-dot { transition: width .3s var(--ease); }
+.carousel-arrows { display: flex; gap: 8px; }
+.carousel-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 52px; height: 52px;
+  border: 1.5px solid var(--text);
+  transition: background-color .25s var(--ease), color .25s var(--ease), opacity .25s var(--ease);
+}
+.carousel-btn:hover:not(:disabled) { background: var(--text); color: var(--on-dark); }
+.carousel-btn:disabled { opacity: .25; cursor: default; }
 
 .occasion-media {
   display: flex; align-items: center; justify-content: center;
@@ -551,7 +629,7 @@ h2 .en {
 .occasion-no {
   position: absolute; left: 12px; top: 12px; z-index: 1;
   padding: 6px 8px;
-  background: var(--text); color: var(--lime);
+  background: var(--text); color: var(--on-dark);
   font-size: 13px; font-weight: 800; line-height: 1;
 }
 
@@ -567,14 +645,13 @@ h2 .en {
 /* 카드 전체를 눌러도 동작 */
 .occasion-card .text-btn::after { content: ""; position: absolute; inset: 0; z-index: 2; }
 .occasion-card .text-btn:focus-visible { outline: none; }
-.occasion-card .text-btn:focus-visible::after { outline: 2px solid var(--cobalt); outline-offset: 3px; }
+.occasion-card .text-btn:focus-visible::after { outline: 2px solid var(--text); outline-offset: 3px; }
 
-/* 생일 캘린더 카드 (라임 강조) */
+/* 생일 캘린더 카드 (흰 카드 + 차콜 테두리) */
 .calendar-card {
-  grid-column: span 5;
   display: flex; flex-direction: column;
   padding: 24px;
-  background: var(--lime); color: var(--text);
+  background: var(--surface); color: var(--text);
   border: 1.5px solid var(--text);
 }
 .cal-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-bottom: 14px; border-bottom: 1.5px solid var(--text); }
@@ -589,12 +666,12 @@ h2 .en {
   font-family: var(--font-display); font-size: 14px; font-weight: 700;
 }
 .cal-day.is-past { opacity: .4; }
-.cal-day.is-today { background: var(--text); color: var(--lime); border-radius: 50%; opacity: 1; }
+.cal-day.is-today { background: var(--text); color: var(--on-dark); border-radius: 50%; opacity: 1; }
 .cal-foot { margin-top: auto; padding-top: 18px; }
 .cal-foot h3 { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
 .cal-foot p { margin-top: 4px; font-size: 14px; }
 .cal-foot .btn { margin-top: 16px; }
-.cal-foot .btn-primary:hover { background: var(--surface); color: var(--text); }
+.cal-foot .btn-primary:hover { background: #45413D; color: var(--on-dark); }
 
 /* 그 밖의 날 */
 .occasion-more { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 32px; }
@@ -607,7 +684,7 @@ h2 .en {
   transition: background-color .2s var(--ease);
 }
 .more-chip span { font-size: 13px; font-weight: 800; text-transform: uppercase; color: var(--text-sub); }
-.more-chip:hover { background: var(--lime); }
+.more-chip:hover { background: var(--surface); }
 .more-chip:hover span { color: var(--text); }
 
 /* ---------- ⑤ 이용 방법 ---------- */
@@ -637,7 +714,7 @@ h2 .en {
 .faq details p strong { color: var(--text); }
 
 /* ---------- 마무리 ---------- */
-.cta-band { background: var(--lime); border-top: 1.5px solid var(--text); }
+.cta-band { background: var(--surface); border-top: 1.5px solid var(--text); }
 .cta-inner { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; padding-top: 96px; padding-bottom: 96px; }
 .cta-title { font-size: clamp(48px, 7vw, 108px); font-weight: 900; line-height: .88; letter-spacing: -0.06em; text-transform: uppercase; }
 .cta-desc { margin-bottom: 16px; font-size: 16px; font-weight: 600; }
@@ -648,17 +725,19 @@ h2 .en {
 .site-footer { padding: 64px 0 32px; background: var(--text); color: var(--on-dark); }
 .site-footer .logo { color: var(--on-dark); }
 .footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
-.footer-desc { margin-top: 10px; font-size: 14px; color: rgba(244, 242, 236, .65); }
+.footer-desc { margin-top: 10px; font-size: 14px; color: rgba(250, 248, 245, .65); }
 .footer-nav { display: flex; gap: 32px; }
-.footer-nav a { display: inline-flex; align-items: center; min-height: 44px; font-size: 15px; font-weight: 600; color: rgba(244, 242, 236, .75); }
-.footer-nav a:hover { color: var(--lime); }
+.footer-nav a { display: inline-flex; align-items: center; min-height: 44px; font-size: 15px; font-weight: 600; color: rgba(250, 248, 245, .75); }
+.footer-nav a:hover { color: var(--on-dark); }
 .footer-word {
   margin-top: 40px;
-  font-size: clamp(96px, 24vw, 360px); font-weight: 900; line-height: .8; letter-spacing: -0.07em;
-  color: var(--lime);
+  /* 글자끼리 겹치지 않게 자간을 덜 좁히고, 반투명 대신 단색을 써서 겹친 자리가 진해지지 않게.
+     줄 높이를 글자보다 넉넉히 둬서 É 위 점이 위쪽 로고·메뉴 줄로 올라가지 않게 */
+  font-size: clamp(88px, 22vw, 340px); font-weight: 900; line-height: 1.05; letter-spacing: -0.03em;
+  color: #3A3734;
   white-space: nowrap;
 }
-.copyright { margin-top: 28px; padding-top: 20px; border-top: 1px solid rgba(244, 242, 236, .2); font-size: 13px; color: rgba(244, 242, 236, .6); }
+.copyright { margin-top: 28px; padding-top: 20px; border-top: 1px solid rgba(250, 248, 245, .2); font-size: 13px; color: rgba(250, 248, 245, .6); }
 
 /* ---------- 찜 목록 패널 ---------- */
 .drawer-overlay { position: fixed; inset: 0; z-index: 80; background: var(--overlay); opacity: 0; transition: opacity .3s var(--ease); }
@@ -676,7 +755,7 @@ h2 .en {
 .drawer-head {
   display: flex; align-items: center; justify-content: space-between;
   height: var(--header-h); padding: 0 16px 0 28px;
-  background: var(--lime);
+  background: var(--surface);
   border-bottom: 1.5px solid var(--text);
 }
 .drawer-head h2 { margin: 0; font-size: 22px; font-weight: 900; letter-spacing: -0.03em; }
@@ -695,7 +774,7 @@ h2 .en {
 .toast {
   position: fixed; left: 50%; bottom: 32px; z-index: 100;
   padding: 14px 22px;
-  background: var(--text); color: var(--lime);
+  background: var(--text); color: var(--on-dark);
   font-size: 14px; font-weight: 700;
   transform: translate(-50%, 16px);
   opacity: 0; pointer-events: none;
@@ -713,9 +792,7 @@ h2 .en {
   .finder-intro { position: static; }
   .gift-grid { gap: 48px 20px; }
   .gift-actions { flex-wrap: wrap; }
-  .occasion-card--birthday { grid-column: span 12; }
-  .calendar-card { grid-column: span 6; }
-  .occasion-card { grid-column: span 6; }
+  .occasion-grid { --per-view: 2; }
   .guide-bottom { grid-template-columns: 1fr; gap: 56px; }
 }
 
@@ -781,11 +858,15 @@ h2 .en {
   .result-actions { margin-top: 48px; }
   .result-actions .btn { flex: 1 1 0; }
 
-  .occasion-grid { gap: 16px; }
-  .occasion-card, .occasion-card--birthday, .calendar-card { grid-column: span 12; }
-  .occasion-card--birthday { flex-direction: column; }
-  .occasion-card--birthday .occasion-media { flex: none; aspect-ratio: 4 / 3; border-right: 0; border-bottom: 1.5px solid var(--text); }
-  .occasion-card:hover { box-shadow: 5px 5px 0 var(--text); }
+  .occasion-grid { --per-view: 1.12; --gap: 14px; }   /* 다음 카드가 살짝 보여 넘길 수 있다는 걸 알려 줌 */
+  .occasion-card:hover { box-shadow: 4px 4px 0 var(--text); }
+  .carousel-controls { gap: 12px; margin-top: 20px; }
+  .carousel-count { min-width: 0; white-space: nowrap; }
+  .carousel-dots { gap: 0; }
+  .carousel-dot { width: 18px; }
+  .carousel-dot::before { left: 3px; right: 3px; }
+  .carousel-dot[aria-current="true"] { width: 32px; }
+  .carousel-btn { width: 44px; height: 44px; }
   .occasion-en { font-size: 26px; }
   .occasion-reps { display: none; }
   .calendar-card { padding: 20px; }
@@ -834,4 +915,7 @@ h2 .en {
     transition-duration: .01ms !important;
   }
   .marquee-track { animation: none; }
+  /* 메인 문구는 움직임 없이 바로 보이게 */
+  .hero-line, .hero h1 mark::before { animation: none; }
+  .occasion-grid { scroll-behavior: auto; }
 }

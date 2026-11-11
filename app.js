@@ -41,6 +41,9 @@
     star: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
     check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
     arrowRight: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+    arrowLeft: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
+    pause: '<path d="M9 5v14M15 5v14"/>',
+    play: '<path d="M8 5.5v13l11-6.5z"/>',
     external: '<path d="M7 17 17 7M9 7h8v8"/>',
     menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
     x: '<path d="M6 6l12 12M18 6 6 18"/>',
@@ -163,9 +166,16 @@
     49: 'jewelry',
     13: 'home', 17: 'home', 21: 'home'
   };
+  // 카테고리 카드 사진: 같은 그레이 톤으로 맞춘 사진 (images/category, 기준은 images/CREDITS.md)
+  IMAGES.occ_birthday     = { src: 'images/category/occ-birthday.jpg',     alt: '흰 생크림 케이크와 디저트 접시가 놓인 밝은 테이블' };
+  IMAGES.occ_anniversary  = { src: 'images/category/occ-anniversary.jpg',  alt: '밝은 회색 벽 앞 안개꽃 한 다발' };
+  IMAGES.occ_congrats     = { src: 'images/category/occ-congrats.jpg',     alt: '밝은 바닥 위 펼친 노트와 펜' };
+  IMAGES.occ_housewarming = { src: 'images/category/occ-housewarming.jpg', alt: '침대 옆 협탁 위 도자기 화병과 마른 꽃' };
+  IMAGES.occ_thanks       = { src: 'images/category/occ-thanks.jpg',       alt: '햇빛 드는 테이블 위 찻잔과 받침' };
+  IMAGES.occ_cheer        = { src: 'images/category/occ-cheer.jpg',        alt: '흐린 창가에 켜 둔 초 한 자루' };
   var OCC_IMAGE = {
-    birthday: 'cake', anniversary: 'flowers', thanks: 'candle',
-    housewarming: 'home', congrats: 'stationery', cheer: 'plush'
+    birthday: 'occ_birthday', anniversary: 'occ_anniversary', thanks: 'occ_thanks',
+    housewarming: 'occ_housewarming', congrats: 'occ_congrats', cheer: 'occ_cheer'
   };
 
   function imgHTML(key, size) {
@@ -600,9 +610,9 @@
      8. 상황별 선물
      ====================================================== */
   var OCC_EN = { birthday: 'Birthday', anniversary: 'Anniversary', thanks: 'Thanks', housewarming: 'Housewarming', congrats: 'Job & Graduation', cheer: 'Cheer up' };
-  // 카테고리 카드에 크게 보여 줄 날 (나머지는 아래 '그 밖의 날'로)
-  var FEATURED_OCC = ['birthday', 'anniversary', 'congrats', 'housewarming'];
-  var CARD_LABEL = { congrats: '취업·졸업' };
+  // 카테고리 카드로 보여 줄 날 (6개 모두 슬라이드에. 빠진 날은 아래 '그 밖의 날'로)
+  var FEATURED_OCC = ['birthday', 'anniversary', 'congrats', 'housewarming', 'thanks', 'cheer'];
+  var CARD_LABEL = { congrats: '취업·졸업', cheer: '응원·위로' };
 
   function occasionCardHTML(o, i) {
     var reps = preferKeywords(GIFTS.filter(function (g) { return g.occasion.indexOf(o.id) > -1; }), o.id)
@@ -650,15 +660,16 @@
   }
 
   function renderOccasions() {
-    var html = '';
+    // 생일 선물 달력을 맨 앞에 두고, 그다음에 날짜별 카드
+    var html = calendarCardHTML();
     FEATURED_OCC.forEach(function (id, i) {
       html += occasionCardHTML(find(OCC, id), i);
-      if (id === 'birthday') html += calendarCardHTML();
     });
     $('#occasionGrid').innerHTML = html;
 
     var rest = OCC.filter(function (o) { return FEATURED_OCC.indexOf(o.id) < 0; });
-    $('#occasionMore').innerHTML = '<p class="occasion-more-label">그 밖의 날</p>' + rest.map(function (o) {
+    $('#occasionMore').hidden = rest.length === 0;
+    $('#occasionMore').innerHTML = !rest.length ? '' : '<p class="occasion-more-label">그 밖의 날</p>' + rest.map(function (o) {
       return '<button class="more-chip" type="button" data-occasion="' + o.id + '">' +
         '<span lang="en">' + OCC_EN[o.id] + '</span>' + escapeHTML(titleOf(o) === '응원' ? '응원·위로' : titleOf(o)) + icon('arrowRight', 16) + '</button>';
     }).join('');
@@ -673,6 +684,214 @@
   }
   $('#occasionGrid').addEventListener('click', onOccasionClick);
   $('#occasionMore').addEventListener('click', onOccasionClick);
+
+  /* 카테고리 슬라이드
+     - 카드가 컨베이어 벨트처럼 끊김 없이 천천히 가로로 흐름 (PC·모바일 모두)
+     - 끝에 닿으면 앞쪽 카드로 자연스럽게 이어지도록 카드 복사본을 뒤에 붙여 두고,
+       복사본 구간에 들어서면 같은 모습의 원래 위치로 순간 이동
+     - 마우스를 올리거나 키보드로 안에 들어오면 멈춤
+     - 화살표·인디케이터·스와이프로 옮기면 그 자리에서 잠시 뒤 다시 흐름
+     - '동작 줄이기' 설정에서는 흐르지 않고 화살표·스와이프로만 넘김 */
+  function setupCarousel() {
+    var track = $('#occasionGrid');
+    var slides = Array.prototype.slice.call(track.children);
+    var n = slides.length;
+    if (n < 2) return;
+    var SPEED = 32;          // 1초에 움직이는 거리(px). 카드 한 장 지나가는 데 약 10~13초
+    var RESUME = 1500;       // 손으로 조작한 뒤 다시 흐르기까지 기다리는 시간(ms)
+
+    track.setAttribute('tabindex', '0');            // 키보드 ←/→로도 넘길 수 있게
+    track.setAttribute('role', 'region');
+    track.setAttribute('aria-roledescription', '슬라이드');
+    track.setAttribute('aria-label', '카테고리 카드');
+
+    // 무한 루프용 복사본: 화면 읽기·키보드·클릭 대상에서 빠지도록 처리
+    slides.forEach(function (s) {
+      var c = s.cloneNode(true);
+      c.classList.add('is-clone');
+      c.setAttribute('aria-hidden', 'true');
+      c.setAttribute('inert', '');
+      $$('[id]', c).forEach(function (el) { el.removeAttribute('id'); });
+      c.removeAttribute('aria-labelledby');
+      $$('a, button', c).forEach(function (el) { el.setAttribute('tabindex', '-1'); });
+      track.appendChild(c);
+    });
+
+    var controls = document.createElement('div');
+    controls.className = 'carousel-controls';
+    var dots = '';
+    for (var i = 0; i < n; i++) {
+      dots += '<button class="carousel-dot" type="button" data-go="' + i + '" aria-label="' + (i + 1) + '번째 카드로"></button>';
+    }
+    controls.innerHTML =
+      '<p class="carousel-count" aria-live="polite"></p>' +
+      '<div class="carousel-dots" role="group" aria-label="슬라이드 위치">' + dots + '</div>' +
+      '<div class="carousel-arrows">' +
+        '<button class="carousel-btn carousel-play" type="button" aria-controls="occasionGrid"></button>' +
+        '<button class="carousel-btn" type="button" data-dir="-1" aria-controls="occasionGrid" aria-label="이전 카테고리">' + icon('arrowLeft', 20) + '</button>' +
+        '<button class="carousel-btn" type="button" data-dir="1" aria-controls="occasionGrid" aria-label="다음 카테고리">' + icon('arrowRight', 20) + '</button>' +
+      '</div>';
+    track.parentNode.insertBefore(controls, track.nextSibling);
+
+    var countEl = $('.carousel-count', controls);
+    var playBtn = $('.carousel-play', controls);
+    var lastCount = '';
+
+    function step() { return slides[1].offsetLeft - slides[0].offsetLeft; }
+    function loopWidth() { return n * step(); }
+    function currentIndex() {
+      var raw = Math.round(track.scrollLeft / step());
+      return ((raw % n) + n) % n;
+    }
+
+    // 스냅·부드러운 스크롤을 잠깐 끄고 위치만 옮김 (눈에 보이는 화면은 똑같음)
+    function jumpTo(left) {
+      track.style.scrollSnapType = 'none';
+      track.style.scrollBehavior = 'auto';
+      track.scrollLeft = left;
+      pos = left;
+      requestAnimationFrame(function () {
+        track.style.scrollSnapType = '';
+        track.style.scrollBehavior = '';
+      });
+    }
+    function smoothTo(left) {
+      track.scrollTo({ left: left, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+    }
+    // 복사본 구간에 들어가 있으면 원래 카드 위치로 돌려놓음
+    function normalize() {
+      if (track.scrollLeft >= loopWidth() - 2) jumpTo(track.scrollLeft - loopWidth());
+    }
+
+    // 흐르는 중이라 카드 경계 사이에 있을 수 있어서, 다음/이전 '카드 경계'로 이동
+    function next() {
+      normalize();
+      smoothTo((Math.floor(track.scrollLeft / step() + 0.02) + 1) * step());
+    }
+    function prev() {
+      normalize();
+      var target = (Math.ceil(track.scrollLeft / step() - 0.02) - 1) * step();
+      if (target < 0) {                             // 첫 카드에서 뒤로: 끝 쪽(같은 모습)으로 옮긴 뒤 이동
+        jumpTo(track.scrollLeft + loopWidth());
+        target += loopWidth();
+      }
+      smoothTo(target);
+    }
+    function goTo(i) {
+      normalize();
+      smoothTo(i * step());
+    }
+
+    function update() {
+      var cur = currentIndex();
+      var text = pad2(cur + 1) + ' <span>/ ' + pad2(n) + '</span>';
+      if (text === lastCount) return;               // 흐르는 동안 매 프레임 다시 그리지 않게
+      lastCount = text;
+      $$('.carousel-dot', controls).forEach(function (d, i) {
+        if (i === cur) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+      });
+      countEl.innerHTML = text;
+    }
+
+    /* ---- 끊김 없이 흐르기 ---- */
+    var raf = 0, last = null, pos = 0, busyUntil = 0;
+    var hovering = false, focused = false, touching = false, onScreen = true, stopped = false;
+
+    function flowAllowed() { return !reduceMotion.matches; }
+    function canFlow() {
+      return flowAllowed() && !stopped && !hovering && !focused && onScreen && !document.hidden;
+    }
+    function holdFor(ms) { busyUntil = Math.max(busyUntil, performance.now() + ms); }
+
+    function frame(t) {
+      raf = 0;
+      if (!canFlow()) { last = null; return; }
+      if (last !== null) {
+        var dt = Math.min(t - last, 50);
+        if (touching || performance.now() < busyUntil) {
+          pos = track.scrollLeft;                   // 사람이 움직이는 동안은 따라가기만
+        } else {
+          if (Math.abs(track.scrollLeft - pos) > 2) pos = track.scrollLeft;
+          pos += SPEED * dt / 1000;
+          var lw = loopWidth();
+          if (pos >= lw) pos -= lw;                 // 복사본 구간 → 같은 모습의 앞쪽으로
+          track.scrollLeft = pos;
+        }
+      }
+      last = t;
+      raf = requestAnimationFrame(frame);
+    }
+
+    function schedule() {
+      track.classList.toggle('is-flowing', flowAllowed());
+      if (canFlow() && !raf) {
+        last = null;
+        pos = track.scrollLeft;
+        raf = requestAnimationFrame(frame);
+      } else if (!canFlow() && raf) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
+      syncPlayBtn();
+    }
+    function syncPlayBtn() {
+      playBtn.hidden = !flowAllowed();
+      playBtn.setAttribute('aria-label', stopped ? '자동 흐름 켜기' : '자동 흐름 멈추기');
+      playBtn.setAttribute('aria-pressed', String(stopped));
+      playBtn.innerHTML = icon(stopped ? 'play' : 'pause', 18);
+      controls.classList.toggle('is-playing', !!raf);
+    }
+
+    controls.addEventListener('click', function (e) {
+      if (e.target.closest('.carousel-play')) { stopped = !stopped; schedule(); return; }
+      var arrow = e.target.closest('[data-dir]');
+      if (arrow) {
+        holdFor(RESUME);
+        if (arrow.getAttribute('data-dir') === '1') next(); else prev();
+        return;
+      }
+      var dot = e.target.closest('[data-go]');
+      if (dot) { holdFor(RESUME); goTo(Number(dot.getAttribute('data-go'))); }
+    });
+
+    var carousel = track.parentNode;                // 카드 + 조작 영역 전체
+    carousel.addEventListener('mouseenter', function () { hovering = true; schedule(); });
+    carousel.addEventListener('mouseleave', function () { hovering = false; schedule(); });
+    carousel.addEventListener('focusin', function () { focused = true; schedule(); });
+    carousel.addEventListener('focusout', function (e) {
+      if (!carousel.contains(e.relatedTarget)) { focused = false; schedule(); }
+    });
+    track.addEventListener('touchstart', function () { touching = true; }, { passive: true });
+    track.addEventListener('touchend', function () { touching = false; holdFor(RESUME); }, { passive: true });
+    track.addEventListener('touchcancel', function () { touching = false; holdFor(RESUME); }, { passive: true });
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        onScreen = entries[entries.length - 1].isIntersecting;
+        schedule();
+      }, { threshold: 0.25 }).observe(track);
+    }
+    document.addEventListener('visibilitychange', schedule);
+    if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', schedule);
+    else reduceMotion.addListener(schedule);
+
+    /* ---- 스크롤 상태 반영 ---- */
+    var tick = false, settle = null;
+    track.addEventListener('scroll', function () {
+      // 흐름이 아닌 움직임(스와이프 관성, 화살표 이동)이면 끝날 때까지 기다렸다가 다시 흐름
+      if (Math.abs(track.scrollLeft - pos) > 2) holdFor(RESUME);
+      if (!tick) {
+        tick = true;
+        requestAnimationFrame(function () { update(); tick = false; });
+      }
+      clearTimeout(settle);                         // 스크롤이 멈추면 복사본 구간 정리
+      settle = setTimeout(normalize, 160);
+    }, { passive: true });
+    window.addEventListener('resize', function () { normalize(); lastCount = ''; update(); });
+
+    update();
+    schedule();
+  }
 
   /* ======================================================
      9. 헤더 · 메뉴 · 스크롤
@@ -765,6 +984,7 @@
   });
   renderQuestions();
   renderOccasions();
+  setupCarousel();
   updateFinder();
   syncWishUI();
   applyURLParams();
