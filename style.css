@@ -24,7 +24,7 @@
 
   --header-h: 72px;
   --gutter: 48px;
-  --section-gap: 140px;
+  --section-gap: 96px;
   --radius: 2px;            /* 둥근 모서리는 거의 쓰지 않음 */
   --ease: cubic-bezier(.22, .61, .36, 1);
 }
@@ -79,7 +79,7 @@ mark { background: none; color: inherit; }
 
 .container {
   width: 100%;
-  max-width: calc(1240px + var(--gutter) * 2);
+  max-width: calc(1160px + var(--gutter) * 2);
   margin: 0 auto;
   padding: 0 var(--gutter);
 }
@@ -251,25 +251,25 @@ img.photo {
 }
 
 h2 {
-  margin-top: 22px;
-  font-size: clamp(30px, 2.9vw, 38px); font-weight: 800; line-height: 1.3; letter-spacing: -0.03em;
+  margin-top: 18px;
+  font-size: clamp(26px, 2.4vw, 32px); font-weight: 800; line-height: 1.3; letter-spacing: -0.03em;
 }
 h2 .en {
-  display: block; margin-bottom: 8px;
-  font-size: clamp(48px, 6.3vw, 88px); font-weight: 900; line-height: .95; letter-spacing: -0.045em;
+  display: block; margin-bottom: 6px;
+  font-size: clamp(40px, 5vw, 68px); font-weight: 900; line-height: .95; letter-spacing: -0.045em;
   text-transform: uppercase;
 }
 
 .section-desc { max-width: 420px; font-size: 18px; color: var(--text-sub); }
-.section-head { margin-bottom: 56px; }
+.section-head { margin-bottom: 40px; }
 .section-head--split {
   display: flex; align-items: flex-end; justify-content: space-between; gap: 40px;
-  padding-bottom: 28px;
+  padding-bottom: 22px;
   border-bottom: 1.5px solid var(--text);
 }
 
 /* ---------- ① 메인 (비대칭 2단) ---------- */
-.hero { padding: 64px 0 96px; overflow: hidden; }
+.hero { padding: 48px 0 72px; overflow: hidden; }
 .hero-inner {
   display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: 56px; align-items: end;
 }
@@ -399,10 +399,10 @@ h2 .en {
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* ---------- ② 선물 찾기 ---------- */
-.finder-layout { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 72px; align-items: start; }
+.finder-layout { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 56px; align-items: start; }
 .finder-intro { position: sticky; top: calc(var(--header-h) + 40px); }
 .finder-intro .eyebrow { font-size: 17px; }
-.finder-intro h2 { margin-top: 24px; font-size: clamp(34px, 3.4vw, 46px); font-weight: 900; line-height: 1.2; }
+.finder-intro h2 { margin-top: 20px; font-size: clamp(30px, 3vw, 40px); font-weight: 900; line-height: 1.2; }
 .finder-intro .section-desc { margin-top: 24px; color: #4F4A46; line-height: 1.7; }
 
 .finder-card {
@@ -412,7 +412,7 @@ h2 .en {
   box-shadow: 10px 10px 0 var(--blush);
 }
 
-.question { border: 0; margin: 0; padding: 32px 0; min-width: 0; border-bottom: 1px solid var(--line); }
+.question { border: 0; margin: 0; padding: 26px 0; min-width: 0; border-bottom: 1px solid var(--line); }
 .question legend {
   display: flex; align-items: center; gap: 14px;
   float: left; width: 100%; padding: 0;
@@ -455,7 +455,7 @@ h2 .en {
 .summary-value { margin-top: 4px; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
 .summary-value .empty { color: var(--line); font-weight: 400; }
 .finder-submit { text-align: center; }
-.finder-submit .btn { width: 100%; height: 68px; font-size: 20px; }
+.finder-submit .btn { width: 100%; height: 62px; font-size: 19px; }
 /* 아직 다 고르지 않았을 때도 핑크 계열로 눈에 띄게 (누를 수 없다는 건 옅은 바탕으로 표시, 글자 대비 4.7:1) */
 #recommendBtn:disabled { background: var(--blush); color: var(--pink-deep); }
 .finder-hint { margin-top: 10px; font-size: 14px; color: var(--text-sub); }
@@ -464,7 +464,7 @@ h2 .en {
 .section--result { padding-top: 0; }
 .result-head {
   display: flex; align-items: flex-end; justify-content: space-between; gap: 32px;
-  margin-bottom: 40px; padding: 72px 0 28px;
+  margin-bottom: 32px; padding: 56px 0 24px;
   border-top: 1.5px solid var(--text);
   border-bottom: 1px solid var(--line);
 }
@@ -484,7 +484,7 @@ h2 .en {
 .result-note { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; font-size: 15px; color: var(--text-sub); }
 .result-note .icon { color: var(--text); }
 
-.gift-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 56px 28px; align-items: start; }
+.gift-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 44px 24px; align-items: start; }
 .gift-card { display: flex; flex-direction: column; }
 .gift-card.is-new { animation: fade-up .6s var(--ease) both; }
 .gift-card.is-new:nth-child(3n+2) { animation-delay: .08s; }
@@ -564,10 +564,10 @@ h2 .en {
 /* 같은 크기·비율(3:4)의 사진을 넉넉한 간격으로 나란히. 테두리·그림자·배지·화살표 없음 */
 .occasion-grid {
   display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 56px 32px;
+  gap: 40px 24px;
 }
 .occasion-card {
-  display: flex; flex-direction: column; gap: 20px;
+  display: flex; flex-direction: column; gap: 16px;
   text-align: left;
 }
 .occasion-media {
@@ -592,7 +592,7 @@ h2 .en {
 .occasion-card:focus-visible .occasion-media { outline: 2px solid var(--text); outline-offset: 4px; }
 
 /* 그 밖의 날: 글자 링크 하나 */
-.occasion-more { display: flex; flex-wrap: wrap; align-items: baseline; gap: 16px; margin-top: 56px; font-size: 16px; }
+.occasion-more { display: flex; flex-wrap: wrap; align-items: baseline; gap: 16px; margin-top: 40px; font-size: 16px; }
 .occasion-more-label { color: var(--text-sub); }
 .more-link {
   font-weight: 700; color: var(--text);
@@ -605,19 +605,19 @@ h2 .en {
 /* 왼쪽: 흰 등록 카드 / 오른쪽: 가까운 순서 목록. 테두리 대신 가는 선과 여백으로 구분 */
 .mydates {
   display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: 56px; align-items: start;
-  margin-bottom: 112px;
+  gap: 40px; align-items: start;
+  margin-bottom: 72px;
 }
 .mydate-form {
-  display: flex; flex-direction: column; gap: 22px;
-  padding: 40px;
+  display: flex; flex-direction: column; gap: 18px;
+  padding: 32px;
   background: var(--surface);
 }
 .mydate-form-title { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
 .field { display: flex; flex-direction: column; gap: 10px; }
 .field-label { font-size: 15px; font-weight: 700; }
 .field input {
-  width: 100%; height: 54px; padding: 0 16px;
+  width: 100%; height: 50px; padding: 0 16px;
   background: var(--bg); color: var(--text);
   border: 1.5px solid rgba(37, 35, 33, .18); border-radius: 0;
   font: inherit; font-size: 17px;
@@ -641,7 +641,7 @@ h2 .en {
   font-size: 13px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; line-height: 1;
   color: var(--pink);
 }
-.mydate-board-head { padding-bottom: 24px; margin-bottom: 20px; border-bottom: 1.5px solid var(--text); }
+.mydate-board-head { padding-bottom: 20px; margin-bottom: 16px; border-bottom: 1.5px solid var(--text); }
 .mydate-board-title { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
 .mydate-board-desc { margin-top: 4px; font-size: 15px; line-height: 1.6; color: var(--text-sub); }
 .mydate-count { font-family: var(--font-display); color: var(--pink); }
@@ -649,8 +649,8 @@ h2 .en {
 /* 기념일 목록: 흰 카드. 왼쪽 큰 D-Day, 오른쪽 이름·날짜, 아래 선물 찾기 / 수정·삭제 */
 .mydate-list { display: flex; flex-direction: column; gap: 12px; margin: 0; padding: 0; list-style: none; }
 .mydate-item {
-  display: grid; grid-template-columns: 172px minmax(0, 1fr); align-items: center; gap: 18px 28px;
-  padding: 28px 32px;
+  display: grid; grid-template-columns: 150px minmax(0, 1fr); align-items: center; gap: 16px 24px;
+  padding: 22px 26px;
   background: var(--surface);
   transition: background-color .2s var(--ease);
 }
@@ -658,7 +658,7 @@ h2 .en {
 .mydate-dday {
   grid-row: span 2; justify-self: start; white-space: nowrap;
   font-family: var(--font-display);
-  font-size: 48px; font-weight: 900; line-height: 1; letter-spacing: -0.04em;
+  font-size: 42px; font-weight: 900; line-height: 1; letter-spacing: -0.04em;
   color: var(--pink);
 }
 .mydate-name { font-size: 20px; font-weight: 700; line-height: 1.35; letter-spacing: -0.02em; overflow-wrap: anywhere; }
@@ -696,18 +696,18 @@ h2 .en {
   background: var(--surface);
   font-size: 17px; line-height: 1.7; color: var(--text-sub);
 }
-.dates-sub { margin-bottom: 32px; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+.dates-sub { margin-bottom: 24px; font-size: 21px; font-weight: 800; letter-spacing: -0.02em; }
 
 @media (max-width: 1100px) {
   .mydates { grid-template-columns: minmax(0, 1fr); gap: 48px; }
 }
 @media (max-width: 767px) {
-  .mydates { gap: 40px; margin-bottom: 80px; }
-  .mydate-form { padding: 28px 20px; gap: 18px; }
+  .mydates { gap: 32px; margin-bottom: 56px; }
+  .mydate-form { padding: 24px 20px; gap: 16px; }
   .mydate-form-title { font-size: 20px; }
   .mydate-board-title { font-size: 20px; }
-  .mydate-item { grid-template-columns: minmax(96px, auto) minmax(0, 1fr); gap: 14px 16px; padding: 22px 20px; }
-  .mydate-dday { grid-row: auto; font-size: 30px; }
+  .mydate-item { grid-template-columns: minmax(90px, auto) minmax(0, 1fr); gap: 12px 16px; padding: 18px 18px; }
+  .mydate-dday { grid-row: auto; font-size: 28px; }
   .mydate-name { font-size: 17px; }
   .mydate-when { font-size: 14px; }
   .mydate-tools { grid-column: 1 / -1; padding-top: 14px; }
@@ -719,7 +719,7 @@ h2 .en {
 /* 같은 비율(4:5) 사진 + 핑크 날짜 + 이름 + 한 줄 설명. 테두리·그림자 없이 여백으로만 구분 */
 .date-grid {
   display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 56px 32px;
+  gap: 40px 24px;
   margin: 0; padding: 0; list-style: none;
 }
 .date-grid > li { display: flex; min-width: 0; }
@@ -734,11 +734,11 @@ h2 .en {
 }
 .date-when {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  margin-top: 22px;
+  margin-top: 18px;
 }
 .date-day {
   font-family: var(--font-display);
-  font-size: 40px; font-weight: 900; line-height: 1; letter-spacing: -0.04em;
+  font-size: 34px; font-weight: 900; line-height: 1; letter-spacing: -0.04em;
   color: var(--text);
 }
 .date-dday {
@@ -768,7 +768,7 @@ h2 .en {
 .date-card:focus-visible .date-media { outline: 2px solid var(--text); outline-offset: 4px; }
 
 @media (max-width: 1100px) {
-  .date-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px 24px; }
+  .date-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 24px; }
 }
 /* 모바일: 옆으로 넘겨 보는 카드 (페이지 전체는 가로로 밀리지 않음) */
 @media (max-width: 767px) {
@@ -779,31 +779,31 @@ h2 .en {
     -webkit-overflow-scrolling: touch; scrollbar-width: none;
   }
   .date-grid::-webkit-scrollbar { display: none; }
-  .date-grid > li { flex: 0 0 74%; scroll-snap-align: start; }
+  .date-grid > li { flex: 0 0 62%; scroll-snap-align: start; }
   .date-when { margin-top: 16px; }
-  .date-day { font-size: 34px; }
+  .date-day { font-size: 28px; }
   .date-name { flex-direction: column; gap: 4px; font-size: 17px; }
   .date-en { font-size: 11px; }
   .date-desc { font-size: 15px; }
 }
 
 /* ---------- ⑤ 이용 방법 ---------- */
-.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px; }
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
 .step { position: relative; }
-.step-num { font-size: 100px; font-weight: 900; line-height: .85; letter-spacing: -0.06em; color: var(--pink); }
+.step-num { font-size: 80px; font-weight: 900; line-height: .85; letter-spacing: -0.06em; color: var(--pink); }
 .step:nth-child(2) .step-num { -webkit-text-stroke: 2px var(--pink); color: transparent; }
 .step > .icon { position: absolute; right: 0; top: 4px; }
-.step h3 { margin-top: 24px; padding-top: 18px; border-top: 1.5px solid var(--text); font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
+.step h3 { margin-top: 18px; padding-top: 16px; border-top: 1.5px solid var(--text); font-size: 21px; font-weight: 800; letter-spacing: -0.02em; }
 .step p:last-child { margin-top: 8px; font-size: 17px; color: var(--text-sub); }
 
-.guide-bottom { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 80px; margin-top: 120px; }
-.about h3, .faq h3 { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
-.about p { margin-top: 18px; font-size: 20px; line-height: 1.8; }
+.guide-bottom { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 64px; margin-top: 80px; }
+.about h3, .faq h3 { font-size: 23px; font-weight: 800; letter-spacing: -0.02em; }
+.about p { margin-top: 16px; font-size: 18px; line-height: 1.8; }
 .faq-list { margin-top: 18px; border-top: 1.5px solid var(--text); }
 .faq details { border-bottom: 1px solid var(--line); }
 .faq summary {
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  min-height: 64px; padding: 14px 0;
+  min-height: 56px; padding: 12px 0;
   font-size: 18px; font-weight: 700;
   cursor: pointer; list-style: none;
 }
@@ -815,8 +815,8 @@ h2 .en {
 
 /* ---------- 마무리 ---------- */
 .cta-band { background: var(--pink); color: #FFFFFF; border-top: 1.5px solid var(--text); }
-.cta-inner { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; padding-top: 96px; padding-bottom: 96px; }
-.cta-title { font-size: clamp(52px, 7.3vw, 112px); font-weight: 900; line-height: .88; letter-spacing: -0.06em; text-transform: uppercase; }
+.cta-inner { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; padding-top: 72px; padding-bottom: 72px; }
+.cta-title { font-size: clamp(48px, 6vw, 92px); font-weight: 900; line-height: .88; letter-spacing: -0.06em; text-transform: uppercase; }
 .cta-desc { margin-bottom: 16px; font-size: 18px; font-weight: 600; }
 /* 핑크 면 위의 버튼은 흰 바탕 + 핑크 글자로 반전 */
 .cta-band .btn-primary { background: #FFFFFF; color: var(--pink); }
@@ -889,7 +889,7 @@ h2 .en {
    반응형
    ========================================================== */
 @media (max-width: 1100px) {
-  :root { --gutter: 32px; --section-gap: 112px; }
+  :root { --gutter: 32px; --section-gap: 80px; }
   .main-nav { gap: 24px; }
   .finder-layout { grid-template-columns: 1fr; gap: 40px; }
   .finder-intro { position: static; }
@@ -905,11 +905,11 @@ h2 .en {
   .gift-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .occasion-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 24px; }
   .steps { gap: 32px; }
-  .step-num { font-size: 76px; }
+  .step-num { font-size: 64px; }
 }
 
 @media (max-width: 767px) {
-  :root { --header-h: 60px; --gutter: 20px; --section-gap: 80px; }
+  :root { --header-h: 60px; --gutter: 20px; --section-gap: 60px; }
 
   .top-strip { font-size: 12px; }
   .top-strip p { gap: 10px; height: 30px; }
@@ -922,12 +922,12 @@ h2 .en {
   .header-actions .btn-sm { height: 40px; padding: 0 14px; }
   .logo { font-size: 28px; }
 
-  h2 { margin-top: 18px; font-size: 26px; }
-  h2 .en { font-size: clamp(42px, 12.4vw, 60px); }
-  .section-head { margin-bottom: 32px; }
+  h2 { margin-top: 14px; font-size: 23px; }
+  h2 .en { font-size: clamp(36px, 10.5vw, 50px); }
+  .section-head { margin-bottom: 26px; }
   .section-head--split { flex-direction: column; align-items: flex-start; gap: 14px; padding-bottom: 20px; }
 
-  .hero { padding: 40px 0 72px; }
+  .hero { padding: 32px 0 56px; }
   .hero h1 { margin-top: 24px; font-size: clamp(48px, 15.5vw, 76px); }
   .hero-line { white-space: normal; }
   .hero-line:last-child { padding-left: .3em; }
@@ -957,24 +957,25 @@ h2 .en {
   .finder-foot { padding-top: 22px; }
   .finder-submit .btn { height: 62px; font-size: 19px; }
 
-  .result-head { flex-direction: column; align-items: stretch; gap: 20px; padding-top: 56px; }
-  .gift-grid { grid-template-columns: 1fr; gap: 48px; }
+  .result-head { flex-direction: column; align-items: stretch; gap: 20px; padding-top: 44px; }
+  .gift-grid { grid-template-columns: 1fr; gap: 36px; }
+  .gift-thumb { aspect-ratio: 4 / 3; }
   .result-actions { margin-top: 48px; }
   .result-actions .btn { flex: 1 1 0; }
 
-  .occasion-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 16px; }
+  .occasion-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 14px; }
   .occasion-card { gap: 14px; }
   .occasion-name { flex-direction: column; gap: 4px; font-size: 17px; }
   .occasion-en { font-size: 11px; }
-  .occasion-more { margin-top: 40px; }
+  .occasion-more { margin-top: 32px; }
 
-  .steps { grid-template-columns: 1fr; gap: 40px; }
-  .step-num { font-size: 68px; }
-  .guide-bottom { margin-top: 80px; }
+  .steps { grid-template-columns: 1fr; gap: 32px; }
+  .step-num { font-size: 56px; }
+  .guide-bottom { margin-top: 56px; }
   .about p { font-size: 18px; }
 
-  .cta-inner { flex-direction: column; align-items: stretch; padding-top: 64px; padding-bottom: 64px; }
-  .cta-title { font-size: clamp(48px, 15vw, 72px); }
+  .cta-inner { flex-direction: column; align-items: stretch; padding-top: 52px; padding-bottom: 52px; }
+  .cta-title { font-size: clamp(42px, 13vw, 60px); }
   .guide-cta .btn { width: 100%; }
 
   .notice-band { padding: 20px; }
