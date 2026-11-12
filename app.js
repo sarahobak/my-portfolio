@@ -41,9 +41,6 @@
     star: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
     check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
     arrowRight: '<path d="M5 12h14M13 6l6 6-6 6"/>',
-    arrowLeft: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
-    pause: '<path d="M9 5v14M15 5v14"/>',
-    play: '<path d="M8 5.5v13l11-6.5z"/>',
     external: '<path d="M7 17 17 7M9 7h8v8"/>',
     menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
     x: '<path d="M6 6l12 12M18 6 6 18"/>',
@@ -143,14 +140,14 @@
 
   /* 사진 (images/CREDITS.md 참고) */
   var IMAGES = {
-    candle:     { src: 'images/candle.jpg',     alt: '나무 받침 위에 켜 둔 흰 기둥 초' },
-    beauty:     { src: 'images/beauty.jpg',     alt: '흰 바탕 위 뚜껑을 연 분홍 크림 용기' },
-    coffee:     { src: 'images/coffee.jpg',     alt: '금색 손잡이가 달린 흰 머그잔' },
-    flowers:    { src: 'images/flowers.jpg',    alt: '분홍 바탕 위 분홍·흰 꽃다발' },
-    stationery: { src: 'images/stationery.jpg', alt: '흰 책상 위 펼친 노트와 금색 펜' },
+    candle:     { src: 'images/products/candle.jpg',     alt: '나무 받침 위에 켜 둔 흰 기둥 초' },
+    beauty:     { src: 'images/products/beauty.jpg',     alt: '밝은 바탕 위 뚜껑을 연 크림 용기' },
+    coffee:     { src: 'images/products/coffee.jpg',     alt: '손잡이가 달린 흰 머그잔' },
+    flowers:    { src: 'images/products/flowers.jpg',    alt: '장미와 라넌큘러스 꽃다발' },
+    stationery: { src: 'images/products/stationery.jpg', alt: '밝은 책상 위 펼친 노트와 펜' },
     dessert:    { src: 'images/dessert.jpg',    alt: '상자에 담긴 초콜릿 트러플' },
-    jewelry:    { src: 'images/jewelry.jpg',    alt: '분홍 접시 위 금색 귀걸이 한 쌍' },
-    home:       { src: 'images/home-decor.jpg', alt: '흰 테이블 위 마른 꽃을 꽂은 유리 화병' },
+    jewelry:    { src: 'images/products/jewelry.jpg',    alt: '물결무늬 접시 위 귀걸이 한 쌍' },
+    home:       { src: 'images/products/home-decor.jpg', alt: '흰 테이블 위 마른 꽃을 꽂은 유리 화병' },
     plush:      { src: 'images/plush.jpg',      alt: '분홍 의자에 앉은 곰 인형' },
     cake:       { src: 'images/birthday-cake.jpg', alt: '초를 꽂아 불을 붙인 흰 생크림 케이크' }
   };
@@ -166,12 +163,12 @@
     49: 'jewelry',
     13: 'home', 17: 'home', 21: 'home'
   };
-  // 카테고리 카드 사진: 같은 그레이 톤으로 맞춘 사진 (images/category, 기준은 images/CREDITS.md)
-  IMAGES.occ_birthday     = { src: 'images/category/occ-birthday.jpg',     alt: '흰 생크림 케이크와 디저트 접시가 놓인 밝은 테이블' };
-  IMAGES.occ_anniversary  = { src: 'images/category/occ-anniversary.jpg',  alt: '밝은 회색 벽 앞 안개꽃 한 다발' };
-  IMAGES.occ_congrats     = { src: 'images/category/occ-congrats.jpg',     alt: '밝은 바닥 위 펼친 노트와 펜' };
-  IMAGES.occ_housewarming = { src: 'images/category/occ-housewarming.jpg', alt: '침대 옆 협탁 위 도자기 화병과 마른 꽃' };
-  IMAGES.occ_thanks       = { src: 'images/category/occ-thanks.jpg',       alt: '햇빛 드는 테이블 위 찻잔과 받침' };
+  // 카테고리 카드 사진: 따뜻한 자연광 톤으로 맞춘 3:4 사진 (images/category/*-warm.jpg, 기준은 images/CREDITS.md)
+  IMAGES.occ_birthday     = { src: 'images/category/occ-birthday-warm.jpg',     alt: '창가 테이블 위 흰 생크림 케이크와 꽃' };
+  IMAGES.occ_anniversary  = { src: 'images/category/occ-anniversary-warm.jpg',  alt: '밝은 벽 앞 안개꽃 한 다발' };
+  IMAGES.occ_congrats     = { src: 'images/category/occ-congrats-warm.jpg',     alt: '밝은 바닥 위 펼친 노트와 펜' };
+  IMAGES.occ_housewarming = { src: 'images/category/occ-housewarming-warm.jpg', alt: '침대 옆 협탁 위 도자기 화병과 마른 꽃' };
+  IMAGES.occ_thanks       = { src: 'images/category/occ-thanks-warm.jpg',       alt: '햇빛 드는 테이블 위 찻잔과 받침' };
   IMAGES.occ_cheer        = { src: 'images/category/occ-cheer.jpg',        alt: '흐린 창가에 켜 둔 초 한 자루' };
   var OCC_IMAGE = {
     birthday: 'occ_birthday', anniversary: 'occ_anniversary', thanks: 'occ_thanks',
@@ -609,69 +606,29 @@
   /* ======================================================
      8. 상황별 선물
      ====================================================== */
-  var OCC_EN = { birthday: 'Birthday', anniversary: 'Anniversary', thanks: 'Thanks', housewarming: 'Housewarming', congrats: 'Job & Graduation', cheer: 'Cheer up' };
-  // 카테고리 카드로 보여 줄 날 (6개 모두 슬라이드에. 빠진 날은 아래 '그 밖의 날'로)
-  var FEATURED_OCC = ['birthday', 'anniversary', 'congrats', 'housewarming', 'thanks', 'cheer'];
+  var OCC_EN = { birthday: 'Birthday', anniversary: 'Anniversary', thanks: 'Thanks', housewarming: 'Housewarming', congrats: 'Graduation', cheer: 'Cheer up' };
+  // 카테고리 카드로 보여 줄 날 (이미지 카드 5개). 빠진 날은 아래 '그 밖의 날' 글자 링크로
+  var FEATURED_OCC = ['birthday', 'anniversary', 'housewarming', 'thanks', 'congrats'];
   var CARD_LABEL = { congrats: '취업·졸업', cheer: '응원·위로' };
 
-  function occasionCardHTML(o, i) {
-    var reps = preferKeywords(GIFTS.filter(function (g) { return g.occasion.indexOf(o.id) > -1; }), o.id)
-      .slice(0, 3).map(function (g) { return escapeHTML(g.name); }).join(' · ');
-    return '<article class="occasion-card occasion-card--' + o.id + '">' +
-      '<div class="occasion-media has-photo">' + icon(o.icon, 40) + imgHTML(OCC_IMAGE[o.id], 800) +
-        '<span class="occasion-no">' + pad2(i + 1) + '</span></div>' +
-      '<div class="occasion-body">' +
-        '<p class="occasion-en" lang="en" aria-hidden="true">' + OCC_EN[o.id] + '</p>' +
-        '<h3>' + escapeHTML(CARD_LABEL[o.id] || titleOf(o)) + '</h3>' +
-        '<p class="occasion-desc">' + escapeHTML(o.desc) + '</p>' +
-        '<p class="occasion-reps"><strong>대표 선물</strong> ' + reps + '</p>' +
-        '<button class="text-btn" type="button" data-occasion="' + o.id + '">이 날의 선물 찾기' + icon('arrowRight', 16) + '</button>' +
-      '</div>' +
-    '</article>';
-  }
-
-  /* 생일 캘린더 카드: 이번 달 달력 + 오늘 표시 */
-  function calendarCardHTML() {
-    var now = new Date();
-    var y = now.getFullYear(), m = now.getMonth(), today = now.getDate();
-    var first = new Date(y, m, 1).getDay();
-    var days = new Date(y, m + 1, 0).getDate();
-    var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    var cells = '';
-    ['일', '월', '화', '수', '목', '금', '토'].forEach(function (d) { cells += '<span class="cal-dow">' + d + '</span>'; });
-    for (var b = 0; b < first; b++) cells += '<span class="cal-day is-blank"></span>';
-    for (var d = 1; d <= days; d++) {
-      cells += '<span class="cal-day' + (d === today ? ' is-today' : '') + (d < today ? ' is-past' : '') + '"' +
-        (d === today ? ' aria-current="date"' : '') + '>' + d + '</span>';
-    }
-    var left = days - today;
-    return '<article class="calendar-card" aria-labelledby="calTitle">' +
-      '<div class="cal-head">' +
-        '<p class="cal-kicker" lang="en">Birthday calendar</p>' +
-        '<p class="cal-month" lang="en">' + MONTHS[m] + ' <span>' + y + '</span></p>' +
-      '</div>' +
-      '<div class="cal-grid" role="img" aria-label="' + y + '년 ' + (m + 1) + '월 달력, 오늘은 ' + today + '일">' + cells + '</div>' +
-      '<div class="cal-foot">' +
-        '<h3 id="calTitle">이번 달 생일, 미리 챙겨요</h3>' +
-        '<p>' + (m + 1) + '월은 ' + left + '일 남았어요. 생일 선물은 일주일 전에 고르면 여유 있어요.</p>' +
-        '<button class="btn btn-primary btn-md" type="button" data-occasion="birthday">생일 선물 찾기' + icon('arrowRight', 16) + '</button>' +
-      '</div>' +
-    '</article>';
+  // 이미지 + 카테고리명만. 카드 전체가 하나의 버튼 (누르면 그 날을 골라 선물 찾기로 이동)
+  function occasionCardHTML(o) {
+    var name = CARD_LABEL[o.id] || titleOf(o);
+    return '<button class="occasion-card" type="button" data-occasion="' + o.id + '" aria-label="' + escapeHTML(name) + ' 선물 찾기">' +
+      '<span class="occasion-media has-photo">' + icon(o.icon, 40) + imgHTML(OCC_IMAGE[o.id], 750) + '</span>' +
+      '<span class="occasion-name">' + escapeHTML(name) + '<span class="occasion-en" lang="en">' + OCC_EN[o.id] + '</span></span>' +
+    '</button>';
   }
 
   function renderOccasions() {
-    // 생일 선물 달력을 맨 앞에 두고, 그다음에 날짜별 카드
-    var html = calendarCardHTML();
-    FEATURED_OCC.forEach(function (id, i) {
-      html += occasionCardHTML(find(OCC, id), i);
-    });
-    $('#occasionGrid').innerHTML = html;
+    $('#occasionGrid').innerHTML = FEATURED_OCC.map(function (id) {
+      return occasionCardHTML(find(OCC, id));
+    }).join('');
 
     var rest = OCC.filter(function (o) { return FEATURED_OCC.indexOf(o.id) < 0; });
     $('#occasionMore').hidden = rest.length === 0;
-    $('#occasionMore').innerHTML = !rest.length ? '' : '<p class="occasion-more-label">그 밖의 날</p>' + rest.map(function (o) {
-      return '<button class="more-chip" type="button" data-occasion="' + o.id + '">' +
-        '<span lang="en">' + OCC_EN[o.id] + '</span>' + escapeHTML(titleOf(o) === '응원' ? '응원·위로' : titleOf(o)) + icon('arrowRight', 16) + '</button>';
+    $('#occasionMore').innerHTML = !rest.length ? '' : '<span class="occasion-more-label">그 밖의 날</span>' + rest.map(function (o) {
+      return '<button class="more-link" type="button" data-occasion="' + o.id + '">' + escapeHTML(CARD_LABEL[o.id] || titleOf(o)) + '</button>';
     }).join('');
   }
 
@@ -685,213 +642,6 @@
   $('#occasionGrid').addEventListener('click', onOccasionClick);
   $('#occasionMore').addEventListener('click', onOccasionClick);
 
-  /* 카테고리 슬라이드
-     - 카드가 컨베이어 벨트처럼 끊김 없이 천천히 가로로 흐름 (PC·모바일 모두)
-     - 끝에 닿으면 앞쪽 카드로 자연스럽게 이어지도록 카드 복사본을 뒤에 붙여 두고,
-       복사본 구간에 들어서면 같은 모습의 원래 위치로 순간 이동
-     - 마우스를 올리거나 키보드로 안에 들어오면 멈춤
-     - 화살표·인디케이터·스와이프로 옮기면 그 자리에서 잠시 뒤 다시 흐름
-     - '동작 줄이기' 설정에서는 흐르지 않고 화살표·스와이프로만 넘김 */
-  function setupCarousel() {
-    var track = $('#occasionGrid');
-    var slides = Array.prototype.slice.call(track.children);
-    var n = slides.length;
-    if (n < 2) return;
-    var SPEED = 32;          // 1초에 움직이는 거리(px). 카드 한 장 지나가는 데 약 10~13초
-    var RESUME = 1500;       // 손으로 조작한 뒤 다시 흐르기까지 기다리는 시간(ms)
-
-    track.setAttribute('tabindex', '0');            // 키보드 ←/→로도 넘길 수 있게
-    track.setAttribute('role', 'region');
-    track.setAttribute('aria-roledescription', '슬라이드');
-    track.setAttribute('aria-label', '카테고리 카드');
-
-    // 무한 루프용 복사본: 화면 읽기·키보드·클릭 대상에서 빠지도록 처리
-    slides.forEach(function (s) {
-      var c = s.cloneNode(true);
-      c.classList.add('is-clone');
-      c.setAttribute('aria-hidden', 'true');
-      c.setAttribute('inert', '');
-      $$('[id]', c).forEach(function (el) { el.removeAttribute('id'); });
-      c.removeAttribute('aria-labelledby');
-      $$('a, button', c).forEach(function (el) { el.setAttribute('tabindex', '-1'); });
-      track.appendChild(c);
-    });
-
-    var controls = document.createElement('div');
-    controls.className = 'carousel-controls';
-    var dots = '';
-    for (var i = 0; i < n; i++) {
-      dots += '<button class="carousel-dot" type="button" data-go="' + i + '" aria-label="' + (i + 1) + '번째 카드로"></button>';
-    }
-    controls.innerHTML =
-      '<p class="carousel-count" aria-live="polite"></p>' +
-      '<div class="carousel-dots" role="group" aria-label="슬라이드 위치">' + dots + '</div>' +
-      '<div class="carousel-arrows">' +
-        '<button class="carousel-btn carousel-play" type="button" aria-controls="occasionGrid"></button>' +
-        '<button class="carousel-btn" type="button" data-dir="-1" aria-controls="occasionGrid" aria-label="이전 카테고리">' + icon('arrowLeft', 20) + '</button>' +
-        '<button class="carousel-btn" type="button" data-dir="1" aria-controls="occasionGrid" aria-label="다음 카테고리">' + icon('arrowRight', 20) + '</button>' +
-      '</div>';
-    track.parentNode.insertBefore(controls, track.nextSibling);
-
-    var countEl = $('.carousel-count', controls);
-    var playBtn = $('.carousel-play', controls);
-    var lastCount = '';
-
-    function step() { return slides[1].offsetLeft - slides[0].offsetLeft; }
-    function loopWidth() { return n * step(); }
-    function currentIndex() {
-      var raw = Math.round(track.scrollLeft / step());
-      return ((raw % n) + n) % n;
-    }
-
-    // 스냅·부드러운 스크롤을 잠깐 끄고 위치만 옮김 (눈에 보이는 화면은 똑같음)
-    function jumpTo(left) {
-      track.style.scrollSnapType = 'none';
-      track.style.scrollBehavior = 'auto';
-      track.scrollLeft = left;
-      pos = left;
-      requestAnimationFrame(function () {
-        track.style.scrollSnapType = '';
-        track.style.scrollBehavior = '';
-      });
-    }
-    function smoothTo(left) {
-      track.scrollTo({ left: left, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
-    }
-    // 복사본 구간에 들어가 있으면 원래 카드 위치로 돌려놓음
-    function normalize() {
-      if (track.scrollLeft >= loopWidth() - 2) jumpTo(track.scrollLeft - loopWidth());
-    }
-
-    // 흐르는 중이라 카드 경계 사이에 있을 수 있어서, 다음/이전 '카드 경계'로 이동
-    function next() {
-      normalize();
-      smoothTo((Math.floor(track.scrollLeft / step() + 0.02) + 1) * step());
-    }
-    function prev() {
-      normalize();
-      var target = (Math.ceil(track.scrollLeft / step() - 0.02) - 1) * step();
-      if (target < 0) {                             // 첫 카드에서 뒤로: 끝 쪽(같은 모습)으로 옮긴 뒤 이동
-        jumpTo(track.scrollLeft + loopWidth());
-        target += loopWidth();
-      }
-      smoothTo(target);
-    }
-    function goTo(i) {
-      normalize();
-      smoothTo(i * step());
-    }
-
-    function update() {
-      var cur = currentIndex();
-      var text = pad2(cur + 1) + ' <span>/ ' + pad2(n) + '</span>';
-      if (text === lastCount) return;               // 흐르는 동안 매 프레임 다시 그리지 않게
-      lastCount = text;
-      $$('.carousel-dot', controls).forEach(function (d, i) {
-        if (i === cur) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
-      });
-      countEl.innerHTML = text;
-    }
-
-    /* ---- 끊김 없이 흐르기 ---- */
-    var raf = 0, last = null, pos = 0, busyUntil = 0;
-    var hovering = false, focused = false, touching = false, onScreen = true, stopped = false;
-
-    function flowAllowed() { return !reduceMotion.matches; }
-    function canFlow() {
-      return flowAllowed() && !stopped && !hovering && !focused && onScreen && !document.hidden;
-    }
-    function holdFor(ms) { busyUntil = Math.max(busyUntil, performance.now() + ms); }
-
-    function frame(t) {
-      raf = 0;
-      if (!canFlow()) { last = null; return; }
-      if (last !== null) {
-        var dt = Math.min(t - last, 50);
-        if (touching || performance.now() < busyUntil) {
-          pos = track.scrollLeft;                   // 사람이 움직이는 동안은 따라가기만
-        } else {
-          if (Math.abs(track.scrollLeft - pos) > 2) pos = track.scrollLeft;
-          pos += SPEED * dt / 1000;
-          var lw = loopWidth();
-          if (pos >= lw) pos -= lw;                 // 복사본 구간 → 같은 모습의 앞쪽으로
-          track.scrollLeft = pos;
-        }
-      }
-      last = t;
-      raf = requestAnimationFrame(frame);
-    }
-
-    function schedule() {
-      track.classList.toggle('is-flowing', flowAllowed());
-      if (canFlow() && !raf) {
-        last = null;
-        pos = track.scrollLeft;
-        raf = requestAnimationFrame(frame);
-      } else if (!canFlow() && raf) {
-        cancelAnimationFrame(raf);
-        raf = 0;
-      }
-      syncPlayBtn();
-    }
-    function syncPlayBtn() {
-      playBtn.hidden = !flowAllowed();
-      playBtn.setAttribute('aria-label', stopped ? '자동 흐름 켜기' : '자동 흐름 멈추기');
-      playBtn.setAttribute('aria-pressed', String(stopped));
-      playBtn.innerHTML = icon(stopped ? 'play' : 'pause', 18);
-      controls.classList.toggle('is-playing', !!raf);
-    }
-
-    controls.addEventListener('click', function (e) {
-      if (e.target.closest('.carousel-play')) { stopped = !stopped; schedule(); return; }
-      var arrow = e.target.closest('[data-dir]');
-      if (arrow) {
-        holdFor(RESUME);
-        if (arrow.getAttribute('data-dir') === '1') next(); else prev();
-        return;
-      }
-      var dot = e.target.closest('[data-go]');
-      if (dot) { holdFor(RESUME); goTo(Number(dot.getAttribute('data-go'))); }
-    });
-
-    var carousel = track.parentNode;                // 카드 + 조작 영역 전체
-    carousel.addEventListener('mouseenter', function () { hovering = true; schedule(); });
-    carousel.addEventListener('mouseleave', function () { hovering = false; schedule(); });
-    carousel.addEventListener('focusin', function () { focused = true; schedule(); });
-    carousel.addEventListener('focusout', function (e) {
-      if (!carousel.contains(e.relatedTarget)) { focused = false; schedule(); }
-    });
-    track.addEventListener('touchstart', function () { touching = true; }, { passive: true });
-    track.addEventListener('touchend', function () { touching = false; holdFor(RESUME); }, { passive: true });
-    track.addEventListener('touchcancel', function () { touching = false; holdFor(RESUME); }, { passive: true });
-
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (entries) {
-        onScreen = entries[entries.length - 1].isIntersecting;
-        schedule();
-      }, { threshold: 0.25 }).observe(track);
-    }
-    document.addEventListener('visibilitychange', schedule);
-    if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', schedule);
-    else reduceMotion.addListener(schedule);
-
-    /* ---- 스크롤 상태 반영 ---- */
-    var tick = false, settle = null;
-    track.addEventListener('scroll', function () {
-      // 흐름이 아닌 움직임(스와이프 관성, 화살표 이동)이면 끝날 때까지 기다렸다가 다시 흐름
-      if (Math.abs(track.scrollLeft - pos) > 2) holdFor(RESUME);
-      if (!tick) {
-        tick = true;
-        requestAnimationFrame(function () { update(); tick = false; });
-      }
-      clearTimeout(settle);                         // 스크롤이 멈추면 복사본 구간 정리
-      settle = setTimeout(normalize, 160);
-    }, { passive: true });
-    window.addEventListener('resize', function () { normalize(); lastCount = ''; update(); });
-
-    update();
-    schedule();
-  }
 
   /* ======================================================
      9. 헤더 · 메뉴 · 스크롤
@@ -974,17 +724,38 @@
     });
   });
 
+  /* 흐르는 핑크 띠: 화면이 문구 한 묶음보다 넓으면(약 1700px 이상) 끝에 빈 공간이 생기므로
+     문구 묶음을 화면을 채울 만큼 반복해 넣고, 길어진 만큼 시간도 늘려 속도는 그대로 유지 */
+  var marqueeTrack = $('.marquee-track');
+  var marqueeCount = marqueeTrack ? marqueeTrack.children.length / 2 : 0;  // 한 묶음의 문구 수 (6개)
+  var marqueeUnit = marqueeTrack ? Array.prototype.slice.call(marqueeTrack.children, 0, marqueeCount).map(function (s) { return s.outerHTML; }).join('') : '';
+  var marqueeReps = 1;
+  function fitMarquee() {
+    if (!marqueeTrack) return;
+    var items = marqueeTrack.children;
+    var unitWidth = items[marqueeCount].offsetLeft - items[0].offsetLeft;   // 문구 한 묶음 길이 (CSS 40s 기준)
+    if (!unitWidth) return;
+    var reps = Math.max(1, Math.ceil(window.innerWidth / unitWidth));
+    if (reps === marqueeReps) return;
+    marqueeReps = reps;
+    var half = new Array(reps + 1).join(marqueeUnit);
+    marqueeTrack.innerHTML = half + half;                                   // 두 벌 → -50% 이동으로 끊김 없이 반복
+    marqueeTrack.style.animationDuration = (40 * reps) + 's';
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitMarquee);   // 글꼴이 늦게 로드되면 길이를 다시 잼
+  window.addEventListener('resize', fitMarquee);
+
   /* ======================================================
      10. 시작
      ====================================================== */
   hydrateIcons();
+  fitMarquee();
   // app.js보다 먼저 실패한 사진(메인 배너 등)도 기본 이미지로 바꿈
   $$('img.photo').forEach(function (img) {
     if (img.complete && !img.naturalWidth) img.dispatchEvent(new Event('error'));
   });
   renderQuestions();
   renderOccasions();
-  setupCarousel();
   updateFinder();
   syncWishUI();
   applyURLParams();

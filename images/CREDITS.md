@@ -68,3 +68,24 @@ GIFTÉ 리뉴얼 뒤로는 `banner-gift-box.jpg`, `default.jpg`(분홍 리본 �
 **5. 교체 뒤 확인**
 - PC, 모바일에서 카드 6장 모두 사진이 뜨는지 확인해요.
 - 사진을 못 불러오면 기본 이미지(`default-neutral.jpg`)로 바뀌는지 확인해요.
+
+---
+
+## 카테고리 이미지 · 따뜻한 톤 버전 (지금 사이트에서 쓰는 사진) · `images/category/*-warm.jpg`
+
+03 카테고리를 '이미지 + 카테고리명'만 남기는 미니멀 디자인으로 바꾸면서, 위 그레이 톤 대신 **따뜻한 자연광 톤**으로 다시 맞췄어요. 원본 사진은 위 표와 같아요 (응원·위로 사진은 카드에서 빠져 쓰지 않음). 그레이 톤 파일은 지우지 않고 남겨 뒀어요.
+
+| 파일 | 카테고리 | 원본 사진 |
+| --- | --- | --- |
+| occ-birthday-warm.jpg | 생일 | https://unsplash.com/photos/OiJDyCr3Ohk |
+| occ-anniversary-warm.jpg | 기념일 | https://unsplash.com/photos/56PnO1-lHbs |
+| occ-housewarming-warm.jpg | 집들이 | https://unsplash.com/photos/-37ysvsiUbk |
+| occ-thanks-warm.jpg | 감사 | https://unsplash.com/photos/JJeb7OHQ7a8 |
+| occ-congrats-warm.jpg | 취업·졸업 | https://unsplash.com/photos/60-_Ta1Fcyk |
+
+### 따뜻한 톤 교체 기준 (위 '카테고리 이미지 교체 기준'의 3·4번을 이 값으로 대신함)
+- **비율·크기:** 3:4 세로, 750×1000 JPG, 품질 80%, 한 장 200KB 이하
+- **밝기·대비:** 평균 밝기 0.70, 대비(표준편차) 0.19를 목표로 맞춤 → 결과 평균 밝기 0.71~0.72
+- **색:** 원래 색을 55%만 남겨 차분하게, 빨강 ×1.035 · 파랑 ×0.93으로 살짝 따뜻하게, 가장 어두운 곳을 4% 띄워 부드럽게
+- **피할 것:** 핑크가 많은 사진, 글자·상표가 크게 보이는 사진, 소품이 많은 사진
+- 5장 모두 같은 값으로 한 번에 변환해요. 사진마다 따로 손보지 않아요.
