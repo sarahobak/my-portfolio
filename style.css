@@ -585,8 +585,9 @@ h2 .en {
   font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
   color: var(--text-sub);
 }
-/* 마우스를 올리면 이름만 핑크로 (움직임 없음) */
+/* 마우스를 올리면 이름은 핑크로, 사진은 살짝 커짐 (아래 기념일 카드와 같은 1.03배) */
 .occasion-card:hover .occasion-name { color: var(--pink); }
+.occasion-card:hover .photo { transform: scale(1.03); }
 .occasion-card:focus-visible { outline: none; }
 .occasion-card:focus-visible .occasion-media { outline: 2px solid var(--text); outline-offset: 4px; }
 
