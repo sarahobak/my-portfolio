@@ -791,9 +791,11 @@
           '<p class="mydate-when">' + t.y + '.' + pad2(t.m) + '.' + pad2(t.d) + ' ' + dow + '요일' + (it.yearly ? ' · 매년' : '') + '</p>' +
         '</div>' +
         '<div class="mydate-tools">' +
-          '<button type="button" data-act="gift">선물 찾기</button>' +
+          '<button class="mydate-gift" type="button" data-act="gift">선물 찾기' + icon('arrowRight', 16) + '</button>' +
+          '<span class="mydate-edit">' +
           '<button type="button" data-act="edit" aria-label="' + escapeHTML(it.name) + ' 수정">수정</button>' +
           '<button type="button" data-act="delete" aria-label="' + escapeHTML(it.name) + ' 삭제">삭제</button>' +
+          '</span>' +
         '</div>' +
       '</li>';
     }).join('');
@@ -929,6 +931,7 @@
     { el: $('#finder'), nav: 'finder' },
     { el: resultSection, nav: 'finder' },
     { el: $('#occasions'), nav: 'occasions' },
+    { el: $('#dates'), nav: 'dates' },
     { el: $('#guide'), nav: 'guide' }
   ];
   function updateSpy() {

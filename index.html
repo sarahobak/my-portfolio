@@ -31,6 +31,7 @@
       <nav class="main-nav" aria-label="주요 메뉴">
         <a href="#finder" data-nav="finder">선물 찾기</a>
         <a href="#occasions" data-nav="occasions">카테고리</a>
+        <a href="#dates" data-nav="dates">기념일</a>
         <a href="#guide" data-nav="guide">이용 방법</a>
       </nav>
 
@@ -52,6 +53,7 @@
       <nav class="container" aria-label="모바일 메뉴">
         <a href="#finder" data-nav="finder">선물 찾기</a>
         <a href="#occasions" data-nav="occasions">카테고리</a>
+        <a href="#dates" data-nav="dates">기념일</a>
         <a href="#guide" data-nav="guide">이용 방법</a>
         <a class="btn btn-primary btn-lg btn-block" href="#finder" data-start>선물 추천받기</a>
       </nav>
@@ -202,7 +204,10 @@
         <!-- 나의 기념일: 직접 등록 · D-Day · 수정 · 삭제 (이 브라우저에 저장) -->
         <div class="mydates">
           <form class="mydate-form" id="myDateForm" novalidate>
-            <h3 class="mydate-form-title" id="myDateFormTitle">나의 기념일 등록</h3>
+            <div class="mydate-head">
+              <p class="mydate-kicker" lang="en">Add a date</p>
+              <h3 class="mydate-form-title" id="myDateFormTitle">나의 기념일 등록</h3>
+            </div>
             <label class="field">
               <span class="field-label">기념일 이름</span>
               <input type="text" id="myDateName" maxlength="20" placeholder="예: 엄마 생신, 우리 1주년" autocomplete="off" required>
@@ -224,7 +229,11 @@
           </form>
 
           <div class="mydate-board">
-            <p class="mydate-board-title">다가오는 나의 기념일 <span class="mydate-count" id="myDateCount">0</span></p>
+            <div class="mydate-head mydate-board-head">
+              <p class="mydate-kicker" lang="en">My dates</p>
+              <h3 class="mydate-board-title">다가오는 나의 기념일 <span class="mydate-count" id="myDateCount">0</span></h3>
+              <p class="mydate-board-desc">가까운 날부터 보여 드려요. 선물 찾기를 누르면 그날을 위한 추천으로 바로 이어져요.</p>
+            </div>
             <ul class="mydate-list" id="myDateList"></ul>
             <p class="mydate-empty" id="myDateEmpty">아직 등록한 기념일이 없어요.<br>이름과 날짜를 입력해 첫 기념일을 등록해 보세요.</p>
           </div>
@@ -289,7 +298,7 @@
               </details>
               <details>
                 <summary>내 정보가 저장되나요? <span class="icon" data-icon="plus" data-size="20"></span></summary>
-                <p>회원가입이 없고, 고른 조건은 새로고침하면 사라져요. 찜한 선물만 지금 쓰는 브라우저에 저장되고, 다른 기기나 서버로는 보내지 않아요.</p>
+                <p>회원가입은 필요하지 않아요. 찜한 선물과 등록한 기념일은 현재 사용 중인 브라우저에 저장됩니다. 다른 기기와 동기화되지 않으며, 브라우저의 사이트 데이터 삭제 시 저장된 정보가 사라질 수 있어요.</p>
               </details>
             </div>
           </div>
