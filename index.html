@@ -188,6 +188,53 @@
       </div>
     </section>
 
+    <!-- ④-1 다가오는 기념일 (카드는 app.js가 오늘 날짜 기준으로 그립니다) -->
+    <section class="section section--dates" id="dates" aria-labelledby="datesTitle">
+      <div class="container">
+        <header class="section-head section-head--split">
+          <div>
+            <p class="eyebrow"><span class="eyebrow-no" lang="en">D</span>기념일 캘린더</p>
+            <h2 id="datesTitle"><span class="en" lang="en">Special dates.</span>다가오는 특별한 날, 선물 준비하셨나요?</h2>
+          </div>
+          <p class="section-desc">특별한 날을 위한 선물 아이디어를 미리 만나보세요.</p>
+        </header>
+
+        <!-- 나의 기념일: 직접 등록 · D-Day · 수정 · 삭제 (이 브라우저에 저장) -->
+        <div class="mydates">
+          <form class="mydate-form" id="myDateForm" novalidate>
+            <h3 class="mydate-form-title" id="myDateFormTitle">나의 기념일 등록</h3>
+            <label class="field">
+              <span class="field-label">기념일 이름</span>
+              <input type="text" id="myDateName" maxlength="20" placeholder="예: 엄마 생신, 우리 1주년" autocomplete="off" required>
+            </label>
+            <label class="field">
+              <span class="field-label">날짜</span>
+              <input type="date" id="myDateDate" min="1900-01-01" max="2100-12-31" required>
+            </label>
+            <label class="check">
+              <input type="checkbox" id="myDateYearly" checked>
+              <span>매년 반복</span>
+            </label>
+            <p class="field-error" id="myDateError" role="alert"></p>
+            <div class="mydate-actions">
+              <button class="btn btn-primary btn-md" type="submit" id="myDateSubmit">등록하기</button>
+              <button class="btn btn-ghost btn-md" type="button" id="myDateCancel" hidden>취소</button>
+            </div>
+            <p class="mydate-note">등록한 기념일은 이 브라우저에만 저장돼요.</p>
+          </form>
+
+          <div class="mydate-board">
+            <p class="mydate-board-title">다가오는 나의 기념일 <span class="mydate-count" id="myDateCount">0</span></p>
+            <ul class="mydate-list" id="myDateList"></ul>
+            <p class="mydate-empty" id="myDateEmpty">아직 등록한 기념일이 없어요.<br>이름과 날짜를 입력해 첫 기념일을 등록해 보세요.</p>
+          </div>
+        </div>
+
+        <h3 class="dates-sub">이런 날도 다가와요</h3>
+        <ol class="date-grid" id="dateGrid"></ol>
+      </div>
+    </section>
+
     <!-- ⑤ 이용 방법 -->
     <section class="section" id="guide" aria-labelledby="guideTitle">
       <div class="container">

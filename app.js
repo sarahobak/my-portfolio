@@ -642,6 +642,243 @@
   $('#occasionGrid').addEventListener('click', onOccasionClick);
   $('#occasionMore').addEventListener('click', onOccasionClick);
 
+  /* ------------------------------------------------------
+     8-1. 다가오는 기념일 (SPECIAL DATES)
+     매년 같은 날짜인 기념일만 담고, 오늘 기준으로 다음 날짜를 계산해 가까운 순서로 4개를 보여 줌
+     카드를 누르면 그날에 맞는 '그날'(+ 받는 사람)을 골라 둔 채 선물 찾기로 이동
+     ------------------------------------------------------ */
+  var SPECIAL_DATES = [
+    { id: 'valentine', month: 2,  day: 14, name: '발렌타인데이', en: "Valentine's Day", desc: '초콜릿과 함께 좋아하는 마음을 전하는 날', occ: 'anniversary', who: 'lover' },
+    { id: 'whiteday',  month: 3,  day: 14, name: '화이트데이',   en: 'White Day',       desc: '달콤한 선물로 받은 마음에 답하는 날',   occ: 'anniversary', who: 'lover' },
+    { id: 'parents',   month: 5,  day: 8,  name: '어버이날',     en: "Parents' Day",    desc: '카네이션과 함께 부모님께 고마움을 전하는 날', occ: 'thanks', who: 'parents' },
+    { id: 'teacher',   month: 5,  day: 15, name: '스승의 날',    en: "Teachers' Day",   desc: '고마운 선생님께 작은 감사를 건네는 날', occ: 'thanks' },
+    { id: 'pepero',    month: 11, day: 11, name: '빼빼로데이',   en: 'Pepero Day',      desc: '가까운 사람과 가볍게 달콤함을 나누는 날', occ: 'thanks', who: 'friend' },
+    { id: 'christmas', month: 12, day: 25, name: '크리스마스',   en: 'Christmas',       desc: '한 해를 함께한 사람에게 선물을 건네는 날', occ: 'anniversary' }
+  ];
+  IMAGES.date_valentine = { src: 'images/dates/date-valentine.jpg', alt: '나무 테이블 위 뚜껑을 연 초콜릿 상자' };
+  IMAGES.date_whiteday  = { src: 'images/dates/date-whiteday.jpg',  alt: '마른 꽃 사이에 놓인 마카롱과 와플 콘' };
+  IMAGES.date_parents   = { src: 'images/dates/date-parents.jpg',   alt: '밝은 벽 앞 화병에 꽂은 카네이션' };
+  IMAGES.date_teacher   = { src: 'images/dates/date-teacher.jpg',   alt: '손글씨 편지 봉투와 꽃 몇 송이' };
+  IMAGES.date_pepero    = { src: 'images/dates/date-pepero.jpg',    alt: '상자에 담긴 초콜릿과 흩어진 리본' };
+  IMAGES.date_christmas = { src: 'images/dates/date-christmas.jpg', alt: '불빛이 켜진 트리에 걸린 흰 오너먼트' };
+  var DATES_SHOWN = 4;
+  var WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
+
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+
+  /** 오늘(자정 기준)부터 가까운 순서로 정렬한 기념일. 올해 날짜가 지났으면 내년 날짜로 */
+  function upcomingDates(now) {
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    return SPECIAL_DATES.map(function (sd) {
+      var date = new Date(today.getFullYear(), sd.month - 1, sd.day);
+      if (date < today) date = new Date(today.getFullYear() + 1, sd.month - 1, sd.day);
+      return { sd: sd, date: date, dday: Math.round((date - today) / 86400000) };
+    }).sort(function (a, b) { return a.dday - b.dday; });
+  }
+
+  function dateCardHTML(item, i) {
+    var sd = item.sd, d = item.date;
+    var ddayText = item.dday === 0 ? 'D-DAY' : 'D-' + item.dday;
+    return '<li><button class="date-card' + (i === 0 ? ' is-next' : '') + '" type="button" data-date="' + sd.id + '" ' +
+        'aria-label="' + escapeHTML(sd.name + ', ' + (d.getMonth() + 1) + '월 ' + d.getDate() + '일, ' + (item.dday === 0 ? '오늘' : item.dday + '일 남음') + '. 선물 찾기') + '">' +
+      '<span class="date-media has-photo">' + imgHTML('date_' + sd.id, 750) + '</span>' +
+      '<span class="date-when">' +
+        '<span class="date-day" lang="en">' + pad2(d.getMonth() + 1) + '.' + pad2(d.getDate()) + '</span>' +
+        '<span class="date-dday" lang="en">' + ddayText + '</span>' +
+      '</span>' +
+      '<span class="date-sub">' + d.getFullYear() + ' · ' + WEEKDAY[d.getDay()] + '요일</span>' +
+      '<span class="date-name">' + escapeHTML(sd.name) + '<span class="date-en" lang="en">' + escapeHTML(sd.en) + '</span></span>' +
+      '<span class="date-desc">' + escapeHTML(sd.desc) + '</span>' +
+    '</button></li>';
+  }
+
+  function renderDates() {
+    var grid = $('#dateGrid');
+    if (!grid) return;
+    grid.innerHTML = upcomingDates(new Date()).slice(0, DATES_SHOWN).map(dateCardHTML).join('');
+  }
+
+  if ($('#dateGrid')) $('#dateGrid').addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-date]');
+    if (!btn) return;
+    var sd = find(SPECIAL_DATES, btn.getAttribute('data-date'));
+    if (!sd) return;
+    setChoice('occ', sd.occ);
+    if (sd.who) setChoice('who', sd.who);
+    updateFinder();
+    focusFinder();
+    var who = sd.who ? find(WHO, sd.who) : null;
+    toast(sd.name + ' 선물: ' + (who ? titleOf(who) + ' · ' : '') + titleOf(find(OCC, sd.occ)) + '로 골라 뒀어요');
+  });
+
+  /* ------------------------------------------------------
+     8-2. 나의 기념일 (직접 등록 · D-Day · 수정 · 삭제, LocalStorage 저장)
+     날짜는 'YYYY-MM-DD' 글자로 저장하고, 계산할 때만 연·월·일 숫자로 나눠
+     Date.UTC로 '며칠째'를 셈 → 시간대·서머타임 때문에 하루 밀리는 일이 없음
+     ------------------------------------------------------ */
+  var MYDATE_KEY = 'gifte.myDates.v1';
+  var myDates = [];
+  var editingId = null;
+  var storageOK = true;
+
+  function parseYMD(str) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(str || '');
+    if (!m) return null;
+    var y = +m[1], mo = +m[2], d = +m[3];
+    var check = new Date(Date.UTC(y, mo - 1, d));
+    if (check.getUTCFullYear() !== y || check.getUTCMonth() !== mo - 1 || check.getUTCDate() !== d) return null; // 2월 30일 같은 없는 날짜
+    return { y: y, m: mo, d: d };
+  }
+  function dayNo(y, m, d) { return Math.round(Date.UTC(y, m - 1, d) / 86400000); }
+  function todayNo() { var n = new Date(); return dayNo(n.getFullYear(), n.getMonth() + 1, n.getDate()); }
+  function isLeap(y) { return (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0; }
+
+  /** 이번에 셀 날짜: 매년 반복이면 오늘 이후 가장 가까운 그날(2월 29일은 평년엔 28일), 아니면 적은 날짜 그대로 */
+  function targetOf(item, today) {
+    var p = parseYMD(item.date);
+    if (!item.yearly) return { y: p.y, m: p.m, d: p.d, no: dayNo(p.y, p.m, p.d) };
+    var y = new Date(Date.UTC(1970, 0, 1 + today)).getUTCFullYear();
+    for (var i = 0; i < 2; i++, y++) {
+      var d = (p.m === 2 && p.d === 29 && !isLeap(y)) ? 28 : p.d;
+      var no = dayNo(y, p.m, d);
+      if (no >= today) return { y: y, m: p.m, d: d, no: no };
+    }
+  }
+
+  /** D-30 · D-7 · D-1 · D-DAY · D+1 */
+  function ddayLabel(diff) { return diff === 0 ? 'D-DAY' : diff > 0 ? 'D-' + diff : 'D+' + (-diff); }
+
+  function loadMyDates() {
+    var raw = null;
+    try { raw = localStorage.getItem(MYDATE_KEY); } catch (e) { storageOK = false; }
+    var list = [];
+    try { list = JSON.parse(raw || '[]'); } catch (e) { list = []; }
+    if (!Array.isArray(list)) list = [];
+    // 저장된 값이 깨졌거나 모양이 다르면 그 항목만 빼고 불러옴
+    myDates = list.filter(function (it) {
+      return it && typeof it.id === 'string' && typeof it.name === 'string' && it.name.trim() && parseYMD(it.date);
+    }).map(function (it) {
+      return { id: it.id, name: it.name.trim().slice(0, 20), date: it.date, yearly: !!it.yearly };
+    });
+  }
+  function saveMyDates() {
+    try { localStorage.setItem(MYDATE_KEY, JSON.stringify(myDates)); storageOK = true; }
+    catch (e) { storageOK = false; toast('이 브라우저에서는 저장할 수 없어요. 새로고침하면 사라져요'); }
+  }
+
+  function renderMyDates() {
+    var listEl = $('#myDateList');
+    if (!listEl) return;
+    var today = todayNo();
+    var rows = myDates.map(function (it) {
+      var t = targetOf(it, today);
+      return { it: it, t: t, diff: t.no - today };
+    }).sort(function (a, b) {
+      // 다가오는 날(오늘 포함)을 가까운 순서로, 지난 날은 그 뒤에 최근 순서로
+      var ap = a.diff < 0, bp = b.diff < 0;
+      if (ap !== bp) return ap ? 1 : -1;
+      return ap ? b.diff - a.diff : a.diff - b.diff;
+    });
+
+    listEl.innerHTML = rows.map(function (r) {
+      var it = r.it, t = r.t;
+      var dow = WEEKDAY[new Date(Date.UTC(t.y, t.m - 1, t.d)).getUTCDay()];
+      var cls = 'mydate-item' + (r.diff === 0 ? ' is-today' : '') + (r.diff < 0 ? ' is-past' : '') + (r.diff > 0 && r.diff <= 7 ? ' is-soon' : '');
+      return '<li class="' + cls + '" data-id="' + escapeHTML(it.id) + '">' +
+        '<span class="mydate-dday" lang="en">' + ddayLabel(r.diff) + '</span>' +
+        '<div class="mydate-info">' +
+          '<p class="mydate-name">' + escapeHTML(it.name) + '</p>' +
+          '<p class="mydate-when">' + t.y + '.' + pad2(t.m) + '.' + pad2(t.d) + ' ' + dow + '요일' + (it.yearly ? ' · 매년' : '') + '</p>' +
+        '</div>' +
+        '<div class="mydate-tools">' +
+          '<button type="button" data-act="gift">선물 찾기</button>' +
+          '<button type="button" data-act="edit" aria-label="' + escapeHTML(it.name) + ' 수정">수정</button>' +
+          '<button type="button" data-act="delete" aria-label="' + escapeHTML(it.name) + ' 삭제">삭제</button>' +
+        '</div>' +
+      '</li>';
+    }).join('');
+    $('#myDateEmpty').hidden = rows.length > 0;
+    listEl.hidden = rows.length === 0;
+    $('#myDateCount').textContent = rows.length;
+  }
+
+  function setMyDateError(msg, field) {
+    $('#myDateError').textContent = msg || '';
+    [$('#myDateName'), $('#myDateDate')].forEach(function (el) { el.removeAttribute('aria-invalid'); });
+    if (field) { field.setAttribute('aria-invalid', 'true'); field.focus(); }
+  }
+
+  function resetMyDateForm() {
+    editingId = null;
+    $('#myDateForm').reset();
+    $('#myDateYearly').checked = true;
+    $('#myDateFormTitle').textContent = '나의 기념일 등록';
+    $('#myDateSubmit').textContent = '등록하기';
+    $('#myDateCancel').hidden = true;
+    setMyDateError('');
+  }
+
+  function startEdit(id) {
+    var it = find(myDates, id);
+    if (!it) return;
+    editingId = id;
+    $('#myDateName').value = it.name;
+    $('#myDateDate').value = it.date;
+    $('#myDateYearly').checked = it.yearly;
+    $('#myDateFormTitle').textContent = '기념일 수정';
+    $('#myDateSubmit').textContent = '수정 완료';
+    $('#myDateCancel').hidden = false;
+    setMyDateError('');
+    $('#myDateForm').scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'center' });
+    $('#myDateName').focus({ preventScroll: true });
+  }
+
+  if ($('#myDateForm')) {
+    $('#myDateForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = $('#myDateName').value.trim();
+      var date = $('#myDateDate').value;
+      if (!name) return setMyDateError('기념일 이름을 입력해 주세요.', $('#myDateName'));
+      if (!parseYMD(date)) return setMyDateError('날짜를 골라 주세요.', $('#myDateDate'));
+      var yearly = $('#myDateYearly').checked;
+      var wasEditing = !!editingId;
+      if (wasEditing) {
+        var it = find(myDates, editingId);
+        if (it) { it.name = name; it.date = date; it.yearly = yearly; }
+      } else {
+        myDates.push({ id: 'd' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), name: name, date: date, yearly: yearly });
+      }
+      saveMyDates();
+      resetMyDateForm();
+      renderMyDates();
+      toast(wasEditing ? '‘' + name + '’ 기념일을 수정했어요' : '‘' + name + '’ 기념일을 등록했어요');
+    });
+    $('#myDateCancel').addEventListener('click', resetMyDateForm);
+
+    $('#myDateList').addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-act]');
+      if (!btn) return;
+      var id = btn.closest('[data-id]').getAttribute('data-id');
+      var it = find(myDates, id);
+      if (!it) return;
+      var act = btn.getAttribute('data-act');
+      if (act === 'edit') return startEdit(id);
+      if (act === 'gift') return focusFinder();
+      if (act === 'delete') {
+        if (!window.confirm('‘' + it.name + '’ 기념일을 삭제할까요?')) return;
+        myDates = myDates.filter(function (x) { return x.id !== id; });
+        if (editingId === id) resetMyDateForm();
+        saveMyDates();
+        renderMyDates();
+        toast('‘' + it.name + '’ 기념일을 삭제했어요');
+      }
+    });
+
+    // 다른 탭에서 바꿨을 때, 자정을 넘겨 다시 볼 때 D-Day를 새로 계산
+    window.addEventListener('storage', function (e) { if (e.key === MYDATE_KEY) { loadMyDates(); renderMyDates(); } });
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) renderMyDates(); });
+  }
+
 
   /* ======================================================
      9. 헤더 · 메뉴 · 스크롤
@@ -756,6 +993,9 @@
   });
   renderQuestions();
   renderOccasions();
+  renderDates();
+  loadMyDates();
+  renderMyDates();
   updateFinder();
   syncWishUI();
   applyURLParams();

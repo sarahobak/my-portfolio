@@ -89,3 +89,24 @@ GIFTÉ 리뉴얼 뒤로는 `banner-gift-box.jpg`, `default.jpg`(분홍 리본 �
 - **색:** 원래 색을 55%만 남겨 차분하게, 빨강 ×1.035 · 파랑 ×0.93으로 살짝 따뜻하게, 가장 어두운 곳을 4% 띄워 부드럽게
 - **피할 것:** 핑크가 많은 사진, 글자·상표가 크게 보이는 사진, 소품이 많은 사진
 - 5장 모두 같은 값으로 한 번에 변환해요. 사진마다 따로 손보지 않아요.
+
+---
+
+## 기념일 사진 (SPECIAL DATES '이런 날도 다가와요') · `images/dates/`
+
+모두 각 사진 페이지에서 **Unsplash License**(무료, Unsplash+ 아님)임을 확인했어요.
+
+| 파일 | 기념일 | 원본 사진 | 작가 |
+| --- | --- | --- | --- |
+| date-valentine.jpg | 발렌타인데이 | https://unsplash.com/photos/2TN8bSoWWeA | Clint McKoy |
+| date-whiteday.jpg | 화이트데이 | https://unsplash.com/photos/3bgJzhTscYg | Diana Light |
+| date-parents.jpg | 어버이날 | https://unsplash.com/photos/7IUE9fTPyhk | Hanna Pysareva |
+| date-teacher.jpg | 스승의 날 | https://unsplash.com/photos/X6t0EmzKjm4 | Diana Light |
+| date-pepero.jpg | 빼빼로데이 | https://unsplash.com/photos/dcPNZeSY3yk | Jennifer Pallian |
+| date-christmas.jpg | 크리스마스 | https://unsplash.com/photos/QmBkVA9l_yc | G (@visualsbying) |
+
+### 처리 기준
+- **비율·크기:** 4:5 세로, 750×938 JPG, 품질 80%, 한 장 200KB 이하
+- **톤:** 위 '따뜻한 톤' 카테고리 사진과 같은 색 처리(원래 색 55%, 빨강 ×1.035 · 파랑 ×0.93, 가장 어두운 곳 4% 띄움)
+- **밝기:** 원래 어두운 사진(초콜릿, 트리)이 뿌옇게 바래지 않도록, 목표 밝기 0.68 쪽으로 **60%만** 끌어올림 → 결과 평균 밝기 0.51~0.77
+- 6장 모두 같은 값으로 한 번에 변환해요. 사진마다 따로 손보지 않아요.
